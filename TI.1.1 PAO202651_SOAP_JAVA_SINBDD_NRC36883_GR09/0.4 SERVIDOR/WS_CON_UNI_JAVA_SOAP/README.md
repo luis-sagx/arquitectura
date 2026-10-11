@@ -7,7 +7,7 @@ No requiere una conexion de base de datos.
 ## Operaciones de WSConUni
 
 - autenticar(usuario, clave): retorna token y expiraEn (fecha UTC ISO-8601).
-- obtenerCategorias(token): retorna las seis categorias.
+- obtenerCategorias(token): retorna las categorias de longitud, masa y temperatura.
 - obtenerUnidades(token, categoria): retorna identificadores de unidades.
 - convertir(token, categoria, unidadOrigen, unidadDestino, valor): retorna resultado y unidades.
 
@@ -38,9 +38,9 @@ tras su depuracion se consideran desconocidos.
 
 LONGITUD: CENTIMETRO, METRO, PIE, YARDA, MILLA.
 MASA: GRAMO, KILOGRAMO, ONZA, LIBRA, QUINTAL.
-TEMPERATURA: CELSIUS, FAHRENHEIT, KELVIN, NEWTON, REAUMUR.
+TEMPERATURA: CELSIUS, FAHRENHEIT, KELVIN.
 
-VOLUMEN, TIEMPO y AREA permiten consultar unidades, pero rechazan conversiones.
+Todas las categorias del catalogo permiten conversion.
 Categoria y unidades aceptan minusculas y espacios exteriores; usar los identificadores del catalogo.
 Cero y negativos se aceptan, salvo temperaturas inferiores al cero absoluto.
 Se utiliza double sin redondeo de negocio; el cliente puede formatear la presentacion.
@@ -48,7 +48,7 @@ Valores no finitos y resultados fuera de rango se rechazan.
 Catalogo y conversion requieren token, siguiendo los diagramas de actividad.
 
 Codigos: OK, AUTH-001 (credenciales), AUTH-002 (token invalido),
-AUTH-003 (sesion expirada), UNIT-001 (unidad/categoria no convertible),
+AUTH-003 (sesion expirada), UNIT-001 (unidad no soportada),
 DATA-001 (datos incompletos, incompatibles o fuera de rango).
 
 ## Pruebas

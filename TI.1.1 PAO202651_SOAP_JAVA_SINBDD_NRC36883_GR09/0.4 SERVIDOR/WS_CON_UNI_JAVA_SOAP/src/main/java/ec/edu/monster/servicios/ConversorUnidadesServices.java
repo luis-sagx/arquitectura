@@ -46,10 +46,7 @@ public class ConversorUnidadesServices {
             "LIBRA", 0.45359237, "QUINTAL", quintalKg);
         catalogo.put("LONGITUD", List.of("CENTIMETRO", "METRO", "PIE", "YARDA", "MILLA"));
         catalogo.put("MASA", List.of("GRAMO", "KILOGRAMO", "ONZA", "LIBRA", "QUINTAL"));
-        catalogo.put("VOLUMEN", List.of("LITRO", "MILILITRO", "METRO_CUBICO"));
-        catalogo.put("TIEMPO", List.of("SEGUNDO", "MINUTO", "HORA"));
-        catalogo.put("TEMPERATURA", List.of("CELSIUS", "FAHRENHEIT", "KELVIN", "NEWTON", "REAUMUR"));
-        catalogo.put("AREA", List.of("METRO_CUADRADO", "CENTIMETRO_CUADRADO", "HECTAREA"));
+        catalogo.put("TEMPERATURA", List.of("CELSIUS", "FAHRENHEIT", "KELVIN"));
     }
 
     public Respuesta autenticar(String usuario, String clave) {
@@ -99,8 +96,6 @@ public class ConversorUnidadesServices {
         String c = normalizar(categoria), origen = normalizar(unidadOrigen), destino = normalizar(unidadDestino);
         if (valor == null || !Double.isFinite(valor) || !catalogo.containsKey(c) || origen.isEmpty() || destino.isEmpty())
             return Respuesta.error("DATA-001", "Indique categoria, unidades y un valor numerico finito");
-        if (!List.of("LONGITUD", "MASA", "TEMPERATURA").contains(c))
-            return Respuesta.error("UNIT-001", "La categoria solo esta disponible para consulta");
         for (String u : List.of(origen, destino)) {
             if (!catalogo.get(c).contains(u)) {
                 boolean otraMagnitud = catalogo.values().stream().anyMatch(unidades -> unidades.contains(u));
@@ -134,8 +129,6 @@ public class ConversorUnidadesServices {
             case "CELSIUS" -> -273.15;
             case "FAHRENHEIT" -> -459.67;
             case "KELVIN" -> 0;
-            case "NEWTON" -> -90.1395;
-            case "REAUMUR" -> -218.52;
             default -> throw new IllegalArgumentException("Escala no soportada");
         };
     }
@@ -144,8 +137,6 @@ public class ConversorUnidadesServices {
             case "CELSIUS" -> valor;
             case "FAHRENHEIT" -> (valor - 32) * (5.0 / 9.0);
             case "KELVIN" -> valor - 273.15;
-            case "NEWTON" -> valor * (100.0 / 33.0);
-            case "REAUMUR" -> valor * 1.25;
             default -> throw new IllegalArgumentException("Escala no soportada");
         };
     }
@@ -154,8 +145,6 @@ public class ConversorUnidadesServices {
             case "CELSIUS" -> valor;
             case "FAHRENHEIT" -> valor * 1.8 + 32;
             case "KELVIN" -> valor + 273.15;
-            case "NEWTON" -> valor * 0.33;
-            case "REAUMUR" -> valor * 0.8;
             default -> throw new IllegalArgumentException("Escala no soportada");
         };
     }

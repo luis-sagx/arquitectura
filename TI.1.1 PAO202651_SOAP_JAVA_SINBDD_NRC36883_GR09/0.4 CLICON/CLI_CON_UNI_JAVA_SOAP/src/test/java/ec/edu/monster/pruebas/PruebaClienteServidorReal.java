@@ -17,14 +17,14 @@ public class PruebaClienteServidorReal {
             var login = cliente.autenticar("monster", "monster123");
             SoportePruebas.exigir(login.exito() && login.token() != null, "Autenticacion real debe funcionar");
             String token = login.token();
-            SoportePruebas.exigir(cliente.obtenerCategorias(token).categorias().size() == 6, "Catalogo real incompleto");
-            SoportePruebas.exigir(cliente.obtenerUnidades(token, "TEMPERATURA").unidades().contains("KELVIN"), "Unidades reales incorrectas");
+            SoportePruebas.exigir(cliente.obtenerCategorias(token).categorias().equals(java.util.List.of("LONGITUD", "MASA", "TEMPERATURA")), "Catalogo real incorrecto");
+            SoportePruebas.exigir(cliente.obtenerUnidades(token, "TEMPERATURA").unidades().equals(java.util.List.of("CELSIUS", "FAHRENHEIT", "KELVIN")), "Unidades reales de temperatura incorrectas");
             SoportePruebas.exigir(cliente.convertir(token, "LONGITUD", "METRO", "CENTIMETRO", 2).resultado() == 200, "Conversion real de longitud");
             SoportePruebas.exigir(cliente.convertir(token, "MASA", "KILOGRAMO", "GRAMO", 2).resultado() == 2000, "Conversion real de masa");
             SoportePruebas.exigir(cliente.convertir(token, "TEMPERATURA", "CELSIUS", "FAHRENHEIT", 100).resultado() == 212, "Conversion real de temperatura");
             SoportePruebas.exigir("AUTH-001".equals(cliente.autenticar("monster", "mala").codigo()), "Credenciales invalidas");
             SoportePruebas.exigir("AUTH-002".equals(cliente.obtenerCategorias("inventado").codigo()), "Token invalido");
-            SoportePruebas.exigir("UNIT-001".equals(cliente.convertir(token, "VOLUMEN", "LITRO", "MILILITRO", 1).codigo()), "Categoria solo consultable");
+            SoportePruebas.exigir("DATA-001".equals(cliente.convertir(token, "INEXISTENTE", "LITRO", "MILILITRO", 1).codigo()), "Categoria inexistente debe rechazarse");
             System.out.println("PruebaClienteServidorReal: OK");
         } finally {
             tipo.getMethod("stop").invoke(endpoint); servidor.stop(0);

@@ -2,8 +2,8 @@ package ec.edu.monster.pruebas;
 public class PruebaConversionTemperatura {
     public static void main(String[] args) {
         var s = Verificaciones.servicio(); String t = Verificaciones.token(s);
-        String[] unidades = {"CELSIUS", "FAHRENHEIT", "KELVIN", "NEWTON", "REAUMUR"};
-        double[] ebullicion = {100, 212, 373.15, 33, 80};
+        String[] unidades = {"CELSIUS", "FAHRENHEIT", "KELVIN"};
+        double[] ebullicion = {100, 212, 373.15};
         for (int i=0; i<unidades.length; i++) {
             Verificaciones.resultado(s.convertir(t, "TEMPERATURA", "CELSIUS", unidades[i], 100.0), ebullicion[i]);
             Verificaciones.resultado(s.convertir(t, "TEMPERATURA", unidades[i], "CELSIUS", ebullicion[i]), 100);

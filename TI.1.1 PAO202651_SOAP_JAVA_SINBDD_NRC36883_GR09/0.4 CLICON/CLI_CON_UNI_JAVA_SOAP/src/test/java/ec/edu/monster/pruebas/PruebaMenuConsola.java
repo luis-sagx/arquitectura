@@ -14,6 +14,9 @@ public class PruebaMenuConsola {
             var salida = new StringWriter();
             new ConsolaUnidades(new ClienteSoap(servidor.uri()), new BufferedReader(new StringReader(entrada)), new PrintWriter(salida, true)).ejecutar();
             String texto = salida.toString();
+            SoportePruebas.exigir(texto.contains("=== MENÚ PRINCIPAL ==="), "El menú debe mostrar una sección principal clara");
+            SoportePruebas.exigir(texto.contains("----------------------------------------"), "El menu debe separar visualmente sus secciones");
+            SoportePruebas.exigir(texto.contains("Conversión completada:"), "El menú debe resumir claramente una conversión exitosa");
             SoportePruebas.exigir(texto.contains("Opcion invalida"), "Menu debe validar opciones");
             SoportePruebas.exigir(texto.contains("Inicie sesion"), "No debe convertir sin iniciar sesion");
             SoportePruebas.exigir(texto.contains("numero finito"), "Debe validar dato numerico");

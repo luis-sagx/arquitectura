@@ -51,7 +51,7 @@ ExecutionPolicy afecta solamente al proceso del script.
 4. Cerrar sesion local.
 0. Salir. El fin de entrada tambien cierra la aplicacion.
 
-Volumen, tiempo y area permiten consultar unidades.
+El catalogo incluye longitud, masa y temperatura. Para temperatura se ofrecen Celsius, Fahrenheit y Kelvin.
 La consola guarda el token en memoria y lo envia mediante el puerto generado.
 AUTH-002 o AUTH-003 eliminan la sesion local y solicitan iniciar sesion nuevamente.
 Cerrar sesion local no revoca tokens en el servidor, cuyo contrato no expone cierre.

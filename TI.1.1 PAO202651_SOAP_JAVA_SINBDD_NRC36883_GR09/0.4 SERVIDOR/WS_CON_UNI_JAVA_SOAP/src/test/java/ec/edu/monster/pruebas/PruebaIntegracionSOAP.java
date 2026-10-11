@@ -40,7 +40,10 @@ public class PruebaIntegracionSOAP {
             exigir(Double.parseDouble(texto(conversion, "resultado")) == 200, "Resultado SOAP incorrecto");
             Document catalogo = solicitar("obtenerCategorias", "<token>" + token + "</token>");
             exigir("OK".equals(texto(catalogo, "codigo"))
-                && catalogo.getElementsByTagName("categorias").getLength() == 6, "Catalogo SOAP incorrecto");
+                && catalogo.getElementsByTagName("categorias").getLength() == 3, "Catalogo SOAP incorrecto");
+            Document unidadesTemperatura = solicitar("obtenerUnidades", "<token>" + token + "</token><categoria>TEMPERATURA</categoria>");
+            exigir("OK".equals(texto(unidadesTemperatura, "codigo"))
+                && unidadesTemperatura.getElementsByTagName("unidades").getLength() == 3, "Unidades de temperatura SOAP incorrectas");
             Document unidades = solicitar("obtenerUnidades", "<token>" + token + "</token><categoria>MASA</categoria>");
             exigir("OK".equals(texto(unidades, "codigo"))
                 && unidades.getElementsByTagName("unidades").getLength() == 5, "Unidades SOAP incorrectas");

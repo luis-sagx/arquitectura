@@ -8,7 +8,7 @@ public class PruebaValidacionConversion {
         Verificaciones.codigo(s.convertir(t, "LONGITUD", "", "PIE", 1.0), "DATA-001");
         Verificaciones.codigo(s.convertir(t, "LONGITUD", "METRO", "LIBRA", 1.0), "DATA-001");
         Verificaciones.codigo(s.convertir(t, "LONGITUD", "DESCONOCIDA", "METRO", 1.0), "UNIT-001");
-        Verificaciones.codigo(s.convertir(t, "VOLUMEN", "LITRO", "MILILITRO", 1.0), "UNIT-001");
+        Verificaciones.codigo(s.convertir(t, "INEXISTENTE", "METRO", "PIE", 1.0), "DATA-001");
         Verificaciones.codigo(s.convertir(t, "LONGITUD", "MILLA", "CENTIMETRO", Double.MAX_VALUE), "DATA-001");
         Verificaciones.codigo(s.convertir("inventado", null, null, null, null), "AUTH-002");
         Verificaciones.comprobar("METRO".equals(s.convertir(t, "LONGITUD", "METRO", "PIE", 1.0).getUnidadOrigen()), "Respuesta debe identificar unidades");
