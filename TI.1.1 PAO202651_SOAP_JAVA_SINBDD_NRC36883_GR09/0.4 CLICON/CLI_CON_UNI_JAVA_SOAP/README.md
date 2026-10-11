@@ -57,10 +57,12 @@ ExecutionPolicy afecta solamente al proceso del script.
 2. Consultar catalogo: elegir categoria para ver sus unidades.
 3. Convertir: elegir longitud, masa o temperatura, origen, destino y valor.
 4. Cerrar sesion local.
+5. Recuperar contraseña indicando usuario y nueva clave.
 0. Salir. El fin de entrada tambien cierra la aplicacion.
 
 El catalogo incluye longitud, masa y temperatura. Para temperatura se ofrecen Celsius, Fahrenheit y Kelvin.
 La consola guarda el token en memoria y lo envia mediante el puerto generado.
+La recuperación no requiere iniciar sesión y valida solo el usuario; el cambio dura hasta reiniciar el servidor.
 AUTH-002 o AUTH-003 eliminan la sesion local y solicitan iniciar sesion nuevamente.
 Cerrar sesion local no revoca tokens en el servidor, cuyo contrato no expone cierre.
 

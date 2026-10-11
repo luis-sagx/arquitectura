@@ -10,6 +10,7 @@ public class PruebaSistemaUnidades {
         PruebaTemperaturaValoresGrandes.main(args);
         PruebaValidacionConversion.main(args);
         PruebaSesionExpirada.main(args);
+        PruebaRecuperacionClave.main(args);
         System.out.println("Todas las pruebas del sistema de unidades: OK");
     }
 }

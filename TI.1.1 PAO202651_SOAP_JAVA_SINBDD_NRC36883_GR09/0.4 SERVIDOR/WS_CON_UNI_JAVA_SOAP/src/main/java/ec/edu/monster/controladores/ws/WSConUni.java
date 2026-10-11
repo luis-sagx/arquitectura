@@ -17,6 +17,12 @@ public class WSConUni {
         return SERVICIO.autenticar(usuario, clave);
     }
 
+    @WebMethod(operationName = "recuperarClave")
+    public Respuesta recuperarClave(@WebParam(name = "usuario") String usuario,
+            @WebParam(name = "nuevaClave") String nuevaClave) {
+        return SERVICIO.recuperarClave(usuario, nuevaClave);
+    }
+
     @WebMethod(operationName = "obtenerCategorias")
     public Respuesta obtenerCategorias(@WebParam(name = "token") String token) {
         return SERVICIO.obtenerCategorias(token);

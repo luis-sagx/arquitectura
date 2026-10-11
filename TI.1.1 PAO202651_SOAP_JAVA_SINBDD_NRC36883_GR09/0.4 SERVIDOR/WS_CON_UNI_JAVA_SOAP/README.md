@@ -7,6 +7,7 @@ No requiere una conexion de base de datos.
 ## Operaciones de WSConUni
 
 - autenticar(usuario, clave): retorna token y expiraEn (fecha UTC ISO-8601).
+- recuperarClave(usuario, nuevaClave): cambia la clave de la cuenta indicada sin requerir sesión.
 - obtenerCategorias(token): retorna las categorias de longitud, masa y temperatura.
 - obtenerUnidades(token, categoria): retorna identificadores de unidades.
 - convertir(token, categoria, unidadOrigen, unidadDestino, valor): retorna resultado y unidades.
@@ -27,6 +28,9 @@ Puede cambiar estas propiedades JVM en Payara antes de iniciar/desplegar:
 - conversor.usuario
 - conversor.clave
 - conversor.sesion.minutos
+
+La recuperación comprueba solamente el nombre de usuario. El cambio se conserva en memoria y
+se pierde al reiniciar o redesplegar; la clave vuelve al valor de `conversor.clave`.
 
 Las sesiones son compartidas entre peticiones dentro de la misma aplicacion/JVM.
 Reiniciar o redesplegar invalida los tokens. No se comparten sesiones entre servidores.

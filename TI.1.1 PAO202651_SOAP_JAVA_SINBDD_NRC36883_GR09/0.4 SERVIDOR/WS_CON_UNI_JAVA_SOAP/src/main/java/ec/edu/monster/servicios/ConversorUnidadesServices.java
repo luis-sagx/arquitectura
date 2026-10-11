@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /** Logica de negocio independiente del transporte SOAP, sin base de datos. */
 public class ConversorUnidadesServices {
     private final String usuario;
-    private final String clave;
+    private volatile String clave;
     private final Clock reloj;
     private final Duration duracion;
     private final Map<String, Instant> sesiones = new ConcurrentHashMap<>();
@@ -49,7 +49,7 @@ public class ConversorUnidadesServices {
         catalogo.put("TEMPERATURA", List.of("CELSIUS", "FAHRENHEIT", "KELVIN"));
     }
 
-    public Respuesta autenticar(String usuario, String clave) {
+    public synchronized Respuesta autenticar(String usuario, String clave) {
         if (!this.usuario.equals(usuario) || clave == null || !MessageDigest.isEqual(
                 this.clave.getBytes(StandardCharsets.UTF_8), clave.getBytes(StandardCharsets.UTF_8)))
             return Respuesta.error("AUTH-001", "Credenciales invalidas");
@@ -62,6 +62,16 @@ public class ConversorUnidadesServices {
         Respuesta r = Respuesta.exito("Sesion iniciada");
         r.setToken(token); r.setExpiraEn(vencimiento.toString());
         return r;
+    }
+
+    public synchronized Respuesta recuperarClave(String usuario, String nuevaClave) {
+        if (usuario == null || !this.usuario.equals(usuario))
+            return Respuesta.error("AUTH-001", "Usuario inexistente");
+        if (nuevaClave == null || nuevaClave.isBlank())
+            return Respuesta.error("DATA-001", "Indique una nueva clave no vacia");
+        clave = nuevaClave;
+        sesiones.clear();
+        return Respuesta.exito("Clave actualizada");
     }
 
     private Respuesta validarToken(String token) {

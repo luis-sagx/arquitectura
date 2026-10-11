@@ -1,0 +1,17 @@
+package ec.edu.monster.pruebas;
+
+public class PruebaRecuperacionClave {
+    public static void main(String[] args) {
+        var servicio = Verificaciones.servicio();
+        String tokenAnterior = Verificaciones.token(servicio);
+
+        Verificaciones.codigo(servicio.recuperarClave("desconocido", "nueva123"), "AUTH-001");
+        Verificaciones.codigo(servicio.recuperarClave("monster", "  "), "DATA-001");
+        Verificaciones.codigo(servicio.recuperarClave("monster", "nueva123"), "OK");
+
+        Verificaciones.codigo(servicio.autenticar("monster", "monster123"), "AUTH-001");
+        Verificaciones.codigo(servicio.autenticar("monster", "nueva123"), "OK");
+        Verificaciones.codigo(servicio.obtenerCategorias(tokenAnterior), "AUTH-002");
+        System.out.println("PruebaRecuperacionClave: OK");
+    }
+}

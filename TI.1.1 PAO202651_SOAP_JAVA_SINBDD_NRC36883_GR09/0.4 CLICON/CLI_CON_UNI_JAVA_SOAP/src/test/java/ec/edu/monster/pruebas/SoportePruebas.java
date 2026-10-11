@@ -26,7 +26,7 @@ final class SoportePruebas implements AutoCloseable {
     }
     URI uri() { return URI.create("http://127.0.0.1:" + servidor.getAddress().getPort() + "/WSConUni"); }
     private static String operacion(String solicitud) {
-        var patron = java.util.regex.Pattern.compile("<(?:[\\w]+:)?(autenticar|obtenerCategorias|obtenerUnidades|convertir)(?:[\\s>])");
+        var patron = java.util.regex.Pattern.compile("<(?:[\\w]+:)?(autenticar|recuperarClave|obtenerCategorias|obtenerUnidades|convertir)(?:[\\s>])");
         var coincidencia = patron.matcher(solicitud);
         if (!coincidencia.find()) throw new AssertionError("Solicitud SOAP sin operacion conocida");
         return coincidencia.group(1);

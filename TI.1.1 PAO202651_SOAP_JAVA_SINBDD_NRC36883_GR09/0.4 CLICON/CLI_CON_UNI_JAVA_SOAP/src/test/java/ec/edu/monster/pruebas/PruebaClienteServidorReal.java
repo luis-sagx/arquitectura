@@ -25,7 +25,9 @@ public class PruebaClienteServidorReal {
             SoportePruebas.exigir("AUTH-001".equals(cliente.autenticar("monster", "mala").codigo()), "Credenciales invalidas");
             SoportePruebas.exigir("AUTH-002".equals(cliente.obtenerCategorias("inventado").codigo()), "Token invalido");
             SoportePruebas.exigir("DATA-001".equals(cliente.convertir(token, "INEXISTENTE", "LITRO", "MILILITRO", 1).codigo()), "Categoria inexistente debe rechazarse");
-            System.out.println("PruebaClienteServidorReal: OK");
+            SoportePruebas.exigir(cliente.recuperarClave("monster", "nueva123").exito(), "Recuperacion real debe cambiar la clave");
+            SoportePruebas.exigir("AUTH-001".equals(cliente.autenticar("monster", "monster123").codigo()), "Clave anterior debe rechazarse tras recuperar");
+            SoportePruebas.exigir(cliente.autenticar("monster", "nueva123").exito(), "Clave nueva debe autenticar tras recuperar");            System.out.println("PruebaClienteServidorReal: OK");
         } finally {
             tipo.getMethod("stop").invoke(endpoint); servidor.stop(0);
         }

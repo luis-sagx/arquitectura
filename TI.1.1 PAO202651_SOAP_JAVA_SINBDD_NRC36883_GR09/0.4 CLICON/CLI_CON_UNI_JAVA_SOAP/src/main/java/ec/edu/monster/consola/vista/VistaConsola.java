@@ -31,6 +31,7 @@ public final class VistaConsola {
         salida.println("  2. Consultar catálogo");
         salida.println("  3. Convertir unidades");
         salida.println("  4. Cerrar sesión local");
+        salida.println("  5. Recuperar contraseña");
         salida.println("  0. Salir");
         salida.println(SEPARADOR);
     }
@@ -52,14 +53,18 @@ public final class VistaConsola {
     }
 
     public String leerClave() throws IOException {
+        return leerClave("Clave: ");
+    }
+
+    public String leerClave(String mensaje) throws IOException {
         if (System.console() != null) {
-            char[] caracteres = System.console().readPassword("Clave: ");
+            char[] caracteres = System.console().readPassword(mensaje);
             if (caracteres == null) throw new FinEntrada();
             String clave = new String(caracteres);
             java.util.Arrays.fill(caracteres, '\0');
             return clave;
         }
-        return leerLiteral("Clave: ");
+        return leerLiteral(mensaje);
     }
 
     public String seleccionar(String titulo, List<String> opciones) throws IOException {

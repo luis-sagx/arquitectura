@@ -7,6 +7,7 @@ public class PruebaMenuConsola {
     public static void main(String[] args) throws Exception {
         try (var servidor = new SoportePruebas(xml -> {
             if (xml.contains(":autenticar")) return SoportePruebas.exito("<token>sesion</token>");
+            if (xml.contains(":recuperarClave")) return SoportePruebas.exito("");
             if (xml.contains(":obtenerUnidades")) return SoportePruebas.exito("<unidades>METRO</unidades><unidades>CENTIMETRO</unidades>");
             if (xml.contains(":convertir")) return SoportePruebas.exito("<resultado>250</resultado><unidadOrigen>METRO</unidadOrigen><unidadDestino>CENTIMETRO</unidadDestino>");
             return SoportePruebas.exito("<categorias>LONGITUD</categorias>");
@@ -23,7 +24,18 @@ public class PruebaMenuConsola {
             SoportePruebas.exigir(texto.contains("numero finito"), "Debe validar dato numerico");
             SoportePruebas.exigir(texto.contains("250.0000 CENTIMETRO"), "Debe mostrar resultado del servidor");
             SoportePruebas.exigir(servidor.ultimaSolicitud.contains("<valor>2.5</valor>"), "Debe aceptar coma decimal");
-            var fin = new StringWriter();
+            var recuperacion = new StringWriter();
+            new ControladorConsola(new ClienteSoap(servidor.uri()), new VistaConsola(
+                new BufferedReader(new StringReader("5\nmonster\nnueva123\n0\n")), new PrintWriter(recuperacion, true))).ejecutar();
+            SoportePruebas.exigir(recuperacion.toString().contains("Operacion correcta"), "Menu debe permitir recuperar clave sin iniciar sesion");
+            SoportePruebas.exigir(servidor.ultimaSolicitud.contains("<usuario>monster</usuario>")
+                && servidor.ultimaSolicitud.contains("<nuevaClave>nueva123</nuevaClave>"), "Menu debe enviar usuario y nueva clave");
+            var recuperacionConSesion = new StringWriter();
+            new ControladorConsola(new ClienteSoap(servidor.uri()), new VistaConsola(
+                new BufferedReader(new StringReader("1\nmonster\nmonster123\n5\nmonster\nnueva123\n2\n0\n")),
+                new PrintWriter(recuperacionConSesion, true))).ejecutar();
+            SoportePruebas.exigir(recuperacionConSesion.toString().contains("Inicie sesion con la opcion 1"),
+                "La recuperacion debe cerrar la sesion local actual");            var fin = new StringWriter();
             new ControladorConsola(new ClienteSoap(servidor.uri()), new VistaConsola(new BufferedReader(new StringReader("")), new PrintWriter(fin, true))).ejecutar();
             SoportePruebas.exigir(fin.toString().contains("Hasta luego"), "EOF debe cerrar limpiamente");
             servidor.respuesta = xml -> xml.contains(":autenticar") ? SoportePruebas.exito("<token>sesion</token>")

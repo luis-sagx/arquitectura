@@ -28,11 +28,15 @@ public class PruebaIntegracionSOAP {
             direccion = URI.create("http://127.0.0.1:" + servidor.getAddress().getPort() + "/WSConUni");
             String wsdl = CLIENTE.send(HttpRequest.newBuilder(URI.create(direccion + "?wsdl")).GET().build(),
                 HttpResponse.BodyHandlers.ofString()).body();
-            exigir(wsdl.contains("autenticar") && wsdl.contains("obtenerCategorias")
+            exigir(wsdl.contains("autenticar") && wsdl.contains("recuperarClave") && wsdl.contains("obtenerCategorias")
                 && wsdl.contains("obtenerUnidades") && wsdl.contains("convertir"), "WSDL incompleto");
-            Document login = solicitar("autenticar", "<usuario>monster</usuario><clave>monster123</clave>");
-            exigir("OK".equals(texto(login, "codigo")), "SOAP debe autenticar");
-            String token = texto(login, "token");
+            Document recuperacion = solicitar("recuperarClave", "<usuario>monster</usuario><nuevaClave>nueva123</nuevaClave>");
+            exigir("OK".equals(texto(recuperacion, "codigo")), "SOAP debe permitir recuperar la clave por usuario");
+            Document claveAnterior = solicitar("autenticar", "<usuario>monster</usuario><clave>monster123</clave>");
+            exigir("AUTH-001".equals(texto(claveAnterior, "codigo")), "La clave anterior debe dejar de funcionar");
+            Document claveNueva = solicitar("autenticar", "<usuario>monster</usuario><clave>nueva123</clave>");
+            exigir("OK".equals(texto(claveNueva, "codigo")), "La clave nueva debe permitir iniciar sesion");
+            String token = texto(claveNueva, "token");
             exigir(!token.isBlank(), "SOAP debe serializar token");
             Document conversion = solicitar("convertir", "<token>" + token + "</token><categoria>LONGITUD</categoria>"
                 + "<unidadOrigen>METRO</unidadOrigen><unidadDestino>CENTIMETRO</unidadDestino><valor>2</valor>");

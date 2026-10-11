@@ -2,7 +2,7 @@
 
 <xs:element name="autenticar" type="tns:autenticar"/>
 
-<xs:element name="autenticarResponse" type="tns:autenticarResponse"/>
+<xs:element name="autenticarResponse" type="tns:autenticarResponse"/><xs:element name="recuperarClave" type="tns:recuperarClave"/><xs:element name="recuperarClaveResponse" type="tns:recuperarClaveResponse"/>
 
 <xs:element name="convertir" type="tns:convertir"/>
 
@@ -85,4 +85,4 @@
 <xs:element name="return" type="tns:respuesta" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
-</xs:schema>
+<xs:complexType name="recuperarClave"><xs:sequence><xs:element name="usuario" type="xs:string" minOccurs="0"/><xs:element name="nuevaClave" type="xs:string" minOccurs="0"/></xs:sequence></xs:complexType><xs:complexType name="recuperarClaveResponse"><xs:sequence><xs:element name="return" type="tns:respuesta" minOccurs="0"/></xs:sequence></xs:complexType></xs:schema>

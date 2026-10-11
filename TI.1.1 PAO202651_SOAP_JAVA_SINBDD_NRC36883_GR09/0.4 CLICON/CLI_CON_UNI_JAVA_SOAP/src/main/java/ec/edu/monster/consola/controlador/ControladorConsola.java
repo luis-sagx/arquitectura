@@ -29,8 +29,9 @@ public final class ControladorConsola {
                         case "2" -> { if (haySesion()) consultarCatalogo(); }
                         case "3" -> { if (haySesion()) convertir(); }
                         case "4" -> { token = null; vista.mostrarMensaje("Sesion local cerrada. Inicie sesion con la opcion 1 para continuar."); }
+                        case "5" -> recuperarClave();
                         case "0" -> { vista.mostrarMensaje("Hasta luego."); return; }
-                        default -> vista.mostrarMensaje("Opcion invalida. Escribe una opcion del menu, del 0 al 4.");
+                        default -> vista.mostrarMensaje("Opcion invalida. Escribe una opcion del menu, del 0 al 5.");
                     }
                 } catch (IOException e) {
                     vista.mostrarError(e.getMessage());
@@ -58,6 +59,12 @@ public final class ControladorConsola {
         }
     }
 
+    private void recuperarClave() throws IOException {
+        vista.mostrarSeccion("=== RECUPERAR CONTRASEÑA ===");
+        String usuario = vista.leerLiteral("Usuario: ");
+        String nuevaClave = vista.leerClave("Nueva clave: ");
+        if (mostrar(cliente.recuperarClave(usuario, nuevaClave))) token = null;
+    }
     private boolean haySesion() {
         if (token != null) return true;
         vista.mostrarMensaje("Inicie sesion con la opcion 1 para continuar.");

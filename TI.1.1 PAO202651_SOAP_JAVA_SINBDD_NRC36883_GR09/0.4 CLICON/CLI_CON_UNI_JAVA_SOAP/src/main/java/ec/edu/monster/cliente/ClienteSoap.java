@@ -28,6 +28,9 @@ public final class ClienteSoap {
     public RespuestaSoap autenticar(String usuario, String clave) throws IOException {
         return invocar(p -> p.autenticar(usuario, clave));
     }
+    public RespuestaSoap recuperarClave(String usuario, String nuevaClave) throws IOException {
+        return invocar(p -> p.recuperarClave(usuario, nuevaClave));
+    }
     public RespuestaSoap obtenerCategorias(String token) throws IOException {
         return invocar(p -> p.obtenerCategorias(token));
     }

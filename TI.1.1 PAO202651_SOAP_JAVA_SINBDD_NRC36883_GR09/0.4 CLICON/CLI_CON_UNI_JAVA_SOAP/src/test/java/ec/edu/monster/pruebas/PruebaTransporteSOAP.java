@@ -11,6 +11,11 @@ public class PruebaTransporteSOAP {
             var documento = fabrica.newDocumentBuilder().parse(new org.xml.sax.InputSource(new java.io.StringReader(servidor.ultimaSolicitud)));
             SoportePruebas.exigir("clave<&".equals(documento.getElementsByTagName("clave").item(0).getTextContent()), "Credenciales XML deben conservar caracteres especiales");
             SoportePruebas.exigir(servidor.ultimaSolicitud.contains("autenticar"), "Operacion SOAP incorrecta");
+            var recuperacion = cliente.recuperarClave("usuario<&", "nueva<&");
+            SoportePruebas.exigir(recuperacion.exito(), "Debe interpretar recuperacion de clave");
+            var solicitudRecuperacion = fabrica.newDocumentBuilder().parse(new org.xml.sax.InputSource(new java.io.StringReader(servidor.ultimaSolicitud)));
+            SoportePruebas.exigir("usuario<&".equals(solicitudRecuperacion.getElementsByTagName("usuario").item(0).getTextContent()), "Debe enviar el usuario de recuperacion");
+            SoportePruebas.exigir("nueva<&".equals(solicitudRecuperacion.getElementsByTagName("nuevaClave").item(0).getTextContent()), "Debe enviar la nueva clave como XML");
             servidor.respuesta = xml -> SoportePruebas.exito("<categorias>LONGITUD</categorias><categorias>MASA</categorias>");
             SoportePruebas.exigir(cliente.obtenerCategorias("sesion").categorias().equals(java.util.List.of("LONGITUD", "MASA")), "Debe leer listas SOAP");
             servidor.respuesta = xml -> SoportePruebas.exito("<unidades>METRO</unidades><unidades>CENTIMETRO</unidades>");
