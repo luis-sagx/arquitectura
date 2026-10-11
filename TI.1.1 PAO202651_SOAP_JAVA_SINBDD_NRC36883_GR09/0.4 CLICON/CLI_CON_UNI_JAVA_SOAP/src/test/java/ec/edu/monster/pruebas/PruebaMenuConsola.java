@@ -17,11 +17,11 @@ public class PruebaMenuConsola {
             String texto = salida.toString();
             SoportePruebas.exigir(texto.contains("=== MENÚ PRINCIPAL ==="), "El menú debe mostrar una sección principal clara");
             SoportePruebas.exigir(texto.contains("----------------------------------------"), "El menu debe separar visualmente sus secciones");
-            SoportePruebas.exigir(texto.contains("Conversión completada:"), "El menú debe resumir claramente una conversión exitosa");
+            SoportePruebas.exigir(texto.matches("(?s).*Conversión completada:\\R----------------------------------------\\R\\s+2\\.5000 METRO = 250\\.0000 CENTIMETRO\\R----------------------------------------.*"), "La conversión debe aparecer separada visualmente");
             SoportePruebas.exigir(texto.contains("Opcion invalida"), "Menu debe validar opciones");
             SoportePruebas.exigir(texto.contains("Inicie sesion"), "No debe convertir sin iniciar sesion");
             SoportePruebas.exigir(texto.contains("numero finito"), "Debe validar dato numerico");
-            SoportePruebas.exigir(texto.contains("250.0 CENTIMETRO"), "Debe mostrar resultado del servidor");
+            SoportePruebas.exigir(texto.contains("250.0000 CENTIMETRO"), "Debe mostrar resultado del servidor");
             SoportePruebas.exigir(servidor.ultimaSolicitud.contains("<valor>2.5</valor>"), "Debe aceptar coma decimal");
             var fin = new StringWriter();
             new ControladorConsola(new ClienteSoap(servidor.uri()), new VistaConsola(new BufferedReader(new StringReader("")), new PrintWriter(fin, true))).ejecutar();

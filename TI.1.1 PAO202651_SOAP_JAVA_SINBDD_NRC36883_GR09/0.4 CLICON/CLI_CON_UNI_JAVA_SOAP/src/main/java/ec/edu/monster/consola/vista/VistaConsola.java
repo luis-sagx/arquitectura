@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Locale;
 
 /** Presenta la interfaz de texto y recoge las entradas del usuario. */
 public final class VistaConsola {
@@ -113,7 +114,9 @@ public final class VistaConsola {
     public void mostrarConversion(double valor, String origen, Double resultado, String destino) {
         salida.println();
         salida.println("Conversión completada:");
-        salida.println("    " + valor + " " + origen + " = " + resultado + " " + destino);
+        salida.println(SEPARADOR);
+        salida.printf(Locale.ROOT, "    %.4f %s = %.4f %s%n", valor, origen, resultado, destino);
+        salida.println(SEPARADOR);
     }
 
     private void imprimirSeccion(String titulo) {
