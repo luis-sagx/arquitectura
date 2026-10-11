@@ -2,8 +2,8 @@ package ec.edu.monster.pruebas;
 public class PruebaConversionLongitud {
     public static void main(String[] args) {
         var s = Verificaciones.servicio(); String t = Verificaciones.token(s);
-        String[] unidades = {"CENTIMETRO", "METRO", "PIE", "YARDA", "MILLA"};
-        double[] metros = {0.01, 1, 0.3048, 0.9144, 1609.344};
+        String[] unidades = {"KILOMETRO", "METRO", "CENTIMETRO", "MILIMETRO", "MILLA", "PIE"};
+        double[] metros = {1000, 1, 0.01, 0.001, 1609.344, 0.3048};
         for (int i=0; i<unidades.length; i++) {
             Verificaciones.resultado(s.convertir(t, "LONGITUD", unidades[i], "METRO", 1.0), metros[i]);
             Verificaciones.resultado(s.convertir(t, "LONGITUD", "METRO", unidades[i], metros[i]), 1);

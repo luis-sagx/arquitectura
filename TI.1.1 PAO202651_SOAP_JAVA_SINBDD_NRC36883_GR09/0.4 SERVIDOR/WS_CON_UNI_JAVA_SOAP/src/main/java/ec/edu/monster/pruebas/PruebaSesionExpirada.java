@@ -9,7 +9,7 @@ public class PruebaSesionExpirada {
     }
     public static void main(String[] args) {
         Reloj reloj = new Reloj();
-        var s = new ec.edu.monster.servicios.ConversorUnidadesServices("monster", "monster123", reloj, Duration.ofMinutes(15), 45.359237);
+        var s = new ec.edu.monster.servicios.ConversorUnidadesServices("monster", "monster123", reloj, Duration.ofMinutes(15));
         String t = Verificaciones.token(s);
         reloj.instante = reloj.instante.plusSeconds(899);
         Verificaciones.resultado(s.convertir(t, "LONGITUD", "METRO", "CENTIMETRO", 1.0), 100);

@@ -27,7 +27,6 @@ Puede cambiar estas propiedades JVM en Payara antes de iniciar/desplegar:
 - conversor.usuario
 - conversor.clave
 - conversor.sesion.minutos
-- conversor.quintal.kg (por defecto 45.359237: quintal de 100 libras)
 
 Las sesiones son compartidas entre peticiones dentro de la misma aplicacion/JVM.
 Reiniciar o redesplegar invalida los tokens. No se comparten sesiones entre servidores.
@@ -36,8 +35,8 @@ tras su depuracion se consideran desconocidos.
 
 ## Alcance y reglas
 
-LONGITUD: CENTIMETRO, METRO, PIE, YARDA, MILLA.
-MASA: GRAMO, KILOGRAMO, ONZA, LIBRA, QUINTAL.
+LONGITUD: KILOMETRO, METRO, CENTIMETRO, MILIMETRO, MILLA, PIE.
+MASA: KILOGRAMO, GRAMO, MILIGRAMO, LIBRA.
 TEMPERATURA: CELSIUS, FAHRENHEIT, KELVIN.
 
 Todas las categorias del catalogo permiten conversion.

@@ -4,7 +4,7 @@ import ec.edu.monster.servicios.ConversorUnidadesServices;
 final class Verificaciones {
     private Verificaciones() {}
     static ConversorUnidadesServices servicio() {
-        return new ConversorUnidadesServices("monster", "monster123", java.time.Clock.systemUTC(), java.time.Duration.ofMinutes(15), 45.359237);
+        return new ConversorUnidadesServices("monster", "monster123", java.time.Clock.systemUTC(), java.time.Duration.ofMinutes(15));
     }
     static String token(ConversorUnidadesServices s) {
         Respuesta r = s.autenticar("monster", "monster123");

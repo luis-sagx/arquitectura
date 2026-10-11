@@ -8,7 +8,12 @@ public class PruebaConsultaCatalogo {
             var u = s.obtenerUnidades(t, c); Verificaciones.codigo(u, "OK");
             Verificaciones.comprobar(!u.getUnidades().isEmpty(), "Categoria sin unidades: " + c);
         }
-        Verificaciones.comprobar(s.obtenerUnidades(t, "LONGITUD").getUnidades().contains("METRO"), "Falta metro");
+        Verificaciones.comprobar(s.obtenerUnidades(t, "LONGITUD").getUnidades()
+            .equals(java.util.List.of("KILOMETRO", "METRO", "CENTIMETRO", "MILIMETRO", "MILLA", "PIE")),
+            "Unidades de longitud incorrectas");
+        Verificaciones.comprobar(s.obtenerUnidades(t, "MASA").getUnidades()
+            .equals(java.util.List.of("KILOGRAMO", "GRAMO", "MILIGRAMO", "LIBRA")),
+            "Unidades de masa incorrectas");
         Verificaciones.comprobar(s.obtenerUnidades(t, "TEMPERATURA").getUnidades()
             .equals(java.util.List.of("CELSIUS", "FAHRENHEIT", "KELVIN")), "Unidades de temperatura incorrectas");
         Verificaciones.codigo(s.obtenerCategorias(null), "AUTH-002");

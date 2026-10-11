@@ -24,28 +24,28 @@ public class ConversorUnidadesServices {
     private final Map<String, Instant> sesiones = new ConcurrentHashMap<>();
     private final Map<String, List<String>> catalogo = new LinkedHashMap<>();
     private final Map<String, Double> longitud = Map.of(
-        "CENTIMETRO", 0.01, "METRO", 1.0, "PIE", 0.3048, "YARDA", 0.9144, "MILLA", 1609.344);
+        "KILOMETRO", 1000.0, "METRO", 1.0, "CENTIMETRO", 0.01,
+        "MILIMETRO", 0.001, "MILLA", 1609.344, "PIE", 0.3048);
     private final Map<String, Double> masa;
 
     public ConversorUnidadesServices() {
         this(System.getProperty("conversor.usuario", "monster"),
             System.getProperty("conversor.clave", "monster123"), Clock.systemUTC(),
-            Duration.ofMinutes(Long.parseLong(System.getProperty("conversor.sesion.minutos", "15"))),
-            Double.parseDouble(System.getProperty("conversor.quintal.kg", "45.359237")));
+            Duration.ofMinutes(Long.parseLong(System.getProperty("conversor.sesion.minutos", "15"))));
     }
 
-    public ConversorUnidadesServices(String usuario, String clave, Clock reloj, Duration duracion, double quintalKg) {
+    public ConversorUnidadesServices(String usuario, String clave, Clock reloj, Duration duracion) {
         if (usuario == null || usuario.isBlank() || clave == null || clave.isBlank())
             throw new IllegalArgumentException("Las credenciales deben estar configuradas");
         this.usuario = usuario; this.clave = clave;
         this.reloj = Objects.requireNonNull(reloj);
         this.duracion = Objects.requireNonNull(duracion);
-        if (duracion.isZero() || duracion.isNegative() || !Double.isFinite(quintalKg) || quintalKg <= 0)
-            throw new IllegalArgumentException("Duracion y equivalencia del quintal deben ser positivas");
-        masa = Map.of("GRAMO", 0.001, "KILOGRAMO", 1.0, "ONZA", 0.028349523125,
-            "LIBRA", 0.45359237, "QUINTAL", quintalKg);
-        catalogo.put("LONGITUD", List.of("CENTIMETRO", "METRO", "PIE", "YARDA", "MILLA"));
-        catalogo.put("MASA", List.of("GRAMO", "KILOGRAMO", "ONZA", "LIBRA", "QUINTAL"));
+        if (duracion.isZero() || duracion.isNegative())
+            throw new IllegalArgumentException("La duracion de la sesion debe ser positiva");
+        masa = Map.of("KILOGRAMO", 1.0, "GRAMO", 0.001, "MILIGRAMO", 0.000001,
+            "LIBRA", 0.45359237);
+        catalogo.put("LONGITUD", List.of("KILOMETRO", "METRO", "CENTIMETRO", "MILIMETRO", "MILLA", "PIE"));
+        catalogo.put("MASA", List.of("KILOGRAMO", "GRAMO", "MILIGRAMO", "LIBRA"));
         catalogo.put("TEMPERATURA", List.of("CELSIUS", "FAHRENHEIT", "KELVIN"));
     }
 
