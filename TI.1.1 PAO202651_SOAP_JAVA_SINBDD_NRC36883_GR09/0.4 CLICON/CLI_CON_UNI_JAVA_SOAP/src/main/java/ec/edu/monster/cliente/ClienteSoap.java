@@ -1,5 +1,6 @@
 package ec.edu.monster.cliente;
 
+import ec.edu.monster.modelo.RespuestaSoap;
 import ec.edu.monster.ws.Respuesta;
 import ec.edu.monster.ws.WSConUni;
 import ec.edu.monster.ws.WSConUni_Service;
