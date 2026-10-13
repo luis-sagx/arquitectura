@@ -101,7 +101,7 @@ public final class VistaConsola {
 
     public void mostrarRespuesta(RespuestaSoap respuesta) {
         salida.println();
-        salida.println((respuesta.exito() ? "" : "[ERROR] ") + respuesta.codigo() + ": " + respuesta.mensaje());
+        salida.println((respuesta.isExito() ? "" : "[ERROR] ") + respuesta.getCodigo() + ": " + respuesta.getMensaje());
     }
 
     public void mostrarError(String mensaje) {

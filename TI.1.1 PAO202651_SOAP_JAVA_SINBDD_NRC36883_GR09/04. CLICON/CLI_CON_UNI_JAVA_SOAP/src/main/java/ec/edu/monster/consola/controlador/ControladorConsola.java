@@ -1,6 +1,6 @@
 package ec.edu.monster.consola.controlador;
 
-import ec.edu.monster.cliente.ClienteSoap;
+import ec.edu.monster.cliente.ws.ClienteSoap;
 import ec.edu.monster.consola.vista.VistaConsola;
 import ec.edu.monster.modelo.RespuestaSoap;
 import java.io.IOException;
@@ -52,10 +52,10 @@ public final class ControladorConsola {
         String clave = vista.leerClave();
         RespuestaSoap respuesta = cliente.autenticar(usuario, clave);
         if (mostrar(respuesta)) {
-            if (respuesta.token() == null || respuesta.token().isBlank()) throw new IOException("El servidor no entrego un token");
-            token = respuesta.token();
+            if (respuesta.getToken() == null || respuesta.getToken().isBlank()) throw new IOException("El servidor no entrego un token");
+            token = respuesta.getToken();
             vista.mostrarMensaje("Sesión iniciada.");
-            if (!respuesta.expiraEn().isBlank()) vista.mostrarMensaje("Sesion vigente hasta: " + respuesta.expiraEn());
+            if (!respuesta.getExpiraEn().isBlank()) vista.mostrarMensaje("Sesion vigente hasta: " + respuesta.getExpiraEn());
         }
     }
 
@@ -75,40 +75,40 @@ public final class ControladorConsola {
         vista.mostrarSeccion("=== CONSULTAR CATÁLOGO ===");
         RespuestaSoap categorias = cliente.obtenerCategorias(token);
         if (!mostrar(categorias)) return;
-        String categoria = vista.seleccionar("Categoria", categorias.categorias());
+        String categoria = vista.seleccionar("Categoria", categorias.getCategorias());
         if (categoria == null) return;
         RespuestaSoap unidades = cliente.obtenerUnidades(token, categoria);
-        if (mostrar(unidades)) vista.mostrarUnidades(unidades.unidades());
+        if (mostrar(unidades)) vista.mostrarUnidades(unidades.getUnidades());
     }
 
     private void convertir() throws IOException {
         vista.mostrarSeccion("=== CONVERTIR UNIDADES ===");
         RespuestaSoap categorias = cliente.obtenerCategorias(token);
         if (!mostrar(categorias)) return;
-        List<String> convertibles = categorias.categorias().stream()
+        List<String> convertibles = categorias.getCategorias().stream()
             .filter(c -> List.of("LONGITUD", "MASA", "TEMPERATURA").contains(c)).toList();
         String categoria = vista.seleccionar("Categoria a convertir", convertibles);
         if (categoria == null) return;
         RespuestaSoap unidades = cliente.obtenerUnidades(token, categoria);
         if (!mostrar(unidades)) return;
-        String origen = vista.seleccionar("Unidad de origen", unidades.unidades());
+        String origen = vista.seleccionar("Unidad de origen", unidades.getUnidades());
         if (origen == null) return;
-        String destino = vista.seleccionar("Unidad de destino", unidades.unidades());
+        String destino = vista.seleccionar("Unidad de destino", unidades.getUnidades());
         if (destino == null) return;
         double valor = vista.leerNumero();
         RespuestaSoap respuesta = cliente.convertir(token, categoria, origen, destino, valor);
         if (mostrar(respuesta)) {
-            if (respuesta.resultado() == null) throw new IOException("El servidor no entrego el resultado de conversion");
-            vista.mostrarConversion(valor, origen, respuesta.resultado(), respuesta.unidadDestino());
+            if (respuesta.getResultado() == null) throw new IOException("El servidor no entrego el resultado de conversion");
+            vista.mostrarConversion(valor, origen, respuesta.getResultado(), respuesta.getUnidadDestino());
         }
     }
 
     private boolean mostrar(RespuestaSoap respuesta) {
         vista.mostrarRespuesta(respuesta);
-        if (respuesta.sesionInvalida()) {
+        if (respuesta.isSesionInvalida()) {
             token = null;
             vista.mostrarMensaje("Inicie sesion nuevamente.");
         }
-        return respuesta.exito();
+        return respuesta.isExito();
     }
 }

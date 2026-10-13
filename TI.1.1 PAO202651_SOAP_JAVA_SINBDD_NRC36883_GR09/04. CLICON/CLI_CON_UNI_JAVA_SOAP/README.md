@@ -10,7 +10,7 @@ realizan mediante los metodos del puerto JAX-WS.
 - `ec.edu.monster.consola.MainConsola`: configura el endpoint y conecta las piezas.
 - `ec.edu.monster.consola.controlador.ControladorConsola`: controla el menú, la sesión y el flujo de operaciones.
 - `ec.edu.monster.consola.vista.VistaConsola`: imprime los menús y recoge entradas.
-- `ec.edu.monster.cliente.ClienteSoap`: adapta las llamadas y errores del servicio SOAP.
+- `ec.edu.monster.cliente.ws.ClienteSoap`: adapta las llamadas y errores del servicio SOAP.
 - `ec.edu.monster.modelo.RespuestaSoap`: contiene los datos normalizados de respuesta.
 - `ec.edu.monster.ws`: clases generadas por Maven desde el WSDL; no editarlas a mano.
 ## Abrir y ejecutar en NetBeans

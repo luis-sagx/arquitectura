@@ -1,31 +1,32 @@
 package ec.edu.monster.pruebas;
-import ec.edu.monster.cliente.ClienteSoap;
+import ec.edu.monster.cliente.ws.ClienteSoap;
 import java.io.IOException;
 public class PruebaTransporteSOAP {
     public static void main(String[] args) throws Exception {
         try (var servidor = new SoportePruebas(xml -> SoportePruebas.exito("<token>sesion</token><expiraEn>2026-10-09T00:15:00Z</expiraEn>"))) {
             var cliente = new ClienteSoap(servidor.uri());
             var login = cliente.autenticar("usuario<&", "clave<&");
-            SoportePruebas.exigir(login.exito() && "sesion".equals(login.token()), "Debe interpretar autenticacion");
+            SoportePruebas.exigir(login.isExito() && "sesion".equals(login.getToken()), "Debe interpretar autenticacion");
+            SoportePruebas.exigir("EXITO".equals(login.getEstado()) && "sesion".equals(login.getToken()), "RespuestaSoap debe exponer getters JavaBean");
             var fabrica = javax.xml.parsers.DocumentBuilderFactory.newInstance();
             var documento = fabrica.newDocumentBuilder().parse(new org.xml.sax.InputSource(new java.io.StringReader(servidor.ultimaSolicitud)));
             SoportePruebas.exigir("clave<&".equals(documento.getElementsByTagName("clave").item(0).getTextContent()), "Credenciales XML deben conservar caracteres especiales");
             SoportePruebas.exigir(servidor.ultimaSolicitud.contains("autenticar"), "Operacion SOAP incorrecta");
             var recuperacion = cliente.recuperarClave("usuario<&", "nueva<&");
-            SoportePruebas.exigir(recuperacion.exito(), "Debe interpretar recuperacion de clave");
+            SoportePruebas.exigir(recuperacion.isExito(), "Debe interpretar recuperacion de clave");
             var solicitudRecuperacion = fabrica.newDocumentBuilder().parse(new org.xml.sax.InputSource(new java.io.StringReader(servidor.ultimaSolicitud)));
             SoportePruebas.exigir("usuario<&".equals(solicitudRecuperacion.getElementsByTagName("usuario").item(0).getTextContent()), "Debe enviar el usuario de recuperacion");
             SoportePruebas.exigir("nueva<&".equals(solicitudRecuperacion.getElementsByTagName("nuevaClave").item(0).getTextContent()), "Debe enviar la nueva clave como XML");
             servidor.respuesta = xml -> SoportePruebas.exito("<categorias>LONGITUD</categorias><categorias>MASA</categorias>");
-            SoportePruebas.exigir(cliente.obtenerCategorias("sesion").categorias().equals(java.util.List.of("LONGITUD", "MASA")), "Debe leer listas SOAP");
+            SoportePruebas.exigir(cliente.obtenerCategorias("sesion").getCategorias().equals(java.util.List.of("LONGITUD", "MASA")), "Debe leer listas SOAP");
             servidor.respuesta = xml -> SoportePruebas.exito("<unidades>METRO</unidades><unidades>CENTIMETRO</unidades>");
-            SoportePruebas.exigir(cliente.obtenerUnidades("sesion", "LONGITUD").unidades().size() == 2, "Debe consultar unidades");
+            SoportePruebas.exigir(cliente.obtenerUnidades("sesion", "LONGITUD").getUnidades().size() == 2, "Debe consultar unidades");
             servidor.respuesta = xml -> SoportePruebas.exito("<resultado>200.0</resultado><unidadOrigen>METRO</unidadOrigen><unidadDestino>CENTIMETRO</unidadDestino>");
-            SoportePruebas.exigir(cliente.convertir("sesion", "LONGITUD", "METRO", "CENTIMETRO", 2).resultado() == 200, "Debe leer resultado");
+            SoportePruebas.exigir(cliente.convertir("sesion", "LONGITUD", "METRO", "CENTIMETRO", 2).getResultado() == 200, "Debe leer resultado");
             SoportePruebas.exigir(servidor.ultimaSolicitud.contains("<valor>2.0</valor>") && servidor.ultimaSolicitud.contains("<token>sesion</token>"), "Debe enviar valor y token");
             servidor.respuesta = xml -> SoportePruebas.xml("<estado>ERROR</estado><codigo>AUTH-003</codigo><mensaje>Sesion expirada</mensaje>");
             var error = cliente.obtenerCategorias("sesion");
-            SoportePruebas.exigir(!error.exito() && error.sesionInvalida() && error.resultado() == null, "Debe reconocer expiracion");
+            SoportePruebas.exigir(!error.isExito() && error.isSesionInvalida() && error.getResultado() == null, "Debe reconocer expiracion");
             servidor.respuesta = xml -> "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\"><s:Body>"
                 + "<m:autenticarResponse xmlns:m=\"http://ws.controladores.monster.edu.ec/\"><return>"
                 + "<estado>EXITO</estado><codigo>OK</codigo><mensaje>Respuesta de otra operacion</mensaje>"

@@ -1,5 +1,5 @@
 package ec.edu.monster.pruebas;
-import ec.edu.monster.cliente.ClienteSoap;
+import ec.edu.monster.cliente.ws.ClienteSoap;
 import ec.edu.monster.consola.controlador.ControladorConsola;
 import ec.edu.monster.consola.vista.VistaConsola;
 import java.io.*;

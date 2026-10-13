@@ -1,4 +1,4 @@
-package ec.edu.monster.cliente;
+package ec.edu.monster.cliente.ws;
 
 import ec.edu.monster.modelo.RespuestaSoap;
 import ec.edu.monster.ws.Respuesta;
