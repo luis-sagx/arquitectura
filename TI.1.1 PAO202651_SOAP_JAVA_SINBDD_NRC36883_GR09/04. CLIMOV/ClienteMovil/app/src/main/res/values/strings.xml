@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Conversor Monster</string>
+    <string name="marca">MONSTER</string>
+    <string name="titulo">Conversor de unidades</string>
+    <string name="subtitulo_acceso">Inicia sesión para usar el servicio SOAP</string>
+    <string name="usuario">Usuario</string>
+    <string name="clave">Contraseña</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="recuperar">Recuperar contraseña</string>
+    <string name="recuperar_titulo">Recuperar contraseña</string>
+    <string name="recuperar_mensaje">Escribe la nueva contraseña para %1$s.</string>
+    <string name="nueva_clave">Nueva contraseña</string>
+    <string name="confirmar_clave">Confirmar contraseña</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="salir">Salir</string>
+    <string name="categoria">Categoría</string>
+    <string name="desde">De</string>
+    <string name="hacia">A</string>
+    <string name="intercambiar">⇅  Intercambiar</string>
+    <string name="valor">Valor a convertir</string>
+    <string name="convertir">Convertir</string>
+    <string name="resultado">Resultado</string>
+    <string name="sin_resultado">—</string>
+</resources>

@@ -34,7 +34,7 @@ y deben regenerarse con Maven, no editarse a mano.
 
 ## Compilar y ejecutar desde PowerShell
 
-Se requiere JDK 17 o superior y Maven, o Maven incluido en NetBeans.
+Se requiere JDK 21 o superior y Maven, o Maven incluido en NetBeans.
 
     powershell -NoProfile -ExecutionPolicy Bypass -File ./construir.ps1
     java -jar target/CLI_CON_UNI_JAVA_SOAP.jar

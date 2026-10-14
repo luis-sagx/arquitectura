@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Dirección del servicio SOAP en Payara.
+        Emulador: 10.0.2.2 apunta al localhost del computador.
+        Celular físico: reemplazar 10.0.2.2 por la IP del computador (ipconfig).
+    -->
+    <string name="endpoint_soap" translatable="false">http://10.0.2.2:8080/WS_CON_UNI_JAVA_SOAP/WSConUni</string>
+</resources>

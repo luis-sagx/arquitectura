@@ -1,6 +1,6 @@
 # Servidor SOAP de conversion de unidades
 
-Proyecto Java 17 WAR existente, con SOAP/JAX-WS Jakarta y despliegue en Payara compatible con Jakarta.
+Proyecto Java 21 WAR existente, con SOAP/JAX-WS Jakarta y despliegue en Payara compatible con Jakarta.
 La logica de suma fue sustituida por conversion, autenticacion y catalogo en memoria.
 No requiere una conexion de base de datos.
 
@@ -62,7 +62,7 @@ PruebaConversionMasa, PruebaConversionTemperatura, PruebaValidacionConversion,
 PruebaSesionExpirada, PruebaCeroAbsoluto y PruebaTemperaturaValoresGrandes.
 PruebaSistemaUnidades ejecuta las nueve.
 
-Desde PowerShell con JDK 17 o superior:
+Desde PowerShell con JDK 21 o superior:
 
     powershell -NoProfile -ExecutionPolicy Bypass -File ./ejecutar-pruebas.ps1
 
