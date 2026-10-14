@@ -114,7 +114,8 @@ Despliegue `target/WS_CON_UNI_JAVA_REST-1.0-SNAPSHOT.war` en un servidor compati
 
 ## Pruebas
 
-El paquete `ec.edu.monster.pruebas` contiene pruebas locales del servicio y una prueba HTTP de integración contra la aplicación desplegada.
+Las pruebas del servicio están en `Source Packages > ec.edu.monster.pruebas`. Estas pruebas cubren autenticación, catálogo, conversiones, validaciones, expiración y recuperación de clave; no requieren desplegar el WAR.
+
 
 Con el WAR desplegado y Payara en ejecución, desde PowerShell en esta carpeta ejecute:
 

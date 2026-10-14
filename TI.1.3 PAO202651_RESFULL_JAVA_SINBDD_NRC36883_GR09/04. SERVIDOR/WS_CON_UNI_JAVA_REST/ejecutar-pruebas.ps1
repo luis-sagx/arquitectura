@@ -14,6 +14,11 @@ try {
     }
 
     $testClasspath = "target\test-classes;target\classes"
+    java -cp $testClasspath ec.edu.monster.pruebas.PruebaSistemaUnidades
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falló la suite de Source Packages ec.edu.monster.pruebas (código $LASTEXITCODE)."
+    }
+
     java -cp $testClasspath ec.edu.monster.pruebas.PruebaServicioUnidades
     if ($LASTEXITCODE -ne 0) {
         throw "Fallaron las pruebas locales del servicio (código $LASTEXITCODE)."
