@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Servidor REST de conversión de unidades</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <main>
+            <h1>Servidor REST de conversión de unidades</h1>
+            <p>API Jakarta RESTful Web Services (JAX-RS) para autenticación, catálogo y conversión de longitud, masa y temperatura.</p>
+            <p>La raíz de la API es <code>/api</code>. Las operaciones protegidas reciben el token como <code>Authorization: Bearer &lt;token&gt;</code>.</p>
+            <ul>
+                <li><code>POST /api/auth/login</code>: iniciar sesión.</li>
+                <li><code>POST /api/auth/recover</code>: recuperar clave.</li>
+                <li><code>GET /api/catalog/categories</code>: consultar categorías.</li>
+                <li><code>GET /api/catalog/categories/{categoria}/units</code>: consultar unidades.</li>
+                <li><code>POST /api/conversions</code>: convertir una unidad.</li>
+            </ul>
+            <p>Consulta <code>README.md</code> en el proyecto para ver ejemplos JSON, configuración y códigos de respuesta.</p>
+        </main>
+    </body>
+</html>
