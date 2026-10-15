@@ -18,6 +18,12 @@ public class PruebaValidacionConversion {
             "DATA-001", "valor ausente");
         VerificacionesREST.codigo(servicio.convertir(token, "LONGITUD", "METRO", "PIE", Double.NaN),
             "DATA-001", "valor NaN");
+        VerificacionesREST.codigo(servicio.convertir(token, "LONGITUD", "METRO", "PIE", -0.01),
+            "DATA-001", "longitud negativa");
+        VerificacionesREST.codigo(servicio.convertir(token, "MASA", "KILOGRAMO", "GRAMO", -0.01),
+            "DATA-001", "masa negativa");
+        VerificacionesREST.resultado(servicio.convertir(token, "MASA", "KILOGRAMO", "GRAMO", 0.0),
+            0, "masa cero permitida");
         VerificacionesREST.codigo(servicio.convertir(null, "LONGITUD", "METRO", "PIE", 1.0),
             "AUTH-002", "conversión sin token");
         VerificacionesREST.informar("PruebaValidacionConversion");

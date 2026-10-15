@@ -7,12 +7,18 @@ public class PruebaCeroAbsoluto {
         ConversorUnidadesServices servicio = VerificacionesREST.servicio();
         String token = VerificacionesREST.token(servicio);
 
-        VerificacionesREST.resultado(servicio.convertir(token, "TEMPERATURA", "CELSIUS", "KELVIN", -273.15),
-            0, "cero absoluto Celsius");
-        VerificacionesREST.resultado(servicio.convertir(token, "TEMPERATURA", "FAHRENHEIT", "CELSIUS", -459.67),
-            -273.15, "cero absoluto Fahrenheit");
-        VerificacionesREST.resultado(servicio.convertir(token, "TEMPERATURA", "KELVIN", "CELSIUS", 0.0),
-            -273.15, "cero absoluto Kelvin");
+        VerificacionesREST.codigo(servicio.convertir(token, "TEMPERATURA", "CELSIUS", "KELVIN", -273.15),
+            "DATA-001", "cero absoluto Celsius rechazado");
+        VerificacionesREST.codigo(servicio.convertir(token, "TEMPERATURA", "FAHRENHEIT", "CELSIUS", -459.67),
+            "DATA-001", "cero absoluto Fahrenheit rechazado");
+        VerificacionesREST.codigo(servicio.convertir(token, "TEMPERATURA", "KELVIN", "CELSIUS", 0.0),
+            "DATA-001", "cero absoluto Kelvin rechazado");
+        VerificacionesREST.resultado(servicio.convertir(token, "TEMPERATURA", "CELSIUS", "KELVIN", -273.149),
+            0.001, "temperatura Celsius sobre cero absoluto");
+        VerificacionesREST.resultado(servicio.convertir(token, "TEMPERATURA", "FAHRENHEIT", "KELVIN", -459.669),
+            0.0005555555555555556, "temperatura Fahrenheit sobre cero absoluto");
+        VerificacionesREST.resultado(servicio.convertir(token, "TEMPERATURA", "KELVIN", "CELSIUS", 0.001),
+            -273.149, "temperatura Kelvin sobre cero absoluto");
         VerificacionesREST.codigo(servicio.convertir(token, "TEMPERATURA", "CELSIUS", "KELVIN", -273.1501),
             "DATA-001", "temperatura Celsius bajo cero absoluto");
         VerificacionesREST.codigo(servicio.convertir(token, "TEMPERATURA", "FAHRENHEIT", "KELVIN", -459.6701),

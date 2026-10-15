@@ -120,12 +120,15 @@ public class ConversorUnidadesServices {
         }
         double resultado;
         if ("TEMPERATURA".equals(c)) {
-            if (valor < ceroAbsoluto(origen))
-                return Respuesta.error("DATA-001", "Temperatura inferior al cero absoluto");
+            if (valor <= ceroAbsoluto(origen))
+                return Respuesta.error("DATA-001", "Temperatura igual o inferior al cero absoluto");
             // Validar en la escala original evita rechazar el limite por redondeo.
-            double celsius = Math.max(-273.15, aCelsius(origen, valor));
+            double celsius = aCelsius(origen, valor);
             resultado = origen.equals(destino) ? valor : desdeCelsius(destino, celsius);
         } else {
+            if (valor < 0)
+                return Respuesta.error("DATA-001", "MASA".equals(c)
+                    ? "La masa no puede ser negativa" : "La longitud no puede ser negativa");
             Map<String, Double> factores = "LONGITUD".equals(c) ? longitud : masa;
             resultado = valor * (factores.get(origen) / factores.get(destino));
         }
