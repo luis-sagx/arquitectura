@@ -19,7 +19,9 @@ public final class MainConsola {
             var cliente = new ClienteSoap(URI.create(url));
             var salida = new PrintWriter(System.out, true);
             salida.println("Servicio: " + url);
-            var vista = new VistaConsola(new BufferedReader(new InputStreamReader(System.in)), salida);
+            boolean interactiva = Boolean.parseBoolean(System.getProperty("conversor.interactivo",
+                Boolean.toString(System.console() != null)));
+            var vista = new VistaConsola(new BufferedReader(new InputStreamReader(System.in)), salida, interactiva);
             new ControladorConsola(cliente, vista).ejecutar();
         } catch (IllegalArgumentException e) {
             System.err.println("URL invalida: " + e.getMessage());

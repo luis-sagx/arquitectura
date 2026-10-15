@@ -60,6 +60,18 @@ ExecutionPolicy afecta solamente al proceso del script.
 5. Recuperar contraseña indicando usuario y nueva clave.
 0. Salir. El fin de entrada tambien cierra la aplicacion.
 
+La presentación separa cada sección y los cuatro pasos de conversión: categoría,
+origen, destino y cantidad. El encabezado indica el paso actual y conserva las
+selecciones anteriores. Los resultados y errores esperan Enter antes de regresar
+al menú; elegir `0` en una selección regresa directamente.
+
+En una terminal se limpia la pantalla entre etapas. En el panel de salida de
+NetBeans se separan las pantallas con espacios, conservando el historial del IDE.
+Las acciones Run y Debug de NetBeans activan las pausas mediante
+`-Dconversor.interactivo=true`. Al redirigir entrada o salida desde una terminal,
+se omiten las limpiezas y pausas. Esta opción también puede configurarse en otros
+IDE; `-Dconversor.interactivo=false` desactiva la presentación interactiva.
+
 El catalogo incluye longitud, masa y temperatura. Para temperatura se ofrecen Celsius, Fahrenheit y Kelvin.
 La consola guarda el token en memoria y lo envia mediante el puerto generado.
 La recuperación no requiere iniciar sesión y valida solo el usuario; el cambio dura hasta reiniciar el servidor.

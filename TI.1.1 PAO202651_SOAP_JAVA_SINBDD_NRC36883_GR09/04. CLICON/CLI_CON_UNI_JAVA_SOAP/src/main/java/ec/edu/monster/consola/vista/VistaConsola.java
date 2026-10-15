@@ -9,21 +9,23 @@ import java.util.Locale;
 
 /** Presenta la interfaz de texto y recoge las entradas del usuario. */
 public final class VistaConsola {
-    private static final String SEPARADOR = "----------------------------------------";
+    private static final String SEPARADOR = "------------------------------------------------------------";
     private final BufferedReader entrada;
     private final PrintWriter salida;
+    private final boolean interactiva;
 
     public VistaConsola(BufferedReader entrada, PrintWriter salida) {
-        this.entrada = entrada;
-        this.salida = salida;
+        this(entrada, salida, false);
     }
 
-    public void mostrarBienvenida() {
-        salida.println("CONVERTIDOR DE UNIDADES");
+    public VistaConsola(BufferedReader entrada, PrintWriter salida, boolean interactiva) {
+        this.entrada = entrada;
+        this.salida = salida;
+        this.interactiva = interactiva;
     }
 
     public void mostrarMenuPrincipal(boolean sesionIniciada) {
-        imprimirSeccion("=== MENÚ PRINCIPAL ===");
+        imprimirSeccion("MENÚ PRINCIPAL");
         salida.println("Sesión: " + (sesionIniciada ? "iniciada" : "no iniciada"));
         salida.println();
         salida.println("Acciones:");
@@ -38,6 +40,22 @@ public final class VistaConsola {
 
     public void mostrarSeccion(String titulo) {
         imprimirSeccion(titulo);
+    }
+
+    public void mostrarPasoConversion(int paso, String categoria, String origen, String destino) {
+        String[] etapas = { "Categoría", "Unidad de origen", "Unidad de destino", "Cantidad" };
+        imprimirSeccion("CONVERTIR UNIDADES | Paso " + paso + "/4: " + etapas[paso - 1]);
+        if (categoria != null) salida.println("Categoría: " + categoria);
+        if (origen != null) salida.println("Origen:    " + origen);
+        if (destino != null) salida.println("Destino:   " + destino);
+        salida.println();
+    }
+
+    public void esperarParaContinuar() throws IOException {
+        if (!interactiva) return;
+        salida.println();
+        salida.println(SEPARADOR);
+        leerLiteral("Presiona Enter para volver al menú principal...");
     }
 
     public String leer(String mensaje) throws IOException {
@@ -57,7 +75,7 @@ public final class VistaConsola {
     }
 
     public String leerClave(String mensaje) throws IOException {
-        if (System.console() != null) {
+        if (interactiva && System.console() != null) {
             char[] caracteres = System.console().readPassword(mensaje);
             if (caracteres == null) throw new FinEntrada();
             String clave = new String(caracteres);
@@ -72,22 +90,28 @@ public final class VistaConsola {
             salida.println("No hay opciones disponibles.");
             return null;
         }
+        salida.println();
         salida.println(titulo + ":");
+        salida.println();
         for (int i = 0; i < opciones.size(); i++) salida.println("  " + (i + 1) + ". " + opciones.get(i));
         salida.println("  0. Volver al menú principal");
+        salida.println();
         while (true) {
             try {
-                int opcion = Integer.parseInt(leer("Seleccione una opción: "));
+                int opcion = Integer.parseInt(leer("Opción (0-" + opciones.size() + "): "));
                 if (opcion == 0) return null;
                 if (opcion >= 1 && opcion <= opciones.size()) return opciones.get(opcion - 1);
             } catch (NumberFormatException e) {
                 // Volver a solicitar la opción.
             }
-            salida.println("Opcion invalida.");
+            salida.println("Opción inválida. Selecciona una de las unidades u opciones de la lista.");
+            salida.println();
         }
     }
 
     public double leerNumero() throws IOException {
+        salida.println("Ingresa la cantidad que deseas convertir.");
+        salida.println();
         while (true) {
             try {
                 double valor = Double.parseDouble(leer("Valor: ").replace(',', '.'));
@@ -105,6 +129,7 @@ public final class VistaConsola {
     }
 
     public void mostrarError(String mensaje) {
+        salida.println();
         salida.println("Error: " + mensaje);
     }
 
@@ -113,6 +138,9 @@ public final class VistaConsola {
     }
 
     public void mostrarUnidades(List<String> unidades) {
+        salida.println();
+        salida.println("Unidades disponibles:");
+        salida.println();
         for (String unidad : unidades) salida.println("- " + unidad);
     }
 
@@ -125,10 +153,36 @@ public final class VistaConsola {
     }
 
     private void imprimirSeccion(String titulo) {
+        limpiarPantalla();
         salida.println();
+        salida.println("CONVERTIDOR DE UNIDADES");
         salida.println(SEPARADOR);
         salida.println(titulo);
         salida.println(SEPARADOR);
+        salida.println();
+    }
+
+    private void limpiarPantalla() {
+        if (!interactiva) return;
+        if (System.console() != null) {
+            if (System.getProperty("os.name", "").toLowerCase(Locale.ROOT).startsWith("windows")) {
+                salida.flush();
+                try {
+                    if (new ProcessBuilder("cmd.exe", "/c", "cls").inheritIO().start().waitFor() == 0) return;
+                } catch (IOException e) {
+                    // Separar con espacios cuando la terminal no permite limpiar.
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            } else {
+                salida.print("\033[H\033[2J");
+                salida.flush();
+                return;
+            }
+        }
+        // La salida del IDE conserva su historial: desplazarlo deja visible la etapa actual.
+        salida.print("\n".repeat(24));
+        salida.flush();
     }
 
     public static final class FinEntrada extends RuntimeException { }

@@ -16,9 +16,28 @@ public class PruebaMenuConsola {
             var salida = new StringWriter();
             new ControladorConsola(new ClienteSoap(servidor.uri()), new VistaConsola(new BufferedReader(new StringReader(entrada)), new PrintWriter(salida, true))).ejecutar();
             String texto = salida.toString();
-            SoportePruebas.exigir(texto.contains("=== MENÚ PRINCIPAL ==="), "El menú debe mostrar una sección principal clara");
-            SoportePruebas.exigir(texto.contains("----------------------------------------"), "El menu debe separar visualmente sus secciones");
-            SoportePruebas.exigir(texto.matches("(?s).*Conversión completada:\\R----------------------------------------\\R\\s+2\\.5000 METRO = 250\\.0000 CENTIMETRO\\R----------------------------------------.*"), "La conversión debe aparecer separada visualmente");
+            SoportePruebas.exigir(texto.contains("MENÚ PRINCIPAL"), "El menú debe mostrar una sección principal clara");
+            String separador = "------------------------------------------------------------";
+            SoportePruebas.exigir(texto.contains(separador), "El menu debe separar visualmente sus secciones");
+            SoportePruebas.exigir(texto.matches("(?s).*Conversión completada:\\R" + separador + "\\R\\s+2\\.5000 METRO = 250\\.0000 CENTIMETRO\\R" + separador + ".*"), "La conversión debe aparecer separada visualmente");
+            String[] pasos = { "Paso 1/4: Categoría", "Paso 2/4: Unidad de origen",
+                "Paso 3/4: Unidad de destino", "Paso 4/4: Cantidad", "RESULTADO DE CONVERSIÓN | LONGITUD" };
+            int anterior = -1;
+            for (String paso : pasos) {
+                int posicion = texto.indexOf(paso);
+                SoportePruebas.exigir(posicion > anterior, "Los pasos deben conservar el orden categoría, origen, destino y cantidad: " + paso);
+                anterior = posicion;
+            }
+            SoportePruebas.exigir(texto.matches("(?s).*Paso 4/4: Cantidad.*Categoría: LONGITUD\\ROrigen:    METRO\\RDestino:   CENTIMETRO.*"),
+                "Antes de ingresar la cantidad deben verse la categoría y ambas unidades");
+            SoportePruebas.exigir(!texto.contains("Presiona Enter") && !texto.contains("\033["),
+                "Las entradas automatizadas no deben consumir pausas ni contener secuencias de limpieza");
+            var salidaPausa = new StringWriter();
+            var vistaPausa = new VistaConsola(new BufferedReader(new StringReader("\ncontinuar\n")),
+                new PrintWriter(salidaPausa, true), true);
+            vistaPausa.esperarParaContinuar();
+            SoportePruebas.exigir(salidaPausa.toString().contains("Presiona Enter")
+                && vistaPausa.leer("").equals("continuar"), "La pausa interactiva debe consumir solo Enter");
             SoportePruebas.exigir(texto.contains("Opcion invalida"), "Menu debe validar opciones");
             SoportePruebas.exigir(texto.contains("Inicie sesion"), "No debe convertir sin iniciar sesion");
             SoportePruebas.exigir(texto.contains("numero finito"), "Debe validar dato numerico");

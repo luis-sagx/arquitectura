@@ -113,7 +113,7 @@ namespace ec.edu.monster.consola.vista
             while (true)
             {
                 int opcion;
-                if (int.TryParse(Leer(string.Format("Opción (0–{0}): ", opciones.Count)), out opcion))
+                if (int.TryParse(Leer(string.Format("Opción (0-{0}): ", opciones.Count)), out opcion))
                 {
                     if (opcion == 0) return null;
                     if (opcion >= 1 && opcion <= opciones.Count) return opciones[opcion - 1];
