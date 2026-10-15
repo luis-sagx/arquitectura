@@ -113,6 +113,8 @@ public class ConversorUnidadesServices {
                     otraMagnitud ? "Las unidades pertenecen a magnitudes incompatibles" : "Unidad no soportada: " + u);
             }
         }
+        if (!"TEMPERATURA".equals(c) && valor < 0)
+            return Respuesta.error("DATA-001", "La masa y la longitud no pueden ser negativas");
         double resultado;
         if ("TEMPERATURA".equals(c)) {
             if (valor < ceroAbsoluto(origen))

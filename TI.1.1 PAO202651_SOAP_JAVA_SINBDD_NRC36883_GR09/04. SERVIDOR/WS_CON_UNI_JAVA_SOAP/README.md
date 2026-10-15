@@ -45,7 +45,9 @@ TEMPERATURA: CELSIUS, FAHRENHEIT, KELVIN.
 
 Todas las categorias del catalogo permiten conversion.
 Categoria y unidades aceptan minusculas y espacios exteriores; usar los identificadores del catalogo.
-Cero y negativos se aceptan, salvo temperaturas inferiores al cero absoluto.
+Para longitud y masa se aceptan valores mayores o iguales a cero; los negativos se rechazan.
+Las temperaturas pueden ser negativas en Celsius y Fahrenheit, pero no inferiores al cero absoluto
+(-273.15 °C, -459.67 °F o 0 K). El cero se acepta en todas las magnitudes.
 Se utiliza double sin redondeo de negocio; el cliente puede formatear la presentacion.
 Valores no finitos y resultados fuera de rango se rechazan.
 Catalogo y conversion requieren token, siguiendo los diagramas de actividad.

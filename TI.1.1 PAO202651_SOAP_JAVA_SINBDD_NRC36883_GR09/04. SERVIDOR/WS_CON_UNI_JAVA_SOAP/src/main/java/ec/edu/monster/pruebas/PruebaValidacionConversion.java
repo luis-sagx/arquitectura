@@ -4,6 +4,10 @@ public class PruebaValidacionConversion {
         var s = Verificaciones.servicio(); String t = Verificaciones.token(s);
         for (Double valor : new Double[]{null, Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY})
             Verificaciones.codigo(s.convertir(t, "LONGITUD", "METRO", "PIE", valor), "DATA-001");
+        Verificaciones.codigo(s.convertir(t, "LONGITUD", "METRO", "PIE", -1.0), "DATA-001");
+        Verificaciones.codigo(s.convertir(t, "MASA", "KILOGRAMO", "GRAMO", -1.0), "DATA-001");
+        Verificaciones.resultado(s.convertir(t, "LONGITUD", "METRO", "PIE", 0.0), 0.0);
+        Verificaciones.resultado(s.convertir(t, "MASA", "KILOGRAMO", "GRAMO", 0.0), 0.0);
         Verificaciones.codigo(s.convertir(t, null, "METRO", "PIE", 1.0), "DATA-001");
         Verificaciones.codigo(s.convertir(t, "LONGITUD", "", "PIE", 1.0), "DATA-001");
         Verificaciones.codigo(s.convertir(t, "LONGITUD", "METRO", "LIBRA", 1.0), "DATA-001");

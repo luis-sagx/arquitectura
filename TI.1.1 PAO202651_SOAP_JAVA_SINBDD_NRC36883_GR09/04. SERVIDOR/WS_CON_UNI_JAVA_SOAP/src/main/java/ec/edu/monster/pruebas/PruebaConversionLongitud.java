@@ -11,7 +11,6 @@ public class PruebaConversionLongitud {
         }
         Verificaciones.resultado(s.convertir(t, "longitud", "metro", "centimetro", 2.0), 200);
         Verificaciones.resultado(s.convertir(t, "LONGITUD", "METRO", "CENTIMETRO", 0.0), 0);
-        Verificaciones.resultado(s.convertir(t, "LONGITUD", "METRO", "CENTIMETRO", -2.0), -200);
         System.out.println("PruebaConversionLongitud: OK");
     }
 }
