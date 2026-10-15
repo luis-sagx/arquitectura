@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CLI_ESC_UNI_DOTNET_JAVA/CLI_ESC_UNI_DOTNET_JAVA.csproj" />
+  <Project Path="WCF_CON_UNI_DOTNET_SOAP/WCF_CON_UNI_DOTNET_SOAP.csproj" />
+</Solution>
