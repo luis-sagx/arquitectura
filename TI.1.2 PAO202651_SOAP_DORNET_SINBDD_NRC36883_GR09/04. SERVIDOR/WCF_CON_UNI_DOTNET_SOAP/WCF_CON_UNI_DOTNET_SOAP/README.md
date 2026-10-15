@@ -38,10 +38,10 @@ Códigos: `OK`, `AUTH-001` (credenciales o usuario), `AUTH-002` (token ausente o
 
 ## Pruebas de lógica y contrato
 
-Desde `04. SERVIDOR/WCF_CON_UNI_DOTNET_SOAP` ejecute:
+Desde la carpeta del proyecto `04. SERVIDOR/WCF_CON_UNI_DOTNET_SOAP/WCF_CON_UNI_DOTNET_SOAP` ejecute:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Pruebas\Ejecutar-Pruebas.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\ec\edu\monster\pruebas\Ejecutar-Pruebas.ps1
 ```
 
 El ejecutable de pruebas usa el compilador C# de .NET Framework y verifica conversiones, códigos, sesiones, recuperación y metadatos WSDL generados desde el contrato. Para compilar y alojar el proyecto web completo se requieren los componentes de desarrollo web de Visual Studio.

@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$projectRoot = Join-Path (Split-Path -Parent $PSScriptRoot) 'WCF_CON_UNI_DOTNET_SOAP'
+$projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..\..\..'))
 $compiler = 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 if (-not (Test-Path -LiteralPath $compiler)) {
     $compiler = 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe'

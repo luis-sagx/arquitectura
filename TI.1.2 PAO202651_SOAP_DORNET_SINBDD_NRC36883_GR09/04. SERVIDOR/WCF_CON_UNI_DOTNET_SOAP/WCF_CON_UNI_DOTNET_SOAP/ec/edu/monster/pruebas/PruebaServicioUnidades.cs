@@ -9,6 +9,8 @@ using ec.edu.monster.controladores.ws;
 using ec.edu.monster.modelos;
 using ec.edu.monster.servicios;
 
+namespace ec.edu.monster.pruebas
+{
 internal static class PruebaServicioUnidades
 {
     private static int comprobaciones;
@@ -232,4 +234,5 @@ internal static class PruebaServicioUnidades
         Exigir(categoriasComoElementosRepetidos && unidadesComoElementosRepetidos,
             "El WSDL debe representar categorias y unidades como elementos repetidos, no como listas envueltas");
     }
+}
 }
