@@ -42,7 +42,7 @@ namespace ec.edu.monster.controlador
                 RespuestaSoap respuesta = await Task.Run(() => cliente.Autenticar(usuario, clave));
                 if (!respuesta.IsExito || String.IsNullOrWhiteSpace(respuesta.Token))
                 {
-                    vista.MostrarMensaje(respuesta.Codigo + " · " + respuesta.Mensaje, true);
+                    vista.MostrarMensaje(respuesta.Mensaje, true);
                     return;
                 }
                 AbrirConversiones(new Sesion(respuesta.Token, respuesta.ExpiraEn));
@@ -83,7 +83,7 @@ namespace ec.edu.monster.controlador
             try
             {
                 RespuestaSoap respuesta = await Task.Run(() => cliente.RecuperarClave(usuario, nuevaClave));
-                vista.MostrarMensaje(respuesta.Codigo + " · " + respuesta.Mensaje, !respuesta.IsExito);
+                vista.MostrarMensaje(respuesta.Mensaje, !respuesta.IsExito);
             }
             catch (IOException error)
             {

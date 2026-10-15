@@ -50,7 +50,7 @@ namespace ec.edu.monster.controlador
                 if (ManejarAutorizacion(respuesta)) return;
                 if (!respuesta.IsExito)
                 {
-                    vista.MostrarMensaje(respuesta.Codigo + " · " + respuesta.Mensaje, true);
+                    vista.MostrarMensaje(respuesta.Mensaje, true);
                     return;
                 }
 
@@ -114,7 +114,7 @@ namespace ec.edu.monster.controlador
             if (!respuesta.IsExito)
             {
                 vista.LimpiarUnidades();
-                vista.MostrarMensaje(respuesta.Codigo + " · " + respuesta.Mensaje, true);
+                vista.MostrarMensaje(respuesta.Mensaje, true);
                 return;
             }
 
@@ -154,7 +154,7 @@ namespace ec.edu.monster.controlador
                 if (!respuesta.IsExito || !respuesta.Resultado.HasValue)
                 {
                     vista.LimpiarResultado();
-                    vista.MostrarMensaje(respuesta.Codigo + " · " + respuesta.Mensaje, true);
+                    vista.MostrarMensaje(respuesta.Mensaje, true);
                     return;
                 }
 
@@ -184,7 +184,7 @@ namespace ec.edu.monster.controlador
             if (respuesta == null || (respuesta.Codigo != "AUTH-002" && respuesta.Codigo != "AUTH-003"))
                 return false;
 
-            string aviso = respuesta.Codigo + " · " + respuesta.Mensaje;
+            string aviso = respuesta.Mensaje;
             sesion = null;
             volverALogin(aviso);
             return true;
