@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using ec.edu.monster.modelo;
 
 namespace ec.edu.monster.consola.vista
@@ -8,16 +9,11 @@ namespace ec.edu.monster.consola.vista
     /// <summary>Presenta el menú y valida las entradas de consola.</summary>
     internal sealed class VistaConsola
     {
-        private const string Separador = "----------------------------------------";
-
-        public void MostrarBienvenida()
-        {
-            Console.WriteLine("CONVERTIDOR DE UNIDADES");
-        }
+        private const string Separador = "------------------------------------------------------------";
 
         public void MostrarMenuPrincipal(bool sesionIniciada)
         {
-            Seccion("=== MENÚ PRINCIPAL ===");
+            Seccion("MENÚ PRINCIPAL");
             Console.WriteLine("Sesión: " + (sesionIniciada ? "iniciada" : "no iniciada"));
             Console.WriteLine();
             Console.WriteLine("Acciones:");
@@ -31,6 +27,25 @@ namespace ec.edu.monster.consola.vista
         }
 
         public void MostrarSeccion(string titulo) { Seccion(titulo); }
+
+        public void MostrarPasoConversion(int paso, string categoria = null,
+            string origen = null, string destino = null)
+        {
+            string[] etapas = { "Categoría", "Unidad de origen", "Unidad de destino", "Cantidad" };
+            Seccion(string.Format("CONVERTIR UNIDADES | Paso {0}/4: {1}", paso, etapas[paso - 1]));
+            if (categoria != null) Console.WriteLine("Categoría: " + categoria);
+            if (origen != null) Console.WriteLine("Origen:    " + origen);
+            if (destino != null) Console.WriteLine("Destino:   " + destino);
+            Console.WriteLine();
+        }
+
+        public void EsperarParaContinuar()
+        {
+            if (Console.IsInputRedirected || Console.IsOutputRedirected) return;
+            Console.WriteLine();
+            Console.WriteLine(Separador);
+            LeerLiteral("Presiona Enter para volver al menú principal...");
+        }
 
         public string Leer(string mensaje)
         {
@@ -87,25 +102,31 @@ namespace ec.edu.monster.consola.vista
                 return null;
             }
 
+            Console.WriteLine();
             Console.WriteLine(titulo + ":");
+            Console.WriteLine();
             for (int i = 0; i < opciones.Count; i++)
                 Console.WriteLine("  {0}. {1}", i + 1, opciones[i]);
             Console.WriteLine("  0. Volver al menú principal");
+            Console.WriteLine();
 
             while (true)
             {
                 int opcion;
-                if (int.TryParse(Leer("Seleccione una opción: "), out opcion))
+                if (int.TryParse(Leer(string.Format("Opción (0–{0}): ", opciones.Count)), out opcion))
                 {
                     if (opcion == 0) return null;
                     if (opcion >= 1 && opcion <= opciones.Count) return opciones[opcion - 1];
                 }
-                Console.WriteLine("Opción inválida.");
+                Console.WriteLine("Opción inválida. Selecciona una de las unidades u opciones de la lista.");
+                Console.WriteLine();
             }
         }
 
         public double LeerNumero()
         {
+            Console.WriteLine("Ingresa la cantidad que deseas convertir.");
+            Console.WriteLine();
             while (true)
             {
                 string entrada = Leer("Valor: ");
@@ -128,11 +149,18 @@ namespace ec.edu.monster.consola.vista
                 respuesta.Codigo, respuesta.Mensaje);
         }
 
-        public void MostrarError(string mensaje) { Console.WriteLine("Error: " + mensaje); }
+        public void MostrarError(string mensaje)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Error: " + mensaje);
+        }
         public void MostrarMensaje(string mensaje) { Console.WriteLine(mensaje); }
 
         public void MostrarUnidades(IList<string> unidades)
         {
+            Console.WriteLine();
+            Console.WriteLine("Unidades disponibles:");
+            Console.WriteLine();
             foreach (string unidad in unidades) Console.WriteLine("- " + unidad);
         }
 
@@ -147,10 +175,17 @@ namespace ec.edu.monster.consola.vista
 
         private static void Seccion(string titulo)
         {
+            if (!Console.IsInputRedirected && !Console.IsOutputRedirected)
+            {
+                try { Console.Clear(); }
+                catch (IOException) { /* Algunas terminales no permiten limpiar la pantalla. */ }
+            }
             Console.WriteLine();
+            Console.WriteLine("CONVERTIDOR DE UNIDADES");
             Console.WriteLine(Separador);
             Console.WriteLine(titulo);
             Console.WriteLine(Separador);
+            Console.WriteLine();
         }
 
         internal sealed class FinEntradaException : Exception { }

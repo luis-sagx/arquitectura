@@ -21,6 +21,8 @@ Si IIS Express muestra otro puerto, cambia `conversor.endpoint` en `App.config` 
 - `5`: recuperar la clave; el servidor invalida las sesiones activas.
 - `0`: salir.
 
+La consola limpia la pantalla al cambiar de sección y entre los cuatro pasos de conversión: categoría, origen, destino y cantidad. Cada paso muestra las selecciones anteriores. Los resultados y errores permanecen visibles hasta presionar Enter; elegir `0` en una selección vuelve directamente al menú. Al redirigir la entrada o salida se conserva la salida completa y se omiten las pausas.
+
 Las categorías, unidades, tokens y resultados vienen del servidor. La sesión y el endpoint se conservan localmente en memoria/configuración; el servidor no ofrece una operación SOAP para revocar un token al cerrar sesión localmente.
 
 El contrato WCF de `ContratoWcf.cs` refleja la interfaz publicada por el servidor. Si cambian las operaciones o el esquema SOAP, actualiza ese contrato y `RespuestaWcf` junto con el servidor.

@@ -24,20 +24,20 @@ namespace ec.edu.monster.consola.controlador
 
         public void Ejecutar()
         {
-            vista.MostrarBienvenida();
             try
             {
                 while (true)
                 {
                     vista.MostrarMenuPrincipal(token != null);
                     string opcion = vista.Leer("Opción: ");
+                    bool esperar = true;
                     try
                     {
                         switch (opcion)
                         {
                             case "1": IniciarSesion(); break;
-                            case "2": if (HaySesion()) ConsultarCatalogo(); break;
-                            case "3": if (HaySesion()) Convertir(); break;
+                            case "2": if (HaySesion()) esperar = ConsultarCatalogo(); break;
+                            case "3": if (HaySesion()) esperar = Convertir(); break;
                             case "4": token = null; vista.MostrarMensaje("Sesión local cerrada."); break;
                             case "5": RecuperarClave(); break;
                             case "0": vista.MostrarMensaje("Hasta luego."); return;
@@ -48,6 +48,7 @@ namespace ec.edu.monster.consola.controlador
                     {
                         vista.MostrarError(ex.Message);
                     }
+                    if (esperar) vista.EsperarParaContinuar();
                 }
             }
             catch (VistaConsola.FinEntradaException)
@@ -58,7 +59,7 @@ namespace ec.edu.monster.consola.controlador
 
         private void IniciarSesion()
         {
-            vista.MostrarSeccion("=== INICIAR SESIÓN ===");
+            vista.MostrarSeccion("INICIAR SESIÓN");
             token = null;
             string usuario = vista.LeerLiteral("Usuario: ");
             string clave = vista.LeerClave("Clave: ");
@@ -75,7 +76,7 @@ namespace ec.edu.monster.consola.controlador
 
         private void RecuperarClave()
         {
-            vista.MostrarSeccion("=== RECUPERAR CONTRASEÑA ===");
+            vista.MostrarSeccion("RECUPERAR CONTRASEÑA");
             string usuario = vista.LeerLiteral("Usuario: ");
             string nuevaClave = vista.LeerClave("Nueva clave: ");
             if (Mostrar(cliente.RecuperarClave(usuario, nuevaClave))) token = null;
@@ -88,43 +89,50 @@ namespace ec.edu.monster.consola.controlador
             return false;
         }
 
-        private void ConsultarCatalogo()
+        private bool ConsultarCatalogo()
         {
-            vista.MostrarSeccion("=== CONSULTAR CATÁLOGO ===");
+            vista.MostrarSeccion("CONSULTAR CATÁLOGO | Selecciona una categoría");
             RespuestaSoap categorias = cliente.ObtenerCategorias(token);
-            if (!Mostrar(categorias)) return;
+            if (!Mostrar(categorias)) return true;
             string categoria = vista.Seleccionar("Categoría", categorias.Categorias);
-            if (categoria == null) return;
+            if (categoria == null) return false;
 
+            vista.MostrarSeccion("CONSULTAR CATÁLOGO | " + categoria);
             RespuestaSoap unidades = cliente.ObtenerUnidades(token, categoria);
             if (Mostrar(unidades)) vista.MostrarUnidades(unidades.Unidades);
+            return true;
         }
 
-        private void Convertir()
+        private bool Convertir()
         {
-            vista.MostrarSeccion("=== CONVERTIR UNIDADES ===");
+            vista.MostrarPasoConversion(1);
             RespuestaSoap categorias = cliente.ObtenerCategorias(token);
-            if (!Mostrar(categorias)) return;
+            if (!Mostrar(categorias)) return true;
             IList<string> convertibles = categorias.Categorias
                 .Where(c => CategoriasConvertibles.Contains(c, StringComparer.Ordinal))
                 .ToList();
             string categoria = vista.Seleccionar("Categoría a convertir", convertibles);
-            if (categoria == null) return;
+            if (categoria == null) return false;
 
+            vista.MostrarPasoConversion(2, categoria);
             RespuestaSoap unidades = cliente.ObtenerUnidades(token, categoria);
-            if (!Mostrar(unidades)) return;
+            if (!Mostrar(unidades)) return true;
             string origen = vista.Seleccionar("Unidad de origen", unidades.Unidades);
-            if (origen == null) return;
+            if (origen == null) return false;
+            vista.MostrarPasoConversion(3, categoria, origen);
             string destino = vista.Seleccionar("Unidad de destino", unidades.Unidades);
-            if (destino == null) return;
+            if (destino == null) return false;
 
+            vista.MostrarPasoConversion(4, categoria, origen, destino);
             double valor = vista.LeerNumero();
             RespuestaSoap respuesta = cliente.Convertir(token, categoria, origen, destino, valor);
-            if (!Mostrar(respuesta)) return;
+            if (!Mostrar(respuesta)) return true;
             if (!respuesta.Resultado.HasValue)
                 throw new IOException("El servidor no entregó el resultado de conversión.");
+            vista.MostrarSeccion("RESULTADO DE CONVERSIÓN | " + categoria);
             vista.MostrarConversion(valor, origen, respuesta.Resultado.Value,
                 string.IsNullOrWhiteSpace(respuesta.UnidadDestino) ? destino : respuesta.UnidadDestino);
+            return true;
         }
 
         private bool Mostrar(RespuestaSoap respuesta)
