@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="../../04. CLICON/ClienteConsola/ClienteConsola.csproj" Id="2f706cd6-2ebf-44ae-8ed3-d3972d97287d" />
   <Project Path="../../04. CLIESC/ClienteEscritorio/ClienteEscritorio.csproj" Id="07a7f5d9-6f82-4916-8244-fc203c3da482" />
   <Project Path="WCF_CON_UNI_DOTNET_SOAP/WCF_CON_UNI_DOTNET_SOAP.csproj" Id="cc8757b3-97b0-46dc-a44e-73718d4b9234" />
 </Solution>
