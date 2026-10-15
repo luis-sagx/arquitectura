@@ -23,7 +23,10 @@ public final class CLI_CON_UNI_JAVA_REST {
             var cliente = new ClienteRest(URI.create(url));
             var salida = new PrintWriter(System.out, true);
             salida.println("Servicio REST: " + url);
-            var vista = new VistaConsola(new BufferedReader(new InputStreamReader(System.in)), salida);
+            boolean interactiva = Boolean.parseBoolean(System.getProperty("conversor.interactivo",
+                Boolean.toString(System.console() != null)));
+            var vista = new VistaConsola(
+                new BufferedReader(new InputStreamReader(System.in)), salida, interactiva);
             new ControladorConsola(cliente, vista).ejecutar();
         } catch (IllegalArgumentException e) {
             System.err.println("URL inválida: " + e.getMessage());

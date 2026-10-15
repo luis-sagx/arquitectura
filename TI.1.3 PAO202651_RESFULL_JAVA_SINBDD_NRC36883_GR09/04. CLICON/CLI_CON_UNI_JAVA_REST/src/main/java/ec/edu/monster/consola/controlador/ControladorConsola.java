@@ -25,11 +25,12 @@ public final class ControladorConsola {
             while (true) {
                 vista.mostrarMenuPrincipal(token != null);
                 String opcion = vista.leer("Opción: ");
+                boolean esperar = true;
                 try {
                     switch (opcion) {
                         case "1" -> iniciarSesion();
-                        case "2" -> { if (haySesion()) consultarCatalogo(); }
-                        case "3" -> { if (haySesion()) convertir(); }
+                        case "2" -> { if (haySesion()) esperar = consultarCatalogo(); }
+                        case "3" -> { if (haySesion()) esperar = convertir(); }
                         case "4" -> {
                             token = null;
                             vista.mostrarMensaje("Sesión local cerrada. Inicie sesión con la opción 1 para continuar.");
@@ -45,6 +46,7 @@ public final class ControladorConsola {
                     vista.mostrarError(e.getMessage());
                     if (Thread.currentThread().isInterrupted()) return;
                 }
+                if (esperar) vista.esperarParaContinuar();
             }
         } catch (VistaConsola.FinEntrada e) {
             vista.mostrarMensaje("\nHasta luego.");
@@ -54,7 +56,7 @@ public final class ControladorConsola {
     }
 
     private void iniciarSesion() throws IOException {
-        vista.mostrarSeccion("=== INICIAR SESIÓN ===");
+        vista.mostrarSeccion("INICIAR SESIÓN");
         token = null;
         String usuario = vista.leerLiteral("Usuario: ");
         String clave = vista.leerClave();
@@ -72,7 +74,7 @@ public final class ControladorConsola {
     }
 
     private void recuperarClave() throws IOException {
-        vista.mostrarSeccion("=== RECUPERAR CONTRASEÑA ===");
+        vista.mostrarSeccion("RECUPERAR CONTRASEÑA");
         String usuario = vista.leerLiteral("Usuario: ");
         String nuevaClave = vista.leerClave("Nueva clave: ");
         if (mostrar(cliente.recuperarClave(usuario, nuevaClave))) token = null;
@@ -84,30 +86,35 @@ public final class ControladorConsola {
         return false;
     }
 
-    private void consultarCatalogo() throws IOException {
-        vista.mostrarSeccion("=== CONSULTAR CATÁLOGO ===");
+    private boolean consultarCatalogo() throws IOException {
+        vista.mostrarSeccion("CONSULTAR CATÁLOGO | Selecciona una categoría");
         RespuestaRest categorias = cliente.obtenerCategorias(token);
-        if (!mostrar(categorias)) return;
+        if (!mostrar(categorias)) return true;
         String categoria = vista.seleccionar("Categoría", categorias.getCategorias());
-        if (categoria == null) return;
+        if (categoria == null) return false;
+        vista.mostrarSeccion("CONSULTAR CATÁLOGO | " + categoria);
         RespuestaRest unidades = cliente.obtenerUnidades(token, categoria);
         if (mostrar(unidades)) vista.mostrarUnidades(unidades.getUnidades());
+        return true;
     }
 
-    private void convertir() throws IOException {
-        vista.mostrarSeccion("=== CONVERTIR UNIDADES ===");
+    private boolean convertir() throws IOException {
+        vista.mostrarPasoConversion(1, null, null, null);
         RespuestaRest categorias = cliente.obtenerCategorias(token);
-        if (!mostrar(categorias)) return;
+        if (!mostrar(categorias)) return true;
         List<String> convertibles = categorias.getCategorias().stream()
             .filter(CATEGORIAS_CONVERTIBLES::contains).toList();
         String categoria = vista.seleccionar("Categoría a convertir", convertibles);
-        if (categoria == null) return;
+        if (categoria == null) return false;
+        vista.mostrarPasoConversion(2, categoria, null, null);
         RespuestaRest unidades = cliente.obtenerUnidades(token, categoria);
-        if (!mostrar(unidades)) return;
+        if (!mostrar(unidades)) return true;
         String origen = vista.seleccionar("Unidad de origen", unidades.getUnidades());
-        if (origen == null) return;
+        if (origen == null) return false;
+        vista.mostrarPasoConversion(3, categoria, origen, null);
         String destino = vista.seleccionar("Unidad de destino", unidades.getUnidades());
-        if (destino == null) return;
+        if (destino == null) return false;
+        vista.mostrarPasoConversion(4, categoria, origen, destino);
         double valor = vista.leerNumero();
         RespuestaRest respuesta = cliente.convertir(token, categoria, origen, destino, valor);
         if (mostrar(respuesta)) {
@@ -116,8 +123,10 @@ public final class ControladorConsola {
             }
             String unidadDestino = respuesta.getUnidadDestino() == null
                 ? destino : respuesta.getUnidadDestino();
+            vista.mostrarSeccion("RESULTADO DE CONVERSIÓN | " + categoria);
             vista.mostrarConversion(valor, origen, respuesta.getResultado(), unidadDestino);
         }
+        return true;
     }
 
     private boolean mostrar(RespuestaRest respuesta) {

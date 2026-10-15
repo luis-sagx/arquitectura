@@ -57,6 +57,19 @@ Si se indica tanto argumento como propiedad, se usa el argumento.
 5. Recuperar contraseña indicando usuario y nueva clave.
 0. Salir. El fin de entrada también cierra la aplicación.
 
+Cada sección se presenta con un encabezado y separadores. La conversión muestra
+los cuatro pasos (categoría, origen, destino y cantidad) y conserva las
+selecciones anteriores en pantalla. Los resultados y errores esperan Enter
+antes de volver al menú cuando la consola es interactiva; elegir `0` en una
+selección regresa directamente.
+
+En una terminal se limpia la pantalla entre secciones. En la salida de un IDE
+se desplaza el contenido para dejar visible la etapa actual. La interacción se
+activa automáticamente cuando Java detecta una terminal; también puede
+configurarse con `-Dconversor.interactivo=true` o desactivarse con
+`-Dconversor.interactivo=false`. Al redirigir entrada o salida, se omiten las
+pausas y la limpieza por defecto.
+
 Las credenciales iniciales del servidor son `monster` / `monster123`, salvo que el servidor se haya configurado de otra manera. Las credenciales se conservan literalmente; la clave se oculta en terminales compatibles con `System.console()`. Si se usa desde un IDE, puede verse al escribirla. No se guardan credenciales ni tokens en archivos.
 
 Se aceptan punto o coma decimal y valores negativos o cero; se rechazan `NaN` e infinitos. Las restricciones de conversión, como el cero absoluto, las aplica el servidor. Los errores HTTP/JSON, desconexiones y timeouts se muestran sin cerrar el menú.
