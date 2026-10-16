@@ -1,0 +1,206 @@
+package ec.edu.monster.vista;
+
+import ec.edu.monster.modelo.OpcionCatalogo;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+/** Formulario principal de conversión, alimentado por el catálogo remoto. */
+public final class VentanaConversiones extends JFrame {
+    private final JComboBox<OpcionCatalogo> categorias = new JComboBox<>();
+    private final JComboBox<OpcionCatalogo> origen = new JComboBox<>();
+    private final JComboBox<OpcionCatalogo> destino = new JComboBox<>();
+    private final JTextField valor = new JTextField();
+    private final JButton convertir = new JButton("Convertir");
+    private final JButton cerrarSesion = new JButton("Cerrar sesión");
+    private final JLabel resultado = new JLabel(" ", SwingConstants.CENTER);
+    private final JLabel estado = new JLabel(" ");
+    private boolean actualizandoCatalogo;
+
+    public VentanaConversiones() {
+        super("Monster · Conversor de unidades");
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        EstilosUI.configurarVentana(this);
+
+        JPanel raiz = new JPanel(new BorderLayout(0, 22));
+        raiz.setBackground(EstilosUI.FONDO);
+        raiz.setBorder(BorderFactory.createEmptyBorder(24, 34, 24, 34));
+        raiz.add(crearCabecera(), BorderLayout.NORTH);
+        raiz.add(crearFormulario(), BorderLayout.CENTER);
+        raiz.add(crearPie(), BorderLayout.SOUTH);
+        setContentPane(raiz);
+
+        categorias.addActionListener(evento -> {
+            if (!actualizandoCatalogo) {
+                limpiarResultado();
+                if (categoriaSeleccionada() != null) {
+                    estado.setText("Cargando unidades…");
+                }
+            }
+        });
+        for (JComboBox<OpcionCatalogo> combo : List.of(categorias, origen, destino)) {
+            EstilosUI.estilizarSelector(combo);
+        }
+    }
+
+    private JPanel crearCabecera() {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setOpaque(false);
+        JPanel textos = new JPanel(new java.awt.GridLayout(0, 1, 0, 5));
+        textos.setOpaque(false);
+        JLabel marca = new JLabel("MONSTER  /  SERVICIO REST");
+        marca.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        marca.setForeground(EstilosUI.AZUL_MARINO);
+        JLabel titulo = new JLabel("Conversor de unidades");
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 27));
+        titulo.setForeground(EstilosUI.TINTA);
+        JLabel detalle = new JLabel("Selecciona una categoría y convierte con el catálogo del servidor.");
+        detalle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        detalle.setForeground(EstilosUI.GRIS);
+        textos.add(marca);
+        textos.add(titulo);
+        textos.add(detalle);
+        EstilosUI.estilizarBotonSecundario(cerrarSesion);
+        panel.add(textos, BorderLayout.CENTER);
+        JPanel acciones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        acciones.setOpaque(false);
+        acciones.add(cerrarSesion);
+        panel.add(acciones, BorderLayout.EAST);
+        return panel;
+    }
+
+    private JPanel crearFormulario() {
+        JPanel tarjeta = new JPanel(new GridBagLayout());
+        tarjeta.setBackground(EstilosUI.BLANCO);
+        tarjeta.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(EstilosUI.BORDE),
+                BorderFactory.createEmptyBorder(26, 28, 26, 28)));
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(8, 8, 8, 8);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1;
+
+        agregar(tarjeta, etiqueta("Categoría"), c, 0, 0, 2);
+        categorias.setName("categoria");
+        agregar(tarjeta, categorias, c, 0, 1, 2);
+
+        agregar(tarjeta, etiqueta("Valor"), c, 0, 2, 2);
+        valor.setName("valor");
+        EstilosUI.estilizarCampo(valor);
+        agregar(tarjeta, valor, c, 0, 3, 2);
+
+        agregar(tarjeta, etiqueta("Unidad de origen"), c, 0, 4, 1);
+        agregar(tarjeta, etiqueta("Unidad de destino"), c, 1, 4, 1);
+        origen.setName("unidadOrigen");
+        destino.setName("unidadDestino");
+        agregar(tarjeta, origen, c, 0, 5, 1);
+        agregar(tarjeta, destino, c, 1, 5, 1);
+
+        EstilosUI.estilizarBotonPrincipal(convertir);
+        c.gridwidth = 2;
+        agregar(tarjeta, convertir, c, 0, 6, 2);
+
+        resultado.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        resultado.setForeground(EstilosUI.AZUL_MARINO);
+        resultado.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(EstilosUI.BORDE),
+                BorderFactory.createEmptyBorder(14, 14, 14, 14)));
+        resultado.setOpaque(true);
+        resultado.setBackground(new java.awt.Color(247, 249, 252));
+        agregar(tarjeta, resultado, c, 0, 7, 2);
+        return tarjeta;
+    }
+
+    private JPanel crearPie() {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setOpaque(false);
+        estado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        estado.setForeground(EstilosUI.GRIS);
+        panel.add(estado, BorderLayout.WEST);
+        return panel;
+    }
+
+    private static JLabel etiqueta(String texto) {
+        JLabel label = new JLabel(texto);
+        label.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        label.setForeground(EstilosUI.TINTA);
+        return label;
+    }
+
+    private static void agregar(JPanel panel, java.awt.Component componente,
+            GridBagConstraints plantilla, int x, int y, int ancho) {
+        GridBagConstraints c = (GridBagConstraints) plantilla.clone();
+        c.gridx = x;
+        c.gridy = y;
+        c.gridwidth = ancho;
+        panel.add(componente, c);
+    }
+
+    public void alCambiarCategoria(ActionListener listener) { categorias.addActionListener(listener); }
+    public void alConvertir(ActionListener listener) { convertir.addActionListener(listener); }
+    public void alCerrarSesion(ActionListener listener) { cerrarSesion.addActionListener(listener); }
+    public OpcionCatalogo categoriaSeleccionada() { return (OpcionCatalogo) categorias.getSelectedItem(); }
+    public OpcionCatalogo origenSeleccionado() { return (OpcionCatalogo) origen.getSelectedItem(); }
+    public OpcionCatalogo destinoSeleccionado() { return (OpcionCatalogo) destino.getSelectedItem(); }
+    public String valorIngresado() { return valor.getText().trim(); }
+
+    public void setCategorias(List<OpcionCatalogo> opciones) {
+        actualizandoCatalogo = true;
+        categorias.removeAllItems();
+        opciones.forEach(categorias::addItem);
+        actualizandoCatalogo = false;
+    }
+
+    public void seleccionarPrimeraCategoria() {
+        if (categorias.getItemCount() > 0) {
+            actualizandoCatalogo = true;
+            categorias.setSelectedIndex(0);
+            actualizandoCatalogo = false;
+        }
+    }
+
+    public void setUnidades(List<OpcionCatalogo> opciones) {
+        actualizandoCatalogo = true;
+        origen.removeAllItems();
+        destino.removeAllItems();
+        opciones.forEach(origen::addItem);
+        opciones.forEach(destino::addItem);
+        actualizandoCatalogo = false;
+    }
+
+    public void limpiarUnidades() { setUnidades(List.of()); }
+    public void mostrarResultado(String texto) { resultado.setText(texto); }
+    public void mostrarEstado(String texto) { estado.setText(texto == null || texto.isBlank() ? " " : texto); }
+
+    public void setOcupado(boolean ocupado) {
+        categorias.setEnabled(!ocupado);
+        origen.setEnabled(!ocupado);
+        destino.setEnabled(!ocupado);
+        valor.setEnabled(!ocupado);
+        convertir.setEnabled(!ocupado);
+        cerrarSesion.setEnabled(!ocupado);
+        setCursor(ocupado ? java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR)
+                : java.awt.Cursor.getDefaultCursor());
+    }
+
+    public void mostrarAviso(String texto, String titulo, int tipo) {
+        javax.swing.JOptionPane.showMessageDialog(this, texto, titulo, tipo);
+    }
+
+    public void limpiarResultado() {
+        resultado.setText(" ");
+    }
+}

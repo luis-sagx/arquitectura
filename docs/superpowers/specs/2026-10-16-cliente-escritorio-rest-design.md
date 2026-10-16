@@ -14,7 +14,7 @@ Agregar al proyecto `TI.1.3 PAO202651_RESFULL_JAVA_SINBDD_NRC36883_GR09` una apl
 
 ## Estructura y arquitectura
 
-Crear `04. CLIESC/ClienteEscritorio` dentro del proyecto REST como aplicación Maven Java 21 empaquetada en JAR ejecutable. Mantener la separación MVC y nombres de paquetes del escritorio SOAP:
+Crear `04. CLIESC/CLI_ESC_CON_UNI_JAVA_REST` dentro del proyecto REST como aplicación Maven Java 21 empaquetada en JAR ejecutable. Mantener la separación MVC y nombres de paquetes del escritorio SOAP:
 
 - `ec.edu.monster.ClienteEscritorio`: punto de entrada Swing.
 - `ec.edu.monster.controlador`: `ControladorLogin` y `ControladorConversiones`; operaciones de red ejecutadas con `SwingWorker` para no bloquear el hilo de interfaz.
