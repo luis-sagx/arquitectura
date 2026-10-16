@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
 }
 
+base {
+    archivesName = 'ConversorMonster'
+}
+
 android {
     namespace 'ec.edu.monster'
     compileSdk 35

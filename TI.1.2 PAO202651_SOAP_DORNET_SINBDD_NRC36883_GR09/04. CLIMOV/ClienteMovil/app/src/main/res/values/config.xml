@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Dirección del servicio WCF (WSConUni.svc) en IIS Express.
+        Emulador: 10.0.2.2 apunta al localhost del computador.
+        Celular u otra red: usar la URL pública de ngrok, por ejemplo
+        https://xxxx.ngrok-free.app/WSConUni.svc
+    -->
+    <string name="endpoint_soap" translatable="false">http://10.0.2.2:14028/WSConUni.svc</string>
+</resources>

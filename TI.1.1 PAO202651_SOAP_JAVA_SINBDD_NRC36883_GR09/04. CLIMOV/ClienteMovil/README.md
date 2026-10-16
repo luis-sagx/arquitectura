@@ -16,6 +16,30 @@ Aplicación Android en Java, con arquitectura MVC, para consumir el servicio SOA
 3. Elegir un emulador o un celular y presionar **Run ▶**.
 4. Usuario y clave iniciales del servidor: `monster` / `monster123`.
 
+## Abrir y ejecutar en NetBeans
+
+NetBeans no tiene soporte para Android, pero abre el proyecto como proyecto Gradle y compila el APK
+con el Gradle wrapper incluido (`gradlew`, Gradle 8.9). Se necesita JDK 21 y el Android SDK
+(`platforms;android-35`, `build-tools` y `platform-tools`), ya sea el que instala Android Studio o las
+*command line tools* con `sdkmanager`.
+
+1. Indicar dónde está el SDK: crear `local.properties` junto a `settings.gradle` con
+   `sdk.dir=C\:\\Users\\USUARIO\\AppData\\Local\\Android\\Sdk`, o definir la variable `ANDROID_HOME`.
+2. En NetBeans: **File > Open Project** y seleccionar `04. CLIMOV/ClienteMovil` (aparece con el ícono de Gradle).
+3. Clic derecho sobre el proyecto > **Run Gradle Task** > `assembleDebug`
+   (o en una terminal: `gradlew.bat assembleDebug`).
+4. El APK queda en `app/build/outputs/apk/debug/app-debug.apk`.
+
+Para probarlo:
+
+- **Celular físico**: activar *Opciones de desarrollador > Depuración USB*, conectarlo y ejecutar
+  `adb install -r app/build/outputs/apk/debug/app-debug.apk` (`adb` está en `SDK/platform-tools`).
+  También se puede copiar el APK al celular e instalarlo permitiendo *orígenes desconocidos*.
+  Antes de compilar, poner la IP del computador en `config.xml` (ver abajo).
+- **Emulador**: listar los dispositivos con `SDK/emulator/emulator -list-avds`, iniciar uno con
+  `emulator -avd NOMBRE` y luego usar el mismo `adb install`.
+- Con Payara corriendo, abrir la app **ClienteMovil**, ingresar con `monster` / `monster123` y convertir.
+
 ## Dirección del servicio
 
 La URL está en `app/src/main/res/values/config.xml` (`endpoint_soap`):
