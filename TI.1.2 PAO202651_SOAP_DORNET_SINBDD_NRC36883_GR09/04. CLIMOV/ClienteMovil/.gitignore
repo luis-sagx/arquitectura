@@ -1,12 +1,5 @@
-.gradle/
-build/
-/app/build/
-local.properties
-.idea/
-*.iml
-captures/
-.cxx/
-.externalNativeBuild/
-.DS_Store
-hs_err_pid*.log
-replay_pid*.log
+bin/
+obj/
+publicar/
+.vs/
+*.user

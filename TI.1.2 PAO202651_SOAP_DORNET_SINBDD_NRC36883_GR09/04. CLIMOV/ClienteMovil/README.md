@@ -1,73 +1,84 @@
-# ClienteMovil (WCF)
+# ClienteMovil (.NET MAUI)
 
-Aplicación Android en Java, con arquitectura MVC, para consumir el servicio SOAP WCF `WSConUni.svc`.
-Tiene la misma estructura y pantallas que el cliente móvil de `TI.1.1` (SOAP Java); solo cambia el
-adaptador SOAP y la dirección del servicio.
+Aplicación móvil en C# con .NET MAUI 10 para consumir el servicio SOAP WCF `WSConUni.svc`.
+Sigue la misma arquitectura MVC y las mismas pantallas que los clientes móviles de SOAP Java y REST.
+El proyecto compila para **Android**; **iOS** está configurado pero solo compila en una Mac.
 
 ## Requisitos
 
-- Android Studio (incluye el SDK de Android y Gradle), o NetBeans con el Android SDK (ver abajo)
-- Un emulador Android 8.0 (API 26) o superior, o un celular con depuración USB
+- Visual Studio 2022/2026 con la carga de trabajo **Desarrollo de .NET MAUI**, o el .NET SDK 10 con
+  `dotnet workload install maui-android`
+- Android SDK con la plataforma **API 36** (Visual Studio la instala; por consola:
+  `dotnet build -t:InstallAndroidDependencies -f net10.0-android -p:AcceptAndroidSDKLicenses=true`)
 - El servicio `WCF_CON_UNI_DOTNET_SOAP` iniciado desde Visual Studio (IIS Express, puerto 14028)
+- Usuario y clave iniciales del servidor: `monster` / `monster123`
 
-## Abrir y ejecutar
+## Ejecutar en Visual Studio
 
-1. En Android Studio: **File > Open** y seleccionar la carpeta `04. CLIMOV/ClienteMovil`.
-2. Esperar a que termine el **Gradle Sync**.
-3. Elegir un emulador o un celular y presionar **Run ▶**.
-4. Usuario y clave iniciales del servidor: `monster` / `monster123`.
+1. Abrir `ClienteMovil.csproj`.
+2. En la barra superior elegir **Android Emulator** (o un celular con depuración USB) y presionar **▶**.
 
-## Abrir y ejecutar en NetBeans
+## Generar el APK
 
-NetBeans abre el proyecto como proyecto Gradle y compila el APK con el Gradle wrapper incluido.
-Se necesita JDK 21 y el Android SDK (`platforms;android-35`, `build-tools` y `platform-tools`).
+```
+dotnet publish -c Release -f net10.0-android -o publicar
+```
 
-1. Crear `local.properties` junto a `settings.gradle` con
-   `sdk.dir=C\:\\Users\\USUARIO\\AppData\\Local\\Android\\Sdk`, o definir la variable `ANDROID_HOME`.
-2. **File > Open Project** y seleccionar `04. CLIMOV/ClienteMovil`.
-3. Clic derecho > **Run Gradle Task** > `assembleDebug` (o `gradlew.bat assembleDebug`).
-4. El APK queda en `app/build/outputs/apk/debug/ConversorMonsterWCF-debug.apk`.
-   Se instala con `adb install -r` o copiándolo al celular.
+El APK firmado queda en `publicar/ec.edu.monster.wcf-Signed.apk`. Se instala con
+`adb install -r publicar/ec.edu.monster.wcf-Signed.apk` o copiándolo al celular. Pesa unos 28 MB
+porque incluye el runtime de .NET.
+
+## iOS (iPhone)
+
+MAUI usa el mismo código para iOS, pero Apple solo permite compilar apps de iOS con Xcode en macOS:
+
+- En una Mac con Xcode y `dotnet workload install maui-ios`: `dotnet build -f net10.0-ios`.
+- En Windows, Visual Studio puede compilar para iOS enlazado a una Mac de la red
+  (*Pair to Mac*), agregando `-p:IncluirIOS=true` o quitando la condición de `TargetFrameworks`.
+- Para instalarla en un iPhone real se necesita una cuenta de Apple Developer.
+
+`Platforms/iOS/Info.plist` ya permite HTTP (`NSAllowsArbitraryLoads`) para el laboratorio.
 
 ## Dirección del servicio
 
-La URL está en `app/src/main/res/values/config.xml` (`endpoint_soap`):
+La URL está en `ec/edu/monster/Configuracion.cs` (`EndpointSoap`):
 
 | Dónde corre la app | URL |
 |---|---|
-| Emulador de Android Studio | `http://10.0.2.2:14028/WSConUni.svc` (configurada) |
+| Emulador de Android | `http://10.0.2.2:14028/WSConUni.svc` (configurada) |
+| Simulador de iOS en una Mac | `http://localhost:14028/WSConUni.svc` |
 | Celular u otra red (ngrok) | `https://xxxx.ngrok-free.app/WSConUni.svc` |
 
-IIS Express solo acepta peticiones con el nombre de host `localhost`. Desde el emulador o el celular
-llegan con otro host (`10.0.2.2`, la IP del equipo) y responde **HTTP 400 Bad Request - Invalid Hostname**.
-La forma más simple de publicarlo es ngrok reescribiendo el host:
+IIS Express solo acepta peticiones con el nombre de host `localhost`. Desde el emulador o un celular
+llegan con otro host y responde **HTTP 400 Bad Request - Invalid Hostname**. Para publicarlo:
 
 ```
 ngrok http 14028 --host-header="localhost:14028"
 ```
 
-y poner en `config.xml` la URL que entrega ngrok seguida de `/WSConUni.svc`.
+y poner en `Configuracion.cs` la URL de ngrok seguida de `/WSConUni.svc`.
 
 ## Arquitectura (MVC)
 
 - `ec.edu.monster.modelo`: `Sesion`, `OpcionCatalogo` y `RespuestaSoap` (datos normalizados).
-- `ec.edu.monster.vista`: `LoginActivity` y `ConversionesActivity`, más las interfaces `VistaLogin` y
-  `VistaConversiones` que usan los controladores. Los layouts están en `res/layout`.
+- `ec.edu.monster.vista`: `LoginPage` y `ConversionesPage` (XAML), las interfaces `IVistaLogin` e
+  `IVistaConversiones` que usan los controladores, y `Navegacion`.
 - `ec.edu.monster.controlador`: `ControladorLogin` (acceso y recuperación de clave) y
-  `ControladorConversiones` (catálogo, conversión, expiración y cierre de sesión).
-- `ec.edu.monster.servicio`: `ClienteSoap` (adaptador SOAP) y `EjecutorAndroid` (hilo de fondo para la red).
+  `ControladorConversiones` (catálogo, conversión, expiración y cierre de sesión). No dependen de MAUI.
+- `ec.edu.monster.servicio`: `ClienteSoap`, el adaptador SOAP 1.1.
 
-Android no incluye WCF, por eso `ClienteSoap` arma el sobre SOAP 1.1 y lee la respuesta con
-`HttpURLConnection` y DOM, según el WSDL del servidor (namespace `http://ws.controladores.monster.edu.ec/`).
-Diferencias con el servicio JAX-WS:
+`ClienteSoap` arma el sobre con `HttpClient` y LINQ to XML en lugar de un proxy WCF
+(`ChannelFactory`), porque los proxys dinámicos de WCF no funcionan en iOS. Sigue el contrato del WSDL:
 
-- Cada operación se envía con `SOAPAction: "http://ws.controladores.monster.edu.ec/WSConUni/<operacion>"`.
-- Los parámetros van calificados con el namespace del contrato (`elementFormDefault="qualified"`).
-- La respuesta llega en `<operacion>Result` en lugar de `<return>`, y un `resultado` vacío viene como `xsi:nil`.
+- `SOAPAction: "http://ws.controladores.monster.edu.ec/WSConUni/<operacion>"` en cada llamada.
+- Parámetros calificados con el namespace `http://ws.controladores.monster.edu.ec/`.
+- La respuesta llega en `<operacion>Result`; un `resultado` vacío viene como `xsi:nil`.
+
+`Platforms/` contiene el arranque de cada plataforma, y `Resources/` el ícono y la pantalla de inicio.
 
 ## Funciones
 
-- Iniciar sesión y recuperar la contraseña (con confirmación).
+- Iniciar sesión y recuperar la contraseña (con confirmación en un panel con campos ocultos).
 - Consultar categorías y unidades: longitud, masa y temperatura.
 - Convertir con punto o coma decimal, valores negativos y botón para intercambiar origen y destino.
 - AUTH-002 o AUTH-003 cierran la sesión local y regresan al acceso.
@@ -75,5 +86,4 @@ Diferencias con el servicio JAX-WS:
 - El token solo vive en memoria; no se guardan credenciales.
 
 La app usa el identificador `ec.edu.monster.wcf`, así que puede instalarse junto a los clientes
-móviles SOAP Java y REST. `usesCleartextTraffic` está habilitado porque IIS Express se usa por HTTP
-en el laboratorio.
+móviles SOAP Java y REST.
