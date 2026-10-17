@@ -1,4 +1,4 @@
-# ClienteMovil (REST)
+# CLI_MOV_CON_UNI_JAVA_REST (REST)
 
 Aplicación Android en Java, con arquitectura MVC, para consumir el API REST `WS_CON_UNI_JAVA_REST`.
 Tiene la misma estructura y pantallas que el cliente móvil de `TI.1.1` (SOAP Java); cambia el
@@ -12,7 +12,7 @@ adaptador de servicio, que habla HTTP/JSON en lugar de SOAP.
 
 ## Abrir y ejecutar
 
-1. En Android Studio: **File > Open** y seleccionar la carpeta `04. CLIMOV/ClienteMovil`.
+1. En Android Studio: **File > Open** y seleccionar la carpeta `04. CLIMOV/CLI_MOV_CON_UNI_JAVA_REST`.
 2. Esperar a que termine el **Gradle Sync**.
 3. Elegir un emulador o un celular y presionar **Run ▶**.
 4. Usuario y clave iniciales del servidor: `monster` / `monster123`.
@@ -24,7 +24,7 @@ Se necesita JDK 21 y el Android SDK (`platforms;android-35`, `build-tools` y `pl
 
 1. Crear `local.properties` junto a `settings.gradle` con
    `sdk.dir=C\:\\Users\\USUARIO\\AppData\\Local\\Android\\Sdk`, o definir la variable `ANDROID_HOME`.
-2. **File > Open Project** y seleccionar `04. CLIMOV/ClienteMovil`.
+2. **File > Open Project** y seleccionar `04. CLIMOV/CLI_MOV_CON_UNI_JAVA_REST`.
 3. Clic derecho > **Run Gradle Task** > `assembleDebug` (o `gradlew.bat assembleDebug`).
 4. El APK queda en `app/build/outputs/apk/debug/ConversorMonsterREST-debug.apk`.
    Se instala con `adb install -r` o copiándolo al celular.

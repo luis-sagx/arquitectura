@@ -1,4 +1,4 @@
-# ClienteMovil (.NET MAUI)
+# CLI_MOV_CON_UNI_DOTNET_SOAP (.NET MAUI)
 
 Aplicación móvil en C# con .NET MAUI 10 para consumir el servicio SOAP WCF `WSConUni.svc`.
 Sigue la misma arquitectura MVC y las mismas pantallas que los clientes móviles de SOAP Java y REST.
@@ -15,7 +15,7 @@ El proyecto compila para **Android**; **iOS** está configurado pero solo compil
 
 ## Ejecutar en Visual Studio
 
-1. Abrir `ClienteMovil.csproj`.
+1. Abrir `CLI_MOV_CON_UNI_DOTNET_SOAP.csproj`.
 2. En la barra superior elegir **Android Emulator** (o un celular con depuración USB) y presionar **▶**.
 
 ## Generar el APK

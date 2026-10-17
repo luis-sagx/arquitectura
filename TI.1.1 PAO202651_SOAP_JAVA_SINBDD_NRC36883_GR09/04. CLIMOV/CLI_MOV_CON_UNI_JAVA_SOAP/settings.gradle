@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ClienteMovil"
+rootProject.name = "CLI_MOV_CON_UNI_JAVA_SOAP"
 include ':app'
