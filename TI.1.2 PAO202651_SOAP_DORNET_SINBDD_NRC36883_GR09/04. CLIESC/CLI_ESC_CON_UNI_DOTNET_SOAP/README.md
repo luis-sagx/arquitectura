@@ -27,10 +27,10 @@ Para regenerarlo con las herramientas de .NET Framework, abre una consola en `Co
 Desde esta carpeta se puede compilar con Visual Studio o con:
 
 ```powershell
-dotnet build .\ClienteEscritorio.csproj --no-restore -p:GenerateResourceMSBuildRuntime=CurrentRuntime -p:GenerateResourceMSBuildArchitecture=CurrentArchitecture
+dotnet build .\CLI_ESC_CON_UNI_DOTNET_SOAP.csproj --no-restore -p:GenerateResourceMSBuildRuntime=CurrentRuntime -p:GenerateResourceMSBuildArchitecture=CurrentArchitecture
 ```
 
-Inicia el servidor WCF, confirma el endpoint y ejecuta el proyecto `ClienteEscritorio` desde Visual Studio. El usuario y clave locales predeterminados del servidor son `monster` y `monster123`; puedes cambiarlos en la configuración del servidor.
+Inicia el servidor WCF, confirma el endpoint y ejecuta el proyecto `CLI_ESC_CON_UNI_DOTNET_SOAP` desde Visual Studio. El usuario y clave locales predeterminados del servidor son `monster` y `monster123`; puedes cambiarlos en la configuración del servidor.
 
 ## Pruebas
 

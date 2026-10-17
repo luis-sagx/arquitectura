@@ -1,0 +1,69 @@
+@model ConversorModelo
+@{
+    ViewData["Titulo"] = "Conversor de unidades";
+}
+<header class="bar">
+    <a asp-controller="Conversor" asp-action="Index">Conversor</a>
+    <form method="post" asp-controller="Acceso" asp-action="Salir">
+        <button class="secondary">Cerrar sesión</button>
+    </form>
+</header>
+<main class="wrap">
+    <p class="eyebrow">Conversión</p>
+    <h1>Convierte unidades</h1>
+    <p class="muted">El catálogo y el cálculo se consultan en el servicio WCF. Sesión activa hasta las @Model.HoraExpiracion.</p>
+
+    @if (Model.Error != null)
+    {
+        <div class="notice error">@Model.Error</div>
+    }
+
+    <section class="panel">
+        <form method="get" asp-controller="Conversor" asp-action="Index">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" onchange="this.form.submit()">
+                @foreach (OpcionCatalogo opcion in Model.Categorias)
+                {
+                    <option value="@opcion.Id" selected="@(opcion.Id == Model.Categoria)">@opcion.Etiqueta</option>
+                }
+            </select>
+            <noscript><button class="secondary">Cargar</button></noscript>
+        </form>
+
+        <form method="post" asp-controller="Conversor" asp-action="Index">
+            <input type="hidden" name="categoria" value="@Model.Categoria">
+            <label for="valor">Valor</label>
+            <input id="valor" name="valor" inputmode="decimal" required value="@Model.Valor" placeholder="Ej.: 2,5">
+            <div class="grid">
+                <div>
+                    <label for="origen">Unidad de origen</label>
+                    <select id="origen" name="origen" required>
+                        @foreach (OpcionCatalogo opcion in Model.Unidades)
+                        {
+                            <option value="@opcion.Id" selected="@(opcion.Id == Model.Origen)">@opcion.Etiqueta</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label for="destino">Unidad de destino</label>
+                    <select id="destino" name="destino" required>
+                        @foreach (OpcionCatalogo opcion in Model.Unidades)
+                        {
+                            <option value="@opcion.Id" selected="@(opcion.Id == Model.Destino)">@opcion.Etiqueta</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <button>Convertir</button>
+        </form>
+    </section>
+
+    @if (Model.Resultado != null)
+    {
+        <section class="result">
+            <p class="eyebrow">Resultado</p>
+            <strong>@Model.Resultado</strong>
+            <p>@Model.DetalleResultado</p>
+        </section>
+    }
+</main>

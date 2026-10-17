@@ -1,4 +1,4 @@
-# ClienteEscritorio
+# CLI_ESC_CON_UNI_JAVA_SOAP
 
 Aplicación Java Swing con arquitectura MVC para consumir el servicio SOAP `WSConUni`.
 
@@ -10,7 +10,7 @@ Aplicación Java Swing con arquitectura MVC para consumir el servicio SOAP `WSCo
 
 ## Abrir y ejecutar en NetBeans
 
-1. Selecciona **File > Open Project** y abre la carpeta `04. CLIESC/ClienteEscritorio`.
+1. Selecciona **File > Open Project** y abre la carpeta `04. CLIESC/CLI_ESC_CON_UNI_JAVA_SOAP`.
 2. Ejecuta **Clean and Build**. Maven genera los proxies JAX-WS en `target/generated-sources` desde el WSDL guardado localmente.
 3. Ejecuta el proyecto; la clase principal es `ec.edu.monster.ClienteEscritorio`.
 

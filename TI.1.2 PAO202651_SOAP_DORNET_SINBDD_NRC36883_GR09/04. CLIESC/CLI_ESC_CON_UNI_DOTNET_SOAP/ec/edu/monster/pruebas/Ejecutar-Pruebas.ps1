@@ -8,7 +8,7 @@ if (-not (Test-Path -LiteralPath $compiler)) {
     throw 'No se encontro el compilador de .NET Framework (csc.exe).'
 }
 
-& dotnet build (Join-Path $projectRoot 'ClienteEscritorio.csproj') --no-restore `
+& dotnet build (Join-Path $projectRoot 'CLI_ESC_CON_UNI_DOTNET_SOAP.csproj') --no-restore `
     -p:GenerateResourceMSBuildRuntime=CurrentRuntime `
     -p:GenerateResourceMSBuildArchitecture=CurrentArchitecture
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

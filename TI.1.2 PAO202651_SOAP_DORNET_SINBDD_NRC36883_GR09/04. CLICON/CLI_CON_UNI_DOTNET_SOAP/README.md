@@ -8,7 +8,7 @@ El código está organizado bajo `ec.edu.monster`: `consola`, `consola.controlad
 
 1. Abre la solución `04. SERVIDOR/WCF_CON_UNI_DOTNET_SOAP/WCF_CON_UNI_DOTNET_SOAP.slnx`.
 2. Inicia el proyecto web `WCF_CON_UNI_DOTNET_SOAP` con F5 y confirma que el servicio esté disponible en `http://localhost:14028/WSConUni.svc`.
-3. Ejecuta `ClienteConsola` desde Visual Studio. El usuario y clave iniciales son `monster` y `monster123`.
+3. Ejecuta `CLI_CON_UNI_DOTNET_SOAP` desde Visual Studio. El usuario y clave iniciales son `monster` y `monster123`.
 
 Si IIS Express muestra otro puerto, cambia `conversor.endpoint` en `App.config` o pasa la URL como primer argumento al ejecutar el cliente. También se acepta la URL terminada en `?wsdl`; el cliente la normaliza al endpoint `.svc`.
 

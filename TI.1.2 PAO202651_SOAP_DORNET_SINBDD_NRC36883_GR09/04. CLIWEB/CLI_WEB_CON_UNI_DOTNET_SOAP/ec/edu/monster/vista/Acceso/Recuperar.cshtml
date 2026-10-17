@@ -1,0 +1,28 @@
+@model RecuperarModelo
+@{
+    ViewData["Titulo"] = "Recuperar clave · Conversor";
+}
+<main class="panel auth">
+    <p class="eyebrow">Conversor de unidades</p>
+    <h1>Recupera tu clave</h1>
+
+    @if (Model.Error != null)
+    {
+        <div class="notice error">@Model.Error</div>
+    }
+    @if (Model.Exito != null)
+    {
+        <div class="notice success">@Model.Exito</div>
+    }
+
+    <form method="post" asp-controller="Acceso" asp-action="Recuperar">
+        <label for="usuario">Usuario</label>
+        <input id="usuario" name="usuario" value="@Model.Usuario" autocomplete="username" required maxlength="100">
+        <label for="clave">Nueva clave</label>
+        <input id="clave" name="clave" type="password" autocomplete="new-password" required maxlength="200">
+        <label for="confirmar">Confirma la clave</label>
+        <input id="confirmar" name="confirmar" type="password" autocomplete="new-password" required maxlength="200">
+        <button>Actualizar clave</button>
+    </form>
+    <p><a class="link-button link-button--back" asp-controller="Acceso" asp-action="Login">Volver al inicio</a></p>
+</main>
