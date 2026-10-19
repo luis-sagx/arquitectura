@@ -14,7 +14,7 @@ public final class MainConsola {
 
     public static void main(String[] args) {
         String url = args.length > 0 ? args[0] : System.getProperty("conversor.endpoint",
-            "http://localhost:8080/WS_CON_UNI_JAVA_SOAP/WSConUni");
+            "https://recycled-facedown-traction.ngrok-free.dev/WS_CON_UNI_JAVA_SOAP/WSConUni");
         try {
             var cliente = new ClienteSoap(URI.create(url));
             var salida = new PrintWriter(System.out, true);

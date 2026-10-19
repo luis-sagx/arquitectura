@@ -11,7 +11,7 @@ import javax.swing.UIManager;
 /** Punto de entrada de la aplicación de escritorio. */
 public final class ClienteEscritorio {
     private static final String ENDPOINT_PREDETERMINADO =
-            "http://localhost:8080/WS_CON_UNI_JAVA_SOAP/WSConUni";
+            "https://recycled-facedown-traction.ngrok-free.dev/WS_CON_UNI_JAVA_SOAP/WSConUni";
 
     private ClienteEscritorio() { }
 
