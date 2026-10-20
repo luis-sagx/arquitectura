@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://ws.controladores.monster.edu.ec/" elementFormDefault="qualified" targetNamespace="http://ws.controladores.monster.edu.ec/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="autenticar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="usuario" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="clave" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="autenticarResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="autenticarResult" type="tns:Respuesta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Respuesta">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="estado" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codigo" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="mensaje" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="token" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="expiraEn" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="resultado" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" maxOccurs="1" name="categoria" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="unidadOrigen" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="unidadDestino" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="categorias" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="unidades" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="recuperarClave">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="usuario" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="nuevaClave" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="recuperarClaveResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="recuperarClaveResult" type="tns:Respuesta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="obtenerCategorias">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="token" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="obtenerCategoriasResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="obtenerCategoriasResult" type="tns:Respuesta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="obtenerUnidades">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="token" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="categoria" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="obtenerUnidadesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="obtenerUnidadesResult" type="tns:Respuesta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="convertir">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="token" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="categoria" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="unidadOrigen" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="unidadDestino" type="xs:string" />
+        <xs:element minOccurs="1" maxOccurs="1" name="valor" nillable="true" type="xs:double" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="convertirResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="convertirResult" type="tns:Respuesta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
