@@ -1,0 +1,40 @@
+@WS_CON_UNI_DOTNET_REST_HostAddress = http://localhost:5111
+@token = pega-aqui-el-token-devuelto-por-autenticar
+
+### Autenticar
+POST {{WS_CON_UNI_DOTNET_REST_HostAddress}}/api/ws-con-uni/autenticar
+Content-Type: application/json
+
+{
+  "usuario": "monster",
+  "clave": "monster123"
+}
+
+### Recuperar clave
+POST {{WS_CON_UNI_DOTNET_REST_HostAddress}}/api/ws-con-uni/recuperar-clave
+Content-Type: application/json
+
+{
+  "usuario": "monster",
+  "nuevaClave": "monster123"
+}
+
+### Obtener categorías
+GET {{WS_CON_UNI_DOTNET_REST_HostAddress}}/api/ws-con-uni/categorias
+Authorization: Bearer {{token}}
+
+### Obtener unidades
+GET {{WS_CON_UNI_DOTNET_REST_HostAddress}}/api/ws-con-uni/unidades?categoria=LONGITUD
+Authorization: Bearer {{token}}
+
+### Convertir
+POST {{WS_CON_UNI_DOTNET_REST_HostAddress}}/api/ws-con-uni/convertir
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "categoria": "LONGITUD",
+  "unidadOrigen": "METRO",
+  "unidadDestino": "CENTIMETRO",
+  "valor": 2
+}
