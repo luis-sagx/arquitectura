@@ -1524,10 +1524,10 @@ ColnFKNameUse=No</a:ModelOptionsText>
 <a:Modifier>jerem</a:Modifier>
 <a:FlowType>NO</a:FlowType>
 <c:Object1>
-<o:Decision Ref="o74"/>
+<o:Activity Ref="o79"/>
 </c:Object1>
 <c:Object2>
-<o:Activity Ref="o79"/>
+<o:Decision Ref="o74"/>
 </c:Object2>
 </o:ActivityFlow>
 </c:Flows>
@@ -2252,8 +2252,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o34">
 <a:ObjectID>B30F5DAF-2D00-40C7-9845-B0AAF6258411</a:ObjectID>
-<a:Name>Generar y retornar respuesta SOAP2</a:Name>
-<a:Code>Generar_y_retornar_respuesta_SOAP2</a:Code>
+<a:Name>Generar y retornar respuesta SOAP (unidades)</a:Name>
+<a:Code>Generar_y_retornar_respuesta_SOAP_unidades</a:Code>
 <a:CreationDate>1791463142</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791463142</a:ModificationDate>
@@ -2317,8 +2317,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o45">
 <a:ObjectID>ACDCDF91-9B7C-4BCF-9F15-DC7B7D7B113D</a:ObjectID>
-<a:Name>Retornar respuesta al cliente.</a:Name>
-<a:Code>Retornar_respuesta_al_cliente_</a:Code>
+<a:Name>Retornar error AUTH-002 o AUTH-003 al cliente</a:Name>
+<a:Code>Retornar_error_AUTH_002_o_AUTH_003_al_cliente</a:Code>
 <a:CreationDate>1791463281</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791463290</a:ModificationDate>
@@ -2343,8 +2343,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o56">
 <a:ObjectID>3006E82C-2E14-4EBC-9593-839651186E19</a:ObjectID>
-<a:Name>Generar respuesta SOAP de error</a:Name>
-<a:Code>Generar_respuesta_SOAP_de_error</a:Code>
+<a:Name>Generar respuesta SOAP de error (DATA-001)</a:Name>
+<a:Code>Generar_respuesta_SOAP_de_error_DATA_001</a:Code>
 <a:CreationDate>1791463324</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791463336</a:ModificationDate>
@@ -2356,8 +2356,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o58">
 <a:ObjectID>43CE60D4-E7FF-4366-893F-9889C9EA4B86</a:ObjectID>
-<a:Name>Retornar respuesta al cliente</a:Name>
-<a:Code>Retornar_respuesta_al_cliente</a:Code>
+<a:Name>Retornar error DATA-001 al cliente</a:Name>
+<a:Code>Retornar_error_DATA_001_al_cliente</a:Code>
 <a:CreationDate>1791463325</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791463344</a:ModificationDate>
@@ -2369,8 +2369,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o48">
 <a:ObjectID>344D2608-4203-4B4C-B0B1-50ED64FABC3B</a:ObjectID>
-<a:Name>Gestionar token inválido o sesión expirada2</a:Name>
-<a:Code>Gestionar_token_invalido_o_sesion_expirada2</a:Code>
+<a:Name>Gestionar token inválido o sesión expirada (unidades)</a:Name>
+<a:Code>Gestionar_token_invalido_o_sesion_expirada_unidades</a:Code>
 <a:CreationDate>1791463376</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791463405</a:ModificationDate>
@@ -2382,8 +2382,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o50">
 <a:ObjectID>4A18EBE0-AB85-4098-A800-97C759940BEB</a:ObjectID>
-<a:Name>Generar respuesta SOAP de error (AUTH-002 o AUTH-003)2</a:Name>
-<a:Code>Generar_respuesta_SOAP_de_error__AUTH_002_o_AUTH_003_2</a:Code>
+<a:Name>Generar respuesta SOAP de error de unidades (AUTH-002 o AUTH-003)</a:Name>
+<a:Code>Generar_respuesta_SOAP_de_error_de_unidades_AUTH_002_o_AUTH_003</a:Code>
 <a:CreationDate>1791463376</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791463376</a:ModificationDate>
@@ -2395,8 +2395,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o52">
 <a:ObjectID>1CC5157B-A9AB-47E6-A8B5-D6C1EB1A7F06</a:ObjectID>
-<a:Name>Retornar respuesta al cliente.2</a:Name>
-<a:Code>Retornar_respuesta_al_cliente_2</a:Code>
+<a:Name>Retornar error AUTH-002 o AUTH-003 al cliente (unidades)</a:Name>
+<a:Code>Retornar_error_AUTH_002_o_AUTH_003_al_cliente_unidades</a:Code>
 <a:CreationDate>1791463376</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791463376</a:ModificationDate>
@@ -2421,8 +2421,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o70">
 <a:ObjectID>FB6EF290-F23E-4AA6-96C8-99F6EE659065</a:ObjectID>
-<a:Name>Mostrar mensaje de error</a:Name>
-<a:Code>Mostrar_mensaje_de_error</a:Code>
+<a:Name>Mostrar mensaje de error de categorías</a:Name>
+<a:Code>Mostrar_mensaje_de_error_de_categorias</a:Code>
 <a:CreationDate>1791464235</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791464258</a:ModificationDate>
@@ -2447,8 +2447,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o79">
 <a:ObjectID>4C0D08A5-5096-4ACC-828C-9079AD99E916</a:ObjectID>
-<a:Name>Mostrar mensaje de error2</a:Name>
-<a:Code>Mostrar_mensaje_de_error2</a:Code>
+<a:Name>Mostrar mensaje de error de unidades</a:Name>
+<a:Code>Mostrar_mensaje_de_error_de_unidades</a:Code>
 <a:CreationDate>1791464408</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791464434</a:ModificationDate>
@@ -2498,8 +2498,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Decision>
 <o:Decision Id="o65">
 <a:ObjectID>DBDBEEC6-22FE-4A96-B9CF-3F24BCD91B61</a:ObjectID>
-<a:Name>¿Consulta exitosa?</a:Name>
-<a:Code>¿Consulta_exitosa?</a:Code>
+<a:Name>¿Consulta de categorías exitosa?</a:Name>
+<a:Code>Consulta_de_categorias_exitosa</a:Code>
 <a:CreationDate>1791464198</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791464258</a:ModificationDate>
@@ -2510,8 +2510,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Decision>
 <o:Decision Id="o74">
 <a:ObjectID>60C2C493-0590-4487-9F67-4C6B0C190DB5</a:ObjectID>
-<a:Name>¿Consulta exitosa?2</a:Name>
-<a:Code>¿Consulta_exitosa?2</a:Code>
+<a:Name>¿Consulta de unidades exitosa?</a:Name>
+<a:Code>Consulta_de_unidades_exitosa</a:Code>
 <a:CreationDate>1791464366</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791464444</a:ModificationDate>
@@ -3348,7 +3348,7 @@ DESTINATION 0 Arial,8,N</a:FontList>
 <a:CreationDate>1791464423</a:CreationDate>
 <a:ModificationDate>1791464429</a:ModificationDate>
 <a:Rect>((-29150,-25370), (-23651,-13230))</a:Rect>
-<a:ListOfPoints>((-24051,-24970),(-24051,-13855),(-28750,-13855))</a:ListOfPoints>
+<a:ListOfPoints>((-28750,-13855),(-24051,-13855),(-24051,-24970))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
 <a:LineColor>16744448</a:LineColor>
@@ -3356,10 +3356,10 @@ DESTINATION 0 Arial,8,N</a:FontList>
 <a:FontList>SOURCE 0 Arial,8,N
 DESTINATION 0 Arial,8,N</a:FontList>
 <c:SourceSymbol>
-<o:ActivitySymbol Ref="o102"/>
+<o:BaseDecisionSymbol Ref="o103"/>
 </c:SourceSymbol>
 <c:DestinationSymbol>
-<o:BaseDecisionSymbol Ref="o103"/>
+<o:ActivitySymbol Ref="o102"/>
 </c:DestinationSymbol>
 <c:Object>
 <o:ActivityFlow Ref="o80"/>

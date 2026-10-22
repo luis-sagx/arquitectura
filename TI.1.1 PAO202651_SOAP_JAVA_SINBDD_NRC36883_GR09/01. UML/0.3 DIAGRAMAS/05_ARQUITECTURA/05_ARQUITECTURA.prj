@@ -571,6 +571,21 @@ Shadow=0</a:DisplayPreferences>
 <c:DefaultDiagram>
 <o:ProjectDiagram Ref="o3"/>
 </c:DefaultDiagram>
+<c:ModelsAndFiles>
+<o:ModelDocument Id="o4">
+<a:ObjectID>D5968D96-9C75-4E59-82AB-BC161BCE1616</a:ObjectID>
+<a:Name>DiagramaArquitectura</a:Name>
+<a:Code>DiagramaArquitectura</a:Code>
+<a:CreationDate>1792619673</a:CreationDate>
+<a:Creator>SebasParra</a:Creator>
+<a:ModificationDate>1792619673</a:ModificationDate>
+<a:Modifier>SebasParra</a:Modifier>
+<a:Location>file:///%[PRJ_ROOT_DIR]%/DiagramaArquitectura.oom</a:Location>
+<a:Extension>oom</a:Extension>
+<a:ModelDocument.ModelID>967C0644-87D1-4DBE-9A88-4B453959DC52</a:ModelDocument.ModelID>
+<a:ModelClassID>18112060-1A4B-11D1-83D9-444553540000</a:ModelClassID>
+</o:ModelDocument>
+</c:ModelsAndFiles>
 </o:Project>
 </c:Children>
 </o:RootObject>

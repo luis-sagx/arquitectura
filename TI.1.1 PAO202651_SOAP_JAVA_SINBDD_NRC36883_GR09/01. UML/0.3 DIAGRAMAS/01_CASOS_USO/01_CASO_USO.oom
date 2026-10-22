@@ -1418,6 +1418,46 @@ Shadow=0</a:DisplayPreferences>
 <a:PageOrientation>-23176</a:PageOrientation>
 <a:PaperSource>-23176</a:PaperSource>
 <c:Symbols>
+<o:DependencySymbol Id="o77">
+<a:CreationDate>1792620678</a:CreationDate>
+<a:ModificationDate>1792620678</a:ModificationDate>
+<a:Rect>((2097,-12400), (26567,-1000))</a:Rect>
+<a:ListOfPoints>((2497,-1400),(23500,-1400),(23500,-12000),(26167,-12000))</a:ListOfPoints>
+<a:CornerStyle>1</a:CornerStyle>
+<a:ArrowStyle>8</a:ArrowStyle>
+<a:LineColor>16744576</a:LineColor>
+<a:ShadowColor>12632256</a:ShadowColor>
+<a:FontList>CENTER 0 Arial,8,N</a:FontList>
+<c:SourceSymbol>
+<o:UseCaseSymbol Ref="o22"/>
+</c:SourceSymbol>
+<c:DestinationSymbol>
+<o:UseCaseSymbol Ref="o42"/>
+</c:DestinationSymbol>
+<c:Object>
+<o:Dependency Ref="o76"/>
+</c:Object>
+</o:DependencySymbol>
+<o:DependencySymbol Id="o79">
+<a:CreationDate>1792620678</a:CreationDate>
+<a:ModificationDate>1792620678</a:ModificationDate>
+<a:Rect>((4642,-11900), (27025,-8900))</a:Rect>
+<a:ListOfPoints>((5042,-9300),(22000,-9300),(22000,-11500),(26625,-11500))</a:ListOfPoints>
+<a:CornerStyle>1</a:CornerStyle>
+<a:ArrowStyle>8</a:ArrowStyle>
+<a:LineColor>16744576</a:LineColor>
+<a:ShadowColor>12632256</a:ShadowColor>
+<a:FontList>CENTER 0 Arial,8,N</a:FontList>
+<c:SourceSymbol>
+<o:UseCaseSymbol Ref="o19"/>
+</c:SourceSymbol>
+<c:DestinationSymbol>
+<o:UseCaseSymbol Ref="o42"/>
+</c:DestinationSymbol>
+<c:Object>
+<o:Dependency Ref="o78"/>
+</c:Object>
+</o:DependencySymbol>
 <o:RectangleSymbol Id="o6">
 <a:CreationDate>1791312887</a:CreationDate>
 <a:ModificationDate>1791423069</a:ModificationDate>
@@ -2149,6 +2189,38 @@ LABL 0 Arial,8,N</a:FontList>
 </o:Generalization>
 </c:Generalizations>
 <c:Dependencies>
+<o:Dependency Id="o76">
+<a:ObjectID>FCF2C3F4-31DE-4C24-BB22-03B0884DD0F7</a:ObjectID>
+<a:Name>Dependency_21</a:Name>
+<a:Code>Dependency_21</a:Code>
+<a:CreationDate>1792620678</a:CreationDate>
+<a:Creator>SebasParra</a:Creator>
+<a:ModificationDate>1792620678</a:ModificationDate>
+<a:Modifier>SebasParra</a:Modifier>
+<a:Stereotype>include</a:Stereotype>
+<c:Object1>
+<o:UseCase Ref="o69"/>
+</c:Object1>
+<c:Object2>
+<o:UseCase Ref="o62"/>
+</c:Object2>
+</o:Dependency>
+<o:Dependency Id="o78">
+<a:ObjectID>59C5F0D2-4DB5-4BAF-B29D-36968AD55B47</a:ObjectID>
+<a:Name>Dependency_22</a:Name>
+<a:Code>Dependency_22</a:Code>
+<a:CreationDate>1792620678</a:CreationDate>
+<a:Creator>SebasParra</a:Creator>
+<a:ModificationDate>1792620678</a:ModificationDate>
+<a:Modifier>SebasParra</a:Modifier>
+<a:Stereotype>include</a:Stereotype>
+<c:Object1>
+<o:UseCase Ref="o69"/>
+</c:Object1>
+<c:Object2>
+<o:UseCase Ref="o63"/>
+</c:Object2>
+</o:Dependency>
 <o:Dependency Id="o14">
 <a:ObjectID>78BDC17D-600A-4412-BA89-A362806E4405</a:ObjectID>
 <a:Name>Dependency_1</a:Name>

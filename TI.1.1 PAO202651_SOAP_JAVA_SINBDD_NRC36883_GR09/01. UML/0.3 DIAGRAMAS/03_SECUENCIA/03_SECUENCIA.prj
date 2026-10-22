@@ -571,6 +571,47 @@ Shadow=0</a:DisplayPreferences>
 <c:DefaultDiagram>
 <o:ProjectDiagram Ref="o3"/>
 </c:DefaultDiagram>
+<c:ModelsAndFiles>
+<o:ModelDocument Id="o4">
+<a:ObjectID>E7C6EC63-A1E2-479C-8821-24D0FC04220F</a:ObjectID>
+<a:Name>SecuenciaIniciarSesion</a:Name>
+<a:Code>SecuenciaIniciarSesion</a:Code>
+<a:CreationDate>1792619673</a:CreationDate>
+<a:Creator>SebasParra</a:Creator>
+<a:ModificationDate>1792619673</a:ModificationDate>
+<a:Modifier>SebasParra</a:Modifier>
+<a:Location>file:///%[PRJ_ROOT_DIR]%/SecuenciaIniciarSesion.oom</a:Location>
+<a:Extension>oom</a:Extension>
+<a:ModelDocument.ModelID>6B94992B-56AC-4E7B-9EA9-C60FA6DC6C7F</a:ModelDocument.ModelID>
+<a:ModelClassID>18112060-1A4B-11D1-83D9-444553540000</a:ModelClassID>
+</o:ModelDocument>
+<o:ModelDocument Id="o5">
+<a:ObjectID>25602371-1D49-409E-A352-52DDC17D1DA2</a:ObjectID>
+<a:Name>SecuenciaConsultaCatalogo</a:Name>
+<a:Code>SecuenciaConsultaCatalogo</a:Code>
+<a:CreationDate>1792619673</a:CreationDate>
+<a:Creator>SebasParra</a:Creator>
+<a:ModificationDate>1792619673</a:ModificationDate>
+<a:Modifier>SebasParra</a:Modifier>
+<a:Location>file:///%[PRJ_ROOT_DIR]%/SecuenciaConsultaCatalogo.oom</a:Location>
+<a:Extension>oom</a:Extension>
+<a:ModelDocument.ModelID>BE0870CB-975E-4943-8C37-C4CCB7FC9D59</a:ModelDocument.ModelID>
+<a:ModelClassID>18112060-1A4B-11D1-83D9-444553540000</a:ModelClassID>
+</o:ModelDocument>
+<o:ModelDocument Id="o6">
+<a:ObjectID>6BAA6DEA-3E17-42DD-84EC-7DE93EA5300C</a:ObjectID>
+<a:Name>SecuenciaConvertirUnidades</a:Name>
+<a:Code>SecuenciaConvertirUnidades</a:Code>
+<a:CreationDate>1792619673</a:CreationDate>
+<a:Creator>SebasParra</a:Creator>
+<a:ModificationDate>1792619673</a:ModificationDate>
+<a:Modifier>SebasParra</a:Modifier>
+<a:Location>file:///%[PRJ_ROOT_DIR]%/SecuenciaConvertirUnidades.oom</a:Location>
+<a:Extension>oom</a:Extension>
+<a:ModelDocument.ModelID>6B6ED66C-C069-493D-978F-49C5F60B4596</a:ModelDocument.ModelID>
+<a:ModelClassID>18112060-1A4B-11D1-83D9-444553540000</a:ModelClassID>
+</o:ModelDocument>
+</c:ModelsAndFiles>
 </o:Project>
 </c:Children>
 </o:RootObject>

@@ -1013,6 +1013,19 @@ ColnFKNameUse=No</a:ModelOptionsText>
 <o:ActivityDiagram Ref="o5"/>
 </c:DefaultDiagram>
 <c:Flows>
+<o:ActivityFlow Id="o196">
+<a:ObjectID>101A8814-F4E1-452B-A783-C9F9B9073F29</a:ObjectID>
+<a:CreationDate>1792620619</a:CreationDate>
+<a:Creator>SebasParra</a:Creator>
+<a:ModificationDate>1792620619</a:ModificationDate>
+<a:Modifier>SebasParra</a:Modifier>
+<c:Object1>
+<o:Decision Ref="o86"/>
+</c:Object1>
+<c:Object2>
+<o:Activity Ref="o83"/>
+</c:Object2>
+</o:ActivityFlow>
 <o:ActivityFlow Id="o6">
 <a:ObjectID>7D3AC21C-3A15-46F1-95D0-8C533E2A489A</a:ObjectID>
 <a:CreationDate>1791429514</a:CreationDate>
@@ -1195,19 +1208,6 @@ ColnFKNameUse=No</a:ModelOptionsText>
 </c:Object1>
 <c:Object2>
 <o:Activity Ref="o12"/>
-</c:Object2>
-</o:ActivityFlow>
-<o:ActivityFlow Id="o35">
-<a:ObjectID>A32650B2-6E1C-4DA8-96A5-BDB19A24DC52</a:ObjectID>
-<a:CreationDate>1791429514</a:CreationDate>
-<a:Creator>jerem</a:Creator>
-<a:ModificationDate>1791429515</a:ModificationDate>
-<a:Modifier>jerem</a:Modifier>
-<c:Object1>
-<o:Activity Ref="o36"/>
-</c:Object1>
-<c:Object2>
-<o:Activity Ref="o37"/>
 </c:Object2>
 </o:ActivityFlow>
 <o:ActivityFlow Id="o38">
@@ -2370,30 +2370,10 @@ Shadow=0</a:DisplayPreferences>
 <o:OrganizationUnit Ref="o99"/>
 </c:OrganizationUnit>
 </o:Activity>
-<o:Activity Id="o37">
-<a:ObjectID>689FC7B6-13D6-466A-8D83-BA19B69220A6</a:ObjectID>
-<a:Name>Convertir unidad origen a unidad base, y de la unidad base a la unidad destino</a:Name>
-<a:Code>Convertirunidadorigenaunidadbase,ydelaunidadbasealaunidaddestino</a:Code>
-<a:CreationDate>1791429514</a:CreationDate>
-<a:Creator>jerem</a:Creator>
-<a:ModificationDate>1791432881</a:ModificationDate>
-<a:Modifier>jerem</a:Modifier>
-<a:ActionType>UNDEF</a:ActionType>
-</o:Activity>
-<o:Activity Id="o36">
-<a:ObjectID>415BA58A-1310-4F72-8AA6-9B842536511F</a:ObjectID>
-<a:Name>Retornar Respuesta con el valor convertido y Éxito = true</a:Name>
-<a:Code>RetornarRespuestaconelvalorconvertidoyExitotrue</a:Code>
-<a:CreationDate>1791429514</a:CreationDate>
-<a:Creator>jerem</a:Creator>
-<a:ModificationDate>1791432881</a:ModificationDate>
-<a:Modifier>jerem</a:Modifier>
-<a:ActionType>UNDEF</a:ActionType>
-</o:Activity>
 <o:Activity Id="o39">
 <a:ObjectID>4260F7EB-E143-40FA-BFF9-5F5BB76D23CF</a:ObjectID>
-<a:Name>Gestionar  token invalido o no autorizado</a:Name>
-<a:Code>RetornarRespuestaconmensajedeTokennoautorizadoyExitofalso</a:Code>
+<a:Name>Gestionar token invalido o no autorizado</a:Name>
+<a:Code>Gestionar_token_invalido_o_no_autorizado</a:Code>
 <a:CreationDate>1791429514</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791431154</a:ModificationDate>
@@ -2418,8 +2398,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o47">
 <a:ObjectID>756902A4-6A6F-4C0C-BB8B-EA7B97F43D81</a:ObjectID>
-<a:Name>Retornar respuesta al cliente</a:Name>
-<a:Code>RetornarRespuestaconmensajedeTokennoautorizadoyExitofalso3</a:Code>
+<a:Name>Retornar error AUTH-002 al cliente</a:Name>
+<a:Code>Retornar_error_AUTH_002_al_cliente</a:Code>
 <a:CreationDate>1791431187</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791431200</a:ModificationDate>
@@ -2431,8 +2411,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o49">
 <a:ObjectID>FE782872-2DC2-49AD-B696-89E07DE368B4</a:ObjectID>
-<a:Name>Verificar vigencia del token ( fecha de expiracion)</a:Name>
-<a:Code>Convertirunidadorigenaunidadbase,ydelaunidadbasealaunidaddestino2</a:Code>
+<a:Name>Verificar vigencia del token (fecha de expiracion)</a:Name>
+<a:Code>Verificar_vigencia_del_token_fecha_de_expiracion</a:Code>
 <a:CreationDate>1791431344</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791431402</a:ModificationDate>
@@ -2470,8 +2450,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o56">
 <a:ObjectID>BCE97E0A-3962-4C39-A7FF-D4AF00A8B724</a:ObjectID>
-<a:Name>Retornar respuesta al cliente2</a:Name>
-<a:Code>RetornarRespuestaconmensajedeTokennoautorizadoyExitofalso6</a:Code>
+<a:Name>Retornar error AUTH-003 al cliente</a:Name>
+<a:Code>Retornar_error_AUTH_003_al_cliente</a:Code>
 <a:CreationDate>1791431546</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791431547</a:ModificationDate>
@@ -2522,8 +2502,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o69">
 <a:ObjectID>AA6609CD-6B8D-43D2-BC01-C2B116B0A6E4</a:ObjectID>
-<a:Name>Gestionar unidad no soportad</a:Name>
-<a:Code>RetornarRespuestaconmensajedeTokennoautorizadoyExitofalso10</a:Code>
+<a:Name>Gestionar unidad no soportada</a:Name>
+<a:Code>Gestionar_unidad_no_soportada</a:Code>
 <a:CreationDate>1791432173</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791432374</a:ModificationDate>
@@ -2548,8 +2528,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o73">
 <a:ObjectID>59FBB6A4-7B9E-4463-B91E-6D986477E96E</a:ObjectID>
-<a:Name>Retornar respuesta al cliente3</a:Name>
-<a:Code>RetornarRespuestaconmensajedeTokennoautorizadoyExitofalso12</a:Code>
+<a:Name>Retornar error UNIT-001 al cliente</a:Name>
+<a:Code>Retornar_error_UNIT_001_al_cliente</a:Code>
 <a:CreationDate>1791432173</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791432173</a:ModificationDate>
@@ -2574,8 +2554,8 @@ Shadow=0</a:DisplayPreferences>
 </o:Activity>
 <o:Activity Id="o77">
 <a:ObjectID>6B78E037-59CA-427B-B905-E5783BECF6E4</a:ObjectID>
-<a:Name>Retornar respuesta al cliente4</a:Name>
-<a:Code>RetornarRespuestaconmensajedeTokennoautorizadoyExitofalso14</a:Code>
+<a:Name>Retornar error DATA-001 al cliente</a:Name>
+<a:Code>Retornar_error_DATA_001_al_cliente</a:Code>
 <a:CreationDate>1791432677</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791432677</a:ModificationDate>
@@ -4806,6 +4786,25 @@ LABL 0 Microsoft Sans Serif,8,N</a:FontList>
 <o:Activity Ref="o77"/>
 </c:Object>
 </o:ActivitySymbol>
+<o:FlowSymbol Id="o197">
+<a:CreationDate>1792620619</a:CreationDate>
+<a:ModificationDate>1792620619</a:ModificationDate>
+<a:Rect>((-19043,-79809), (-18243,-77454))</a:Rect>
+<a:ListOfPoints>((-18643,-77854),(-18643,-79409))</a:ListOfPoints>
+<a:CornerStyle>1</a:CornerStyle>
+<a:ArrowStyle>1</a:ArrowStyle>
+<a:LineColor>0</a:LineColor>
+<a:ShadowColor>12632256</a:ShadowColor>
+<c:SourceSymbol>
+<o:ActivitySymbol Ref="o139"/>
+</c:SourceSymbol>
+<c:DestinationSymbol>
+<o:BaseDecisionSymbol Ref="o134"/>
+</c:DestinationSymbol>
+<c:Object>
+<o:ActivityFlow Ref="o196"/>
+</c:Object>
+</o:FlowSymbol>
 <o:ActivitySymbol Id="o139">
 <a:CreationDate>1791432961</a:CreationDate>
 <a:ModificationDate>1791432963</a:ModificationDate>
@@ -5148,27 +5147,6 @@ DESTINATION 0 Arial,8,N</a:FontList>
 <o:ActivityFlow Ref="o81"/>
 </c:Object>
 </o:FlowSymbol>
-<o:FlowSymbol Id="o190">
-<a:CreationDate>1791429514</a:CreationDate>
-<a:ModificationDate>1791432881</a:ModificationDate>
-<a:Rect>((62267,-80301), (63517,-76298))</a:Rect>
-<a:ListOfPoints>((62892,-76698),(62892,-79901))</a:ListOfPoints>
-<a:CornerStyle>1</a:CornerStyle>
-<a:ArrowStyle>1</a:ArrowStyle>
-<a:LineColor>16744448</a:LineColor>
-<a:ShadowColor>12632256</a:ShadowColor>
-<a:FontList>SOURCE 0 Microsoft Sans Serif,8,N
-DESTINATION 0 Microsoft Sans Serif,8,N</a:FontList>
-<c:SourceSymbol>
-<o:ActivitySymbol Ref="o191"/>
-</c:SourceSymbol>
-<c:DestinationSymbol>
-<o:ActivitySymbol Ref="o192"/>
-</c:DestinationSymbol>
-<c:Object>
-<o:ActivityFlow Ref="o35"/>
-</c:Object>
-</o:FlowSymbol>
 <o:FlowSymbol Id="o193">
 <a:CreationDate>1791433225</a:CreationDate>
 <a:ModificationDate>1791433277</a:ModificationDate>
@@ -5191,44 +5169,6 @@ DESTINATION 0 Arial,8,N</a:FontList>
 <o:ActivityFlow Ref="o95"/>
 </c:Object>
 </o:FlowSymbol>
-<o:ActivitySymbol Id="o192">
-<a:CreationDate>1791429514</a:CreationDate>
-<a:ModificationDate>1791432881</a:ModificationDate>
-<a:IconMode>-1</a:IconMode>
-<a:Rect>((56551,-80988), (69233,-78815))</a:Rect>
-<a:LineColor>12615680</a:LineColor>
-<a:FillColor>16777152</a:FillColor>
-<a:ShadowColor>12632256</a:ShadowColor>
-<a:FontList>STRN 0 Microsoft Sans Serif,8,N
-DISPNAME 0 Microsoft Sans Serif,8,N
-LABL 0 Microsoft Sans Serif,8,N</a:FontList>
-<a:BrushStyle>6</a:BrushStyle>
-<a:GradientFillMode>65</a:GradientFillMode>
-<a:GradientEndColor>16777215</a:GradientEndColor>
-<c:Object>
-<o:Activity Ref="o36"/>
-</c:Object>
-</o:ActivitySymbol>
-<o:ActivitySymbol Id="o191">
-<a:CreationDate>1791429514</a:CreationDate>
-<a:ModificationDate>1791432881</a:ModificationDate>
-<a:IconMode>-1</a:IconMode>
-<a:Rect>((57038,-76698), (68904,-73342))</a:Rect>
-<a:AutoAdjustToText>0</a:AutoAdjustToText>
-<a:LineColor>12615680</a:LineColor>
-<a:FillColor>16777152</a:FillColor>
-<a:ShadowColor>12632256</a:ShadowColor>
-<a:FontList>STRN 0 Microsoft Sans Serif,8,N
-DISPNAME 0 Microsoft Sans Serif,8,N
-LABL 0 Microsoft Sans Serif,8,N</a:FontList>
-<a:BrushStyle>6</a:BrushStyle>
-<a:GradientFillMode>65</a:GradientFillMode>
-<a:GradientEndColor>16777215</a:GradientEndColor>
-<a:ManuallyResized>1</a:ManuallyResized>
-<c:Object>
-<o:Activity Ref="o37"/>
-</c:Object>
-</o:ActivitySymbol>
 </c:Symbols>
 </o:ActivityDiagram>
 </c:ActivityDiagrams>

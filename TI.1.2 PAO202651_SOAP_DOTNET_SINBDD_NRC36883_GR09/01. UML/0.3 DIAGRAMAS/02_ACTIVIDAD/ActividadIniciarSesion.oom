@@ -1333,8 +1333,8 @@ ColnFKNameUse=No</a:ModelOptionsText>
 </o:Activity>
 <o:Activity Id="o13">
 <a:ObjectID>089372AF-9D63-46F1-9F6F-39965EDAA34A</a:ObjectID>
-<a:Name>Presionar &quot;Iniciar Sesión&#39;</a:Name>
-<a:Code>Presionar&quot;IniciarSesion</a:Code>
+<a:Name>Presionar «Iniciar Sesión»</a:Name>
+<a:Code>Presionar_Iniciar_Sesion</a:Code>
 <a:CreationDate>1791428226</a:CreationDate>
 <a:Creator>jerem</a:Creator>
 <a:ModificationDate>1791428226</a:ModificationDate>

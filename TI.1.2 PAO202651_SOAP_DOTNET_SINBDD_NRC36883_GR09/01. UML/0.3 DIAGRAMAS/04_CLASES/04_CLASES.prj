@@ -571,6 +571,21 @@ Shadow=0</a:DisplayPreferences>
 <c:DefaultDiagram>
 <o:ProjectDiagram Ref="o3"/>
 </c:DefaultDiagram>
+<c:ModelsAndFiles>
+<o:ModelDocument Id="o4">
+<a:ObjectID>60DD3995-1DF8-4D23-B7F5-1A4196C9F64A</a:ObjectID>
+<a:Name>DiagramaClases</a:Name>
+<a:Code>DiagramaClases</a:Code>
+<a:CreationDate>1792619673</a:CreationDate>
+<a:Creator>SebasParra</a:Creator>
+<a:ModificationDate>1792619673</a:ModificationDate>
+<a:Modifier>SebasParra</a:Modifier>
+<a:Location>file:///%[PRJ_ROOT_DIR]%/DiagramaClases.oom</a:Location>
+<a:Extension>oom</a:Extension>
+<a:ModelDocument.ModelID>62716989-604D-4069-BC61-B6850F591229</a:ModelDocument.ModelID>
+<a:ModelClassID>18112060-1A4B-11D1-83D9-444553540000</a:ModelClassID>
+</o:ModelDocument>
+</c:ModelsAndFiles>
 </o:Project>
 </c:Children>
 </o:RootObject>
