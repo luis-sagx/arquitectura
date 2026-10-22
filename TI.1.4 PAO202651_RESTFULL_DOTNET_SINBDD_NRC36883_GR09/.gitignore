@@ -1,0 +1,27 @@
+# Visual Studio: estado local del IDE y configuracion por usuario
+.vs/
+**/*.suo
+**/*.user
+**/*.csproj.user
+**/*.sln.docstates
+
+# Salidas de compilacion y pruebas
+**/bin/
+**/obj/
+**/TestResults/
+**/*.trx
+
+# Perfiles de publicacion locales o con credenciales
+**/*.pubxml.user
+**/*.publishsettings
+
+# Archivos temporales y logs
+**/*.log
+**/*.cache
+**/*.tmp
+**/*~
+
+# Archivos del sistema operativo
+Thumbs.db
+Desktop.ini
+.DS_Store

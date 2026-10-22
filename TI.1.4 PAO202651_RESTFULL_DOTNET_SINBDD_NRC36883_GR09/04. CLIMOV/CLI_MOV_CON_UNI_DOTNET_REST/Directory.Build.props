@@ -1,0 +1,10 @@
+<Project>
+	<!--
+		La ruta del repositorio es larga y la herramienta de recursos de Android (aapt2) falla con rutas
+		de más de 260 caracteres. Por eso los archivos intermedios (obj) se generan en una ruta corta,
+		fuera del repositorio. El APK sigue quedando en bin/ de este proyecto.
+	-->
+	<PropertyGroup>
+		<BaseIntermediateOutputPath>$(LOCALAPPDATA)\obj-cli-mov-dotnet-rest\</BaseIntermediateOutputPath>
+	</PropertyGroup>
+</Project>

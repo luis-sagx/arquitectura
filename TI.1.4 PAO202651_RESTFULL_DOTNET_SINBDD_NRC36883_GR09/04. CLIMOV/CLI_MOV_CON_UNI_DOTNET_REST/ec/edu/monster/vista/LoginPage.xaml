@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ec.edu.monster.vista.LoginPage"
+             BackgroundColor="{StaticResource Fondo}">
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="24,48,24,24" Spacing="0" VerticalOptions="Center">
+                <Label Text="MONSTER" CharacterSpacing="3" FontAttributes="Bold" FontSize="15"
+                       TextColor="{StaticResource AzulMarino}" HorizontalOptions="Center" />
+                <Label Text="Conversor de unidades" FontAttributes="Bold" FontSize="26" Margin="0,8,0,0"
+                       TextColor="{StaticResource Tinta}" HorizontalTextAlignment="Center" />
+                <Label Text="Inicia sesión para usar el servicio REST" FontSize="15" Margin="0,4,0,24"
+                       TextColor="{StaticResource Gris}" HorizontalTextAlignment="Center" />
+
+                <Border Style="{StaticResource Tarjeta}" Padding="20">
+                    <VerticalStackLayout Spacing="0">
+                        <Label Text="Usuario" Style="{StaticResource Etiqueta}" Margin="0,0,0,6" />
+                        <Border Style="{StaticResource Campo}">
+                            <Entry x:Name="usuario" Keyboard="Plain" IsSpellCheckEnabled="False"
+                                   IsTextPredictionEnabled="False" ReturnType="Next"
+                                   Completed="AlCompletarUsuario" />
+                        </Border>
+
+                        <Label Text="Contraseña" Style="{StaticResource Etiqueta}" />
+                        <Border Style="{StaticResource Campo}">
+                            <Entry x:Name="clave" IsPassword="True" ReturnType="Done"
+                                   Completed="AlIngresar" />
+                        </Border>
+
+                        <Button x:Name="ingresar" Text="Ingresar" Style="{StaticResource BotonPrincipal}"
+                                Margin="0,20,0,0" Clicked="AlIngresar" />
+                        <Button x:Name="recuperar" Text="Recuperar contraseña" Style="{StaticResource BotonTexto}"
+                                Margin="0,4,0,0" Clicked="AlRecuperar" />
+                        <ActivityIndicator x:Name="progreso" IsVisible="False" IsRunning="False"
+                                           Color="{StaticResource AzulMarino}" HeightRequest="28" Margin="0,8,0,0" />
+                        <Label x:Name="mensaje" FontSize="14" Margin="0,8,0,0" MinimumHeightRequest="20"
+                               TextColor="{StaticResource Gris}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Panel para recuperar la contraseña (dos campos ocultos, que un DisplayPrompt no permite). -->
+        <Grid x:Name="panelRecuperar" IsVisible="False" BackgroundColor="#80000000" Padding="24">
+            <Border Style="{StaticResource Tarjeta}" Padding="20" VerticalOptions="Center">
+                <VerticalStackLayout Spacing="0">
+                    <Label Text="Recuperar contraseña" FontAttributes="Bold" FontSize="20"
+                           TextColor="{StaticResource Tinta}" />
+                    <Label x:Name="mensajeRecuperar" FontSize="14" Margin="0,6,0,4"
+                           TextColor="{StaticResource Gris}" />
+
+                    <Label Text="Nueva contraseña" Style="{StaticResource Etiqueta}" />
+                    <Border Style="{StaticResource Campo}">
+                        <Entry x:Name="nuevaClave" IsPassword="True" ReturnType="Next" />
+                    </Border>
+                    <Label Text="Confirmar contraseña" Style="{StaticResource Etiqueta}" />
+                    <Border Style="{StaticResource Campo}">
+                        <Entry x:Name="confirmarClave" IsPassword="True" ReturnType="Done" />
+                    </Border>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,20,0,0">
+                        <Button Text="Cancelar" Style="{StaticResource BotonTexto}" Clicked="AlCancelarRecuperacion" />
+                        <Button Grid.Column="1" Text="Actualizar" Style="{StaticResource BotonPrincipal}"
+                                Clicked="AlConfirmarRecuperacion" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>
