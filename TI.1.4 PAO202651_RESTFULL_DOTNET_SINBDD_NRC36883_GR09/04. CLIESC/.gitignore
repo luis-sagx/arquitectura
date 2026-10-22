@@ -1,0 +1,10 @@
+# Salidas y cachés de Visual Studio/.NET
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+
+# Documentos temporales del flujo de diseño/planificación
+/docs/superpowers/specs/
+/docs/superpowers/plans/

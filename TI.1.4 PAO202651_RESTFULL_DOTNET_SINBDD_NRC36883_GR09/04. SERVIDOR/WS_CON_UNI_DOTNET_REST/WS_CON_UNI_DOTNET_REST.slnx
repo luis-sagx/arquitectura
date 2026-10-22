@@ -1,4 +1,5 @@
 <Solution>
-  <Project Path="WS_CON_UNI_DOTNET_REST/WS_CON_UNI_DOTNET_REST.csproj" />
+  <Project Path="../../04. CLIESC/WF_CON_UNI_CLI_ESC/WF_CON_UNI_CLI_ESC.csproj" Id="998bff2e-45c1-42d1-b730-d38943a0b2c9" />
   <Project Path="WS_CON_UNI_DOTNET_REST.Verification/WS_CON_UNI_DOTNET_REST.Verification.csproj" />
+  <Project Path="WS_CON_UNI_DOTNET_REST/WS_CON_UNI_DOTNET_REST.csproj" />
 </Solution>
