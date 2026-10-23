@@ -35,12 +35,16 @@ public final class VentanaConversiones extends JFrame {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         EstilosUI.configurarVentana(this);
 
-        JPanel raiz = new JPanel(new BorderLayout(0, 22));
+        JPanel raiz = new JPanel(new BorderLayout());
         raiz.setBackground(EstilosUI.FONDO);
-        raiz.setBorder(BorderFactory.createEmptyBorder(24, 34, 24, 34));
-        raiz.add(crearCabecera(), BorderLayout.NORTH);
-        raiz.add(crearFormulario(), BorderLayout.CENTER);
-        raiz.add(crearPie(), BorderLayout.SOUTH);
+        JPanel contenido = new JPanel(new BorderLayout(0, 22));
+        contenido.setOpaque(false);
+        contenido.setBorder(BorderFactory.createEmptyBorder(24, 34, 24, 34));
+        contenido.add(crearCabecera(), BorderLayout.NORTH);
+        contenido.add(crearFormulario(), BorderLayout.CENTER);
+        contenido.add(crearPie(), BorderLayout.SOUTH);
+        raiz.add(contenido, BorderLayout.CENTER);
+        raiz.add(new ImagenLateral(), BorderLayout.EAST);
         setContentPane(raiz);
 
         categorias.addActionListener(evento -> {
