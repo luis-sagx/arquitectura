@@ -29,8 +29,8 @@ public class ConversorUnidadesServices {
     private final Map<String, Double> masa;
 
     public ConversorUnidadesServices() {
-        this(System.getProperty("conversor.usuario", "monster"),
-            System.getProperty("conversor.clave", "monster123"), Clock.systemUTC(),
+        this(System.getProperty("conversor.usuario", "Monster"),
+            System.getProperty("conversor.clave", "Monster9"), Clock.systemUTC(),
             Duration.ofMinutes(Long.parseLong(System.getProperty("conversor.sesion.minutos", "15"))));
     }
 
