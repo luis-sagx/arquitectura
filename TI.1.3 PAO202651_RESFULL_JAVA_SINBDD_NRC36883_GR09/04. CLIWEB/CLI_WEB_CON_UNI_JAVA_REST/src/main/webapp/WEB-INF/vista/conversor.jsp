@@ -26,8 +26,7 @@ RespuestaRest resultado = (RespuestaRest) request.getAttribute("resultado");
     <button class="secondary" type="submit">Cerrar sesión</button>
   </form>
 </header>
-<main class="wrap">
-  <p class="eyebrow">Conversión</p>
+<div class="screen-layout screen-layout--workspace"><main class="wrap">
   <h1>Convierte unidades</h1>
   <p class="muted">El catálogo y el cálculo se consultan en el servidor REST.</p>
   <% if (request.getAttribute("error") != null) { %>
@@ -76,6 +75,6 @@ RespuestaRest resultado = (RespuestaRest) request.getAttribute("resultado");
       <p><%=esc(resultado.getUnidadOrigen())%> &rarr; <%=esc(resultado.getUnidadDestino())%></p>
     </section>
   <% } %>
-</main>
+</main><aside class="visual-sidebar"><img src="<%=request.getContextPath()%>/recursos/img/monster.jpg" alt="Monster usando una computadora"></aside></div>
 </body>
 </html>

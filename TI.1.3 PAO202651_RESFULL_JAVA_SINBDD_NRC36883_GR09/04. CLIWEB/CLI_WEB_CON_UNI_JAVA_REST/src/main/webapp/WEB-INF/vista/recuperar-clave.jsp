@@ -10,7 +10,7 @@ private String esc(String valor) { return VistaHtml.escapar(valor); }
   <link rel="stylesheet" href="<%=request.getContextPath()%>/recursos/css/estilos.css">
 </head>
 <body>
-<main class="panel auth">
+<div class="screen-layout screen-layout--auth"><section class="screen-content"><main class="panel auth">
   <p class="eyebrow">Conversor de unidades · REST</p>
   <h1>Recupera tu clave</h1>
   <p class="muted">Ingresa tu usuario y define una nueva clave.</p>
@@ -31,6 +31,6 @@ private String esc(String valor) { return VistaHtml.escapar(valor); }
     <button type="submit">Actualizar clave</button>
   </form>
   <p><a class="link-button link-button--back" href="<%=request.getContextPath()%>/login">Volver al inicio</a></p>
-</main>
+</main></section><aside class="visual-sidebar"><img src="<%=request.getContextPath()%>/recursos/img/monster.jpg" alt="Monster usando una computadora"></aside></div>
 </body>
 </html>
