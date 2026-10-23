@@ -29,8 +29,10 @@ public final class LoginFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         EstilosUI.configurarVentana(this);
 
+        JPanel raiz = new JPanel(new BorderLayout());
+        raiz.setBackground(EstilosUI.FONDO);
         JPanel fondo = new JPanel(new BorderLayout());
-        fondo.setBackground(EstilosUI.FONDO);
+        fondo.setOpaque(false);
         fondo.setBorder(BorderFactory.createEmptyBorder(28, 34, 30, 34));
 
         JPanel cabecera = new JPanel(new GridLayout(0, 1, 0, 8));
@@ -76,7 +78,9 @@ public final class LoginFrame extends JFrame {
         tarjeta.add(cabecera, BorderLayout.NORTH);
         tarjeta.add(formulario, BorderLayout.CENTER);
         fondo.add(tarjeta, BorderLayout.CENTER);
-        setContentPane(fondo);
+        raiz.add(fondo, BorderLayout.CENTER);
+        raiz.add(new ImagenLateral(), BorderLayout.EAST);
+        setContentPane(raiz);
         getRootPane().setDefaultButton(ingresar);
     }
 

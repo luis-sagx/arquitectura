@@ -13,8 +13,8 @@ import javax.swing.plaf.basic.BasicButtonUI;
 
 /** Paleta y tratamientos compartidos por los formularios Swing. */
 final class EstilosUI {
-    static final int ANCHO_VENTANA = 790;
-    static final int ALTO_VENTANA = 660;
+    static final int ANCHO_VENTANA = 1024;
+    static final int ALTO_VENTANA = 700;
     static final int ALTO_CONTROL = 36;
     static final Color FONDO = new Color(241, 244, 248);
     static final Color TINTA = new Color(29, 41, 57);
