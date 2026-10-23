@@ -46,6 +46,7 @@ namespace ec.edu.monster.vista
             mensaje.ForeColor = EstilosUI.TextoSecundario;
             tarjeta.Controls.Add(mensaje);
             Controls.Add(tarjeta);
+            Controls.Add(EstilosUI.CrearImagenLateral());
 
             AcceptButton = ingresar;
         }

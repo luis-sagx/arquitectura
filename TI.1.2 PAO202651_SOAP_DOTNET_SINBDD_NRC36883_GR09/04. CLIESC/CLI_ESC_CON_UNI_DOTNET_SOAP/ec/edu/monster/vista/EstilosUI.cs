@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Windows.Forms;
 
 namespace ec.edu.monster.vista
@@ -27,7 +28,12 @@ namespace ec.edu.monster.vista
             form.MaximizeBox = false;
             form.MinimizeBox = false;
             form.BackColor = Fondo;
-            form.Size = new Size(790, 660);
+            form.Size = new Size(1150, 700);
+        }
+
+        internal static Control CrearImagenLateral()
+        {
+            return new PanelImagenLateral();
         }
 
         internal static Label Etiqueta(string texto, int x, int y, int ancho, int alto, float tamano, bool negrita)
@@ -96,6 +102,42 @@ namespace ec.edu.monster.vista
             ruta.AddArc(limites.Left, limites.Bottom - diametro - 1, diametro, diametro, 90, 90);
             ruta.CloseFigure();
             return ruta;
+        }
+
+        private sealed class PanelImagenLateral : Panel
+        {
+            private readonly Image imagen;
+
+            internal PanelImagenLateral()
+            {
+                Dock = DockStyle.Right;
+                Width = 380;
+                BackColor = Acento;
+                DoubleBuffered = true;
+                AccessibleDescription = "Monster usando una computadora";
+                string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Recursos", "monster.jpg");
+                using (Image original = Image.FromFile(ruta))
+                    imagen = new Bitmap(original);
+            }
+
+            protected override void OnPaint(PaintEventArgs evento)
+            {
+                base.OnPaint(evento);
+                if (imagen == null || Width <= 0 || Height <= 0) return;
+                float escala = Math.Max((float)Width / imagen.Width, (float)Height / imagen.Height);
+                int ancho = (int)Math.Ceiling(imagen.Width * escala);
+                int alto = (int)Math.Ceiling(imagen.Height * escala);
+                var destino = new Rectangle((Width - ancho) / 2, (Height - alto) / 2, ancho, alto);
+                evento.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                evento.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                evento.Graphics.DrawImage(imagen, destino);
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing) imagen.Dispose();
+                base.Dispose(disposing);
+            }
         }
 
         private sealed class PanelRedondeado : Panel

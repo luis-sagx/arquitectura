@@ -13,7 +13,7 @@ namespace ec.edu.monster.vista
         private void InitializeComponent()
         {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(790, 660);
+            this.ClientSize = new System.Drawing.Size(1150, 700);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;

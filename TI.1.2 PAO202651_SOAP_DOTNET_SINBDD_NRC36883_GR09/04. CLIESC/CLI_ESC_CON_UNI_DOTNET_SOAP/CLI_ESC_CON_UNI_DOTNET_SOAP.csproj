@@ -89,6 +89,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Recursos\monster.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
     <None Include="Connected Services\WSConUni\WSConUni.wsdl" />
     <None Include="Connected Services\WSConUni\WSConUni_2.wsdl" />
