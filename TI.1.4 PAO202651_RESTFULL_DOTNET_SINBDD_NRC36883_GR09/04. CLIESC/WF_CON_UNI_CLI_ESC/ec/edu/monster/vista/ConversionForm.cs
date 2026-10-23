@@ -78,6 +78,7 @@ namespace ec.edu.monster.vista
                 ShowAlways = true
             };
             ayudaMensajes.SetToolTip(mensaje, mensaje.Text);
+            Controls.Add(EstilosUI.CrearImagenLateral());
         }
 
         public event EventHandler CategoriaCambiadaSolicitado;
