@@ -70,7 +70,7 @@ configurarse con `-Dconversor.interactivo=true` o desactivarse con
 `-Dconversor.interactivo=false`. Al redirigir entrada o salida, se omiten las
 pausas y la limpieza por defecto.
 
-Las credenciales iniciales del servidor son `monster` / `monster123`, salvo que el servidor se haya configurado de otra manera. Las credenciales se conservan literalmente; la clave se oculta en terminales compatibles con `System.console()`. Si se usa desde un IDE, puede verse al escribirla. No se guardan credenciales ni tokens en archivos.
+Las credenciales iniciales del servidor son `Monster` / `Monster9`, salvo que el servidor se haya configurado de otra manera. Las credenciales se conservan literalmente; la clave se oculta en terminales compatibles con `System.console()`. Si se usa desde un IDE, puede verse al escribirla. No se guardan credenciales ni tokens en archivos.
 
 Se aceptan punto o coma decimal y valores negativos o cero; se rechazan `NaN` e infinitos. Las restricciones de conversión, como el cero absoluto, las aplica el servidor. Los errores HTTP/JSON, desconexiones y timeouts se muestran sin cerrar el menú.
 

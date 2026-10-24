@@ -4,8 +4,8 @@ import java.net.http.HttpResponse;
 
 /** Prueba de extremo a extremo contra un WAR REST desplegado y en ejecución. */
 public class PruebaIntegracionREST {
-    private static final String USUARIO = "monster";
-    private static final String CLAVE_INICIAL = "monster123";
+    private static final String USUARIO = "Monster";
+    private static final String CLAVE_INICIAL = "Monster9";
     private static final String CLAVE_TEMPORAL = "clave-prueba-temporal";
 
     public static void main(String[] args) throws Exception {
@@ -24,7 +24,7 @@ public class PruebaIntegracionREST {
         Verificaciones.codigoJson("AUTH-002", bearerInvalido.body(), "catálogo con token inválido");
 
         HttpResponse<String> credencialesIncorrectas = Verificaciones.post(baseUrl, "auth/login",
-            "{\"usuario\":\"monster\",\"clave\":\"incorrecta\"}", null);
+            "{\"usuario\":\"Monster\",\"clave\":\"incorrecta\"}", null);
         Verificaciones.http(401, credencialesIncorrectas, "autenticación incorrecta");
         Verificaciones.codigoJson("AUTH-001", credencialesIncorrectas.body(), "autenticación incorrecta");
 
@@ -117,7 +117,7 @@ public class PruebaIntegracionREST {
             HttpResponse<String> restauracion = Verificaciones.post(baseUrl, "auth/recover",
                 "{\"usuario\":\"" + USUARIO + "\",\"nuevaClave\":\"" + CLAVE_INICIAL + "\"}", null);
             if (restauracion.statusCode() != 200) {
-                throw new AssertionError("No se pudo restaurar la clave monster123; respuesta: " + restauracion.body());
+                throw new AssertionError("No se pudo restaurar la clave Monster9; respuesta: " + restauracion.body());
             }
         }
     }

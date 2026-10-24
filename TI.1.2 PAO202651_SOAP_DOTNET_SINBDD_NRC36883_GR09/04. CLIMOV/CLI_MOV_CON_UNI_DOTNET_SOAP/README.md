@@ -11,7 +11,7 @@ El proyecto compila para **Android**; **iOS** está configurado pero solo compil
 - Android SDK con la plataforma **API 36** (Visual Studio la instala; por consola:
   `dotnet build -t:InstallAndroidDependencies -f net10.0-android -p:AcceptAndroidSDKLicenses=true`)
 - El servicio `WCF_CON_UNI_DOTNET_SOAP` iniciado desde Visual Studio (IIS Express, puerto 14028)
-- Usuario y clave iniciales del servidor: `monster` / `monster123`
+- Usuario y clave iniciales del servidor: `Monster` / `Monster9`
 
 ## Ejecutar en Visual Studio
 

@@ -6,11 +6,11 @@ public class PruebaRecuperacionClave {
         String tokenAnterior = Verificaciones.token(servicio);
 
         Verificaciones.codigo(servicio.recuperarClave("desconocido", "nueva123"), "AUTH-001");
-        Verificaciones.codigo(servicio.recuperarClave("monster", "  "), "DATA-001");
-        Verificaciones.codigo(servicio.recuperarClave("monster", "nueva123"), "OK");
+        Verificaciones.codigo(servicio.recuperarClave("Monster", "  "), "DATA-001");
+        Verificaciones.codigo(servicio.recuperarClave("Monster", "nueva123"), "OK");
 
-        Verificaciones.codigo(servicio.autenticar("monster", "monster123"), "AUTH-001");
-        Verificaciones.codigo(servicio.autenticar("monster", "nueva123"), "OK");
+        Verificaciones.codigo(servicio.autenticar("Monster", "Monster9"), "AUTH-001");
+        Verificaciones.codigo(servicio.autenticar("Monster", "nueva123"), "OK");
         Verificaciones.codigo(servicio.obtenerCategorias(tokenAnterior), "AUTH-002");
         System.out.println("PruebaRecuperacionClave: OK");
     }

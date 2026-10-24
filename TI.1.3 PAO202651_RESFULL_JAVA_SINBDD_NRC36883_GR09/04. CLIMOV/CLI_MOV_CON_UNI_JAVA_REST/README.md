@@ -15,7 +15,7 @@ adaptador de servicio, que habla HTTP/JSON en lugar de SOAP.
 1. En Android Studio: **File > Open** y seleccionar la carpeta `04. CLIMOV/CLI_MOV_CON_UNI_JAVA_REST`.
 2. Esperar a que termine el **Gradle Sync**.
 3. Elegir un emulador o un celular y presionar **Run ▶**.
-4. Usuario y clave iniciales del servidor: `monster` / `monster123`.
+4. Usuario y clave iniciales del servidor: `Monster` / `Monster9`.
 
 ## Abrir y ejecutar en NetBeans
 

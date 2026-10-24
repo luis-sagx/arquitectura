@@ -8,7 +8,7 @@ El código está organizado bajo `ec.edu.monster`: `consola`, `consola.controlad
 
 1. Abre la solución `04. SERVIDOR/WS_CON_UNI_DOTNET_REST/WS_CON_UNI_DOTNET_REST.slnx`.
 2. Inicia el proyecto `WS_CON_UNI_DOTNET_REST` y confirma que la API responda en `http://localhost:5111/api/ws-con-uni`.
-3. Ejecuta `CLI_CON_UNI_DOTNET_REST`. El usuario y clave iniciales son `monster` y `monster123`.
+3. Ejecuta `CLI_CON_UNI_DOTNET_REST`. El usuario y clave iniciales son `Monster` y `Monster9`.
 
 Si el servidor usa otro puerto o equipo, cambia `conversor.endpoint` en `App.config` o pasa la URL de la API (terminada en `/api/ws-con-uni`) como primer argumento al ejecutar el cliente.
 

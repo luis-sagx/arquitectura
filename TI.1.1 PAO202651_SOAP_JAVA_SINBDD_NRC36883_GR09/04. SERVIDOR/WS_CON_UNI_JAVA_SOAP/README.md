@@ -22,7 +22,7 @@ Autenticacion exitosa: token y expiraEn. Consultas: categorias o unidades.
 
 ## Configuracion inicial
 
-Usuario: monster. Clave: monster123. Sesion: 15 minutos.
+Usuario: Monster. Clave: Monster9. Sesion: 15 minutos.
 Puede cambiar estas propiedades JVM en Payara antes de iniciar/desplegar:
 
 - conversor.usuario

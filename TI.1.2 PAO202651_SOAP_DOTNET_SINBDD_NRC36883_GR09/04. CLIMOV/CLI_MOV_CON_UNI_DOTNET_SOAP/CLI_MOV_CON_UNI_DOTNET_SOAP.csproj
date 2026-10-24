@@ -28,6 +28,7 @@
 
 	<ItemGroup>
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#183257" />
+		<MauiImage Include="Resources\Images\monster_banner.jpg" />
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#183257" BaseSize="128,128" />
 	</ItemGroup>
 

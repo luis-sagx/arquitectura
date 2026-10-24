@@ -30,7 +30,7 @@ Desde esta carpeta se puede compilar con Visual Studio o con:
 dotnet build .\CLI_ESC_CON_UNI_DOTNET_SOAP.csproj --no-restore -p:GenerateResourceMSBuildRuntime=CurrentRuntime -p:GenerateResourceMSBuildArchitecture=CurrentArchitecture
 ```
 
-Inicia el servidor WCF, confirma el endpoint y ejecuta el proyecto `CLI_ESC_CON_UNI_DOTNET_SOAP` desde Visual Studio. El usuario y clave locales predeterminados del servidor son `monster` y `monster123`; puedes cambiarlos en la configuración del servidor.
+Inicia el servidor WCF, confirma el endpoint y ejecuta el proyecto `CLI_ESC_CON_UNI_DOTNET_SOAP` desde Visual Studio. El usuario y clave locales predeterminados del servidor son `Monster` y `Monster9`; puedes cambiarlos en la configuración del servidor.
 
 ## Pruebas
 

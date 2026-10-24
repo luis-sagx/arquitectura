@@ -20,10 +20,10 @@ public class PruebaServicioUnidades {
 
     private static void probarAutenticacionYCatalogo() {
         ConversorUnidadesServices servicio = servicio();
-        Respuesta incorrecta = servicio.autenticar("monster", "incorrecta");
+        Respuesta incorrecta = servicio.autenticar("Monster", "incorrecta");
         Verificaciones.codigo("AUTH-001", incorrecta.getCodigo(), incorrecta.getEstado(), "credenciales inválidas");
 
-        Respuesta sesion = servicio.autenticar("monster", "monster123");
+        Respuesta sesion = servicio.autenticar("Monster", "Monster9");
         Verificaciones.codigo("OK", sesion.getCodigo(), sesion.getEstado(), "autenticación válida");
         Verificaciones.comprobar(sesion.getToken() != null && !sesion.getToken().isBlank(), "debe emitir token");
         Verificaciones.comprobar(sesion.getExpiraEn() != null, "debe incluir vencimiento");
@@ -43,7 +43,7 @@ public class PruebaServicioUnidades {
 
     private static void probarConversionesYValidaciones() {
         ConversorUnidadesServices servicio = servicio();
-        String token = servicio.autenticar("monster", "monster123").getToken();
+        String token = servicio.autenticar("Monster", "Monster9").getToken();
 
         Respuesta longitud = servicio.convertir(token, "longitud", "kilometro", "metro", 2.5);
         Verificaciones.codigo("OK", longitud.getCodigo(), longitud.getEstado(), "conversión de longitud");
@@ -73,36 +73,36 @@ public class PruebaServicioUnidades {
 
     private static void probarRecuperacionDeClave() {
         ConversorUnidadesServices servicio = servicio();
-        String token = servicio.autenticar("monster", "monster123").getToken();
+        String token = servicio.autenticar("Monster", "Monster9").getToken();
 
-        Respuesta claveVacia = servicio.recuperarClave("monster", " ");
+        Respuesta claveVacia = servicio.recuperarClave("Monster", " ");
         Verificaciones.codigo("DATA-001", claveVacia.getCodigo(), claveVacia.getEstado(), "clave vacía");
 
-        Respuesta recuperacion = servicio.recuperarClave("monster", "temporal");
+        Respuesta recuperacion = servicio.recuperarClave("Monster", "temporal");
         Verificaciones.codigo("OK", recuperacion.getCodigo(), recuperacion.getEstado(), "recuperación de clave");
 
         Respuesta sesionAnterior = servicio.obtenerCategorias(token);
         Verificaciones.codigo("AUTH-002", sesionAnterior.getCodigo(), sesionAnterior.getEstado(), "sesión invalidada");
 
-        Respuesta claveAnterior = servicio.autenticar("monster", "monster123");
+        Respuesta claveAnterior = servicio.autenticar("Monster", "Monster9");
         Verificaciones.codigo("AUTH-001", claveAnterior.getCodigo(), claveAnterior.getEstado(), "clave anterior invalidada");
 
-        Respuesta claveNueva = servicio.autenticar("monster", "temporal");
+        Respuesta claveNueva = servicio.autenticar("Monster", "temporal");
         Verificaciones.codigo("OK", claveNueva.getCodigo(), claveNueva.getEstado(), "clave nueva activa");
     }
 
     private static void probarExpiracion() {
         RelojMutable reloj = new RelojMutable(Instant.parse("2026-01-01T00:00:00Z"));
         ConversorUnidadesServices servicio = new ConversorUnidadesServices(
-            "monster", "monster123", reloj, Duration.ofSeconds(5));
-        String token = servicio.autenticar("monster", "monster123").getToken();
+            "Monster", "Monster9", reloj, Duration.ofSeconds(5));
+        String token = servicio.autenticar("Monster", "Monster9").getToken();
         reloj.avanzar(Duration.ofSeconds(5));
         Respuesta expirada = servicio.obtenerCategorias(token);
         Verificaciones.codigo("AUTH-003", expirada.getCodigo(), expirada.getEstado(), "sesión expirada");
     }
 
     private static ConversorUnidadesServices servicio() {
-        return new ConversorUnidadesServices("monster", "monster123", Clock.systemUTC(), Duration.ofMinutes(15));
+        return new ConversorUnidadesServices("Monster", "Monster9", Clock.systemUTC(), Duration.ofMinutes(15));
     }
 
     private static final class RelojMutable extends Clock {

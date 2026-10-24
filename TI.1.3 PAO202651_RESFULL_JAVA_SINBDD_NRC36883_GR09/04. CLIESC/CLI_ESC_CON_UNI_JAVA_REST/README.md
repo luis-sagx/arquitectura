@@ -45,7 +45,7 @@ java -Dconversor.endpoint=http://localhost:8080/WS_CON_UNI_JAVA_REST/api -jar ta
 - Conversión de longitud, masa y temperatura
 - Cierre local y vencimiento de sesión
 
-Credenciales iniciales del servidor: usuario `monster`, clave `monster123`.
+Credenciales iniciales del servidor: usuario `Monster`, clave `Monster9`.
 
 ## Estructura MVC
 

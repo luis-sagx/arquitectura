@@ -18,8 +18,8 @@ public class PruebaIntegracionSOAP {
     private static final HttpClient CLIENTE = HttpClient.newHttpClient();
     private static URI direccion;
     public static void main(String[] args) throws Exception {
-        System.setProperty("conversor.usuario", "monster");
-        System.setProperty("conversor.clave", "monster123");
+        System.setProperty("conversor.usuario", "Monster");
+        System.setProperty("conversor.clave", "Monster9");
         HttpServer servidor = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
         Endpoint endpoint = Endpoint.create(new WSConUni());
         try {
@@ -30,11 +30,11 @@ public class PruebaIntegracionSOAP {
                 HttpResponse.BodyHandlers.ofString()).body();
             exigir(wsdl.contains("autenticar") && wsdl.contains("recuperarClave") && wsdl.contains("obtenerCategorias")
                 && wsdl.contains("obtenerUnidades") && wsdl.contains("convertir"), "WSDL incompleto");
-            Document recuperacion = solicitar("recuperarClave", "<usuario>monster</usuario><nuevaClave>nueva123</nuevaClave>");
+            Document recuperacion = solicitar("recuperarClave", "<usuario>Monster</usuario><nuevaClave>nueva123</nuevaClave>");
             exigir("OK".equals(texto(recuperacion, "codigo")), "SOAP debe permitir recuperar la clave por usuario");
-            Document claveAnterior = solicitar("autenticar", "<usuario>monster</usuario><clave>monster123</clave>");
+            Document claveAnterior = solicitar("autenticar", "<usuario>Monster</usuario><clave>Monster9</clave>");
             exigir("AUTH-001".equals(texto(claveAnterior, "codigo")), "La clave anterior debe dejar de funcionar");
-            Document claveNueva = solicitar("autenticar", "<usuario>monster</usuario><clave>nueva123</clave>");
+            Document claveNueva = solicitar("autenticar", "<usuario>Monster</usuario><clave>nueva123</clave>");
             exigir("OK".equals(texto(claveNueva, "codigo")), "La clave nueva debe permitir iniciar sesion");
             String token = texto(claveNueva, "token");
             exigir(!token.isBlank(), "SOAP debe serializar token");

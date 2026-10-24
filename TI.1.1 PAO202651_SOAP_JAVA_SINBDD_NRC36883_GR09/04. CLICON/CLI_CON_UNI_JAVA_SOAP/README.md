@@ -23,7 +23,7 @@ El servidor debe estar desplegado en Payara. URL predeterminada del WSDL creado:
 
     http://localhost:8080/WS_CON_UNI_JAVA_SOAP/WSConUni
 
-Usuario y clave iniciales del servidor: monster / monster123.
+Usuario y clave iniciales del servidor: Monster / Monster9.
 Para otra direccion, indicar la URL del endpoint como argumento del programa
 o propiedad JVM conversor.endpoint. Tambien se acepta una URL terminada en ?wsdl.
 

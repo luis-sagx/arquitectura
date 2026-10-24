@@ -10,8 +10,8 @@ public class PruebaSesionExpirada {
         VerificacionesREST.RelojMutable reloj = new VerificacionesREST.RelojMutable(
             Instant.parse("2026-01-01T00:00:00Z"));
         ConversorUnidadesServices servicio = new ConversorUnidadesServices(
-            "monster", "monster123", reloj, Duration.ofSeconds(5));
-        String token = servicio.autenticar("monster", "monster123").getToken();
+            "Monster", "Monster9", reloj, Duration.ofSeconds(5));
+        String token = servicio.autenticar("Monster", "Monster9").getToken();
 
         VerificacionesREST.codigo(servicio.obtenerCategorias(token), "OK", "sesión antes de vencer");
         reloj.avanzar(Duration.ofSeconds(5));

@@ -27,4 +27,4 @@ Para otro contexto o servidor, cambia ese parámetro o define la propiedad JVM `
 - Consulta autenticada del catálogo con `GET /catalog/categories` y `GET /catalog/categories/{categoria}/units`.
 - Conversión autenticada con `POST /conversions`.
 
-Credenciales iniciales del servidor, salvo que se hayan cambiado: usuario `monster`, clave `monster123`. La sesión del servicio vence después de 15 minutos por defecto; al vencer, el cliente redirige al inicio de sesión.
+Credenciales iniciales del servidor, salvo que se hayan cambiado: usuario `Monster`, clave `Monster9`. La sesión del servicio vence después de 15 minutos por defecto; al vencer, el cliente redirige al inicio de sesión.

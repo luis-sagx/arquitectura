@@ -6,10 +6,10 @@ import ec.edu.monster.servicios.ConversorUnidadesServices;
 public class PruebaAutenticacion {
     public static void main(String[] args) {
         ConversorUnidadesServices servicio = VerificacionesREST.servicio();
-        VerificacionesREST.codigo(servicio.autenticar("otro", "monster123"), "AUTH-001", "usuario incorrecto");
-        VerificacionesREST.codigo(servicio.autenticar("monster", "incorrecta"), "AUTH-001", "clave incorrecta");
+        VerificacionesREST.codigo(servicio.autenticar("otro", "Monster9"), "AUTH-001", "usuario incorrecto");
+        VerificacionesREST.codigo(servicio.autenticar("Monster", "incorrecta"), "AUTH-001", "clave incorrecta");
 
-        Respuesta respuesta = servicio.autenticar("monster", "monster123");
+        Respuesta respuesta = servicio.autenticar("Monster", "Monster9");
         VerificacionesREST.codigo(respuesta, "OK", "credenciales correctas");
         VerificacionesREST.comprobar(respuesta.getToken() != null && !respuesta.getToken().isBlank(),
             "la autenticación debe entregar token");

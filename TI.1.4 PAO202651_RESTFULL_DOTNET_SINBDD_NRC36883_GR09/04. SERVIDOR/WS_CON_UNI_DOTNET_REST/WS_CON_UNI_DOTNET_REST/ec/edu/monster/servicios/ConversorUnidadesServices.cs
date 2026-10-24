@@ -18,7 +18,7 @@ public sealed class ConversorUnidadesServices
     private readonly Dictionary<string, double> longitud = new(StringComparer.Ordinal);
     private readonly Dictionary<string, double> masa = new(StringComparer.Ordinal);
 
-    public ConversorUnidadesServices() : this("monster", "monster123", () => DateTimeOffset.UtcNow, TimeSpan.FromMinutes(15))
+    public ConversorUnidadesServices() : this("Monster", "Monster9", () => DateTimeOffset.UtcNow, TimeSpan.FromMinutes(15))
     {
     }
 

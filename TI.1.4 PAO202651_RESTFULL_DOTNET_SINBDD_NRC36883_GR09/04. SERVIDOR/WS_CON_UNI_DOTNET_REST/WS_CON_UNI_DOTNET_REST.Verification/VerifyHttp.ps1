@@ -28,7 +28,7 @@ try {
         throw '401 responses must advertise the Bearer scheme'
     }
 
-    $login = $client.PostAsync("$base/autenticar", [System.Net.Http.StringContent]::new('{"usuario":"monster","clave":"monster123"}', [System.Text.Encoding]::UTF8, 'application/json')).GetAwaiter().GetResult()
+    $login = $client.PostAsync("$base/autenticar", [System.Net.Http.StringContent]::new('{"usuario":"Monster","clave":"Monster9"}', [System.Text.Encoding]::UTF8, 'application/json')).GetAwaiter().GetResult()
     $loginBody = $login.Content.ReadAsStringAsync().GetAwaiter().GetResult() | ConvertFrom-Json -AsHashtable
     $emptyConversion = Send-EmptyPost 'convertir' $loginBody['token']
     if ([int]$emptyConversion.Response.StatusCode -ne 400 -or $emptyConversion.Body['codigo'] -ne 'DATA-001') {

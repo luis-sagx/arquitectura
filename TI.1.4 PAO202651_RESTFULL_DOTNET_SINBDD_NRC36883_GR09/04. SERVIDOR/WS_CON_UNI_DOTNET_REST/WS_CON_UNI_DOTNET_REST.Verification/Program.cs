@@ -11,9 +11,9 @@ void Check(bool condition, string message)
 void Code(Respuesta response, string expected) => Check(response.Codigo == expected, $"Expected {expected}, got {response.Codigo}");
 void Near(double? actual, double expected) => Check(actual.HasValue && Math.Abs(actual.Value - expected) < 1e-9, $"Expected {expected}, got {actual}");
 
-var service = new ConversorUnidadesServices("monster", "monster123", () => DateTimeOffset.UtcNow, TimeSpan.FromMinutes(15));
-Code(service.Autenticar("monster", "bad"), "AUTH-001");
-var login = service.Autenticar("monster", "monster123");
+var service = new ConversorUnidadesServices("Monster", "Monster9", () => DateTimeOffset.UtcNow, TimeSpan.FromMinutes(15));
+Code(service.Autenticar("Monster", "bad"), "AUTH-001");
+var login = service.Autenticar("Monster", "Monster9");
 Code(login, "OK");
 Check(Guid.TryParse(login.Token, out _), "Login must issue a GUID token");
 Check(!string.IsNullOrWhiteSpace(login.ExpiraEn), "Login must issue an expiry instant");
@@ -29,21 +29,21 @@ Code(service.Convertir(login.Token, "longitud", "metro", "centimetro", null), "D
 Code(service.ObtenerCategorias(null), "AUTH-002");
 
 var now = new DateTimeOffset(2026, 10, 21, 0, 0, 0, TimeSpan.Zero);
-var expiring = new ConversorUnidadesServices("monster", "monster123", () => now, TimeSpan.FromMinutes(1));
-var shortSession = expiring.Autenticar("monster", "monster123");
+var expiring = new ConversorUnidadesServices("Monster", "Monster9", () => now, TimeSpan.FromMinutes(1));
+var shortSession = expiring.Autenticar("Monster", "Monster9");
 now = now.AddMinutes(1);
 Code(expiring.ObtenerCategorias(shortSession.Token), "AUTH-003");
-var recover = service.Autenticar("monster", "monster123");
-Code(service.RecuperarClave("monster", "new-password"), "OK");
+var recover = service.Autenticar("Monster", "Monster9");
+Code(service.RecuperarClave("Monster", "new-password"), "OK");
 Code(service.ObtenerCategorias(recover.Token), "AUTH-002");
-Code(service.Autenticar("monster", "monster123"), "AUTH-001");
-var currentLogin = service.Autenticar("monster", "new-password");
+Code(service.Autenticar("Monster", "Monster9"), "AUTH-001");
+var currentLogin = service.Autenticar("Monster", "new-password");
 Code(currentLogin, "OK");
 
 var json = JsonSerializer.Serialize(new Respuesta { Estado = "EXITO", Codigo = "OK", Categorias = ["LONGITUD"] }, new JsonSerializerOptions(JsonSerializerDefaults.Web));
 Check(json.Contains("\"estado\"") && json.Contains("\"categorias\""), "Response JSON fields must use lower camel case");
 Code(service.RecuperarClave("unknown", "new-password"), "AUTH-001");
-Code(service.RecuperarClave("monster", "  "), "DATA-001");
+Code(service.RecuperarClave("Monster", "  "), "DATA-001");
 Code(service.ObtenerUnidades(currentLogin.Token, "missing"), "DATA-001");
 Code(service.Convertir(currentLogin.Token, "LONGITUD", "METRO", "LIBRA", 1), "DATA-001");
 Code(service.Convertir(currentLogin.Token, "LONGITUD", "METRO", "DESCONOCIDA", 1), "UNIT-001");

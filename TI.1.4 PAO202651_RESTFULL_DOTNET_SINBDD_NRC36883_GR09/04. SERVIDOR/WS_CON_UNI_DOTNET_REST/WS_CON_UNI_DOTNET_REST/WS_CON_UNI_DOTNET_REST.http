@@ -6,8 +6,8 @@ POST {{WS_CON_UNI_DOTNET_REST_HostAddress}}/api/ws-con-uni/autenticar
 Content-Type: application/json
 
 {
-  "usuario": "monster",
-  "clave": "monster123"
+  "usuario": "Monster",
+  "clave": "Monster9"
 }
 
 ### Recuperar clave
@@ -15,8 +15,8 @@ POST {{WS_CON_UNI_DOTNET_REST_HostAddress}}/api/ws-con-uni/recuperar-clave
 Content-Type: application/json
 
 {
-  "usuario": "monster",
-  "nuevaClave": "monster123"
+  "usuario": "Monster",
+  "nuevaClave": "Monster9"
 }
 
 ### Obtener categorías

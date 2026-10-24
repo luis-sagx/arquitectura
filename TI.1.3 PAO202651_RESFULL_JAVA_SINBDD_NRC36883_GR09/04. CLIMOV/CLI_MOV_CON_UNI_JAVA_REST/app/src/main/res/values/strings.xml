@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Conversor REST</string>
     <string name="marca">MONSTER</string>
+    <string name="imagen_monster">Monster usando una computadora</string>
     <string name="titulo">Conversor de unidades</string>
     <string name="subtitulo_acceso">Inicia sesión para usar el servicio REST</string>
     <string name="usuario">Usuario</string>

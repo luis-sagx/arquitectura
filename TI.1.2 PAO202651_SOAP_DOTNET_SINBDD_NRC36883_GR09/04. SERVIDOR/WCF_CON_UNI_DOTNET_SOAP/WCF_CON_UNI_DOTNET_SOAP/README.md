@@ -22,7 +22,7 @@ Las respuestas contienen `estado`, `codigo` y `mensaje`, además de los datos ap
 
 ## Configuración y estado
 
-Valores iniciales: usuario `monster`, clave `monster123`, sesión de 15 minutos. Se configuran en `Web.config` con `conversor.usuario`, `conversor.clave` y `conversor.sesion.minutos`.
+Valores iniciales: usuario `Monster`, clave `Monster9`, sesión de 15 minutos. Se configuran en `Web.config` con `conversor.usuario`, `conversor.clave` y `conversor.sesion.minutos`.
 
 Las sesiones y la clave recuperada viven en memoria del proceso. Reiniciar o redesplegar el servidor invalida los tokens y restaura la clave configurada. La recuperación comprueba el usuario, no requiere sesión y limpia todas las sesiones activas.
 

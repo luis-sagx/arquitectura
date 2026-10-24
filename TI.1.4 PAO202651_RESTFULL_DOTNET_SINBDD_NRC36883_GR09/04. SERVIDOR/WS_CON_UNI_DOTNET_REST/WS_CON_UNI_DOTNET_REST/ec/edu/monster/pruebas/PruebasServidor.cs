@@ -11,9 +11,9 @@ void Check(bool condition, string message)
 void Code(Respuesta response, string expected) => Check(response.Codigo == expected, $"Se esperaba {expected}; se recibió {response.Codigo}");
 void Near(double? actual, double expected) => Check(actual.HasValue && Math.Abs(actual.Value - expected) < 1e-9, $"Se esperaba {expected}; se recibió {actual}");
 
-var servicio = new ConversorUnidadesServices("monster", "monster123", () => DateTimeOffset.UtcNow, TimeSpan.FromMinutes(15));
-Code(servicio.Autenticar("monster", "incorrecta"), "AUTH-001");
-var login = servicio.Autenticar("monster", "monster123");
+var servicio = new ConversorUnidadesServices("Monster", "Monster9", () => DateTimeOffset.UtcNow, TimeSpan.FromMinutes(15));
+Code(servicio.Autenticar("Monster", "incorrecta"), "AUTH-001");
+var login = servicio.Autenticar("Monster", "Monster9");
 Code(login, "OK");
 Check(Guid.TryParse(login.Token, out _), "El login debe emitir un token GUID");
 Check(!string.IsNullOrWhiteSpace(login.ExpiraEn), "El login debe devolver el vencimiento de sesión");
@@ -40,19 +40,19 @@ Code(servicio.ObtenerUnidades("token-invalido", "longitud"), "AUTH-002");
 Code(servicio.ObtenerUnidades(login.Token, "desconocida"), "DATA-001");
 
 var ahora = new DateTimeOffset(2026, 10, 21, 0, 0, 0, TimeSpan.Zero);
-var expirable = new ConversorUnidadesServices("monster", "monster123", () => ahora, TimeSpan.FromMinutes(1));
-var sesionCorta = expirable.Autenticar("monster", "monster123");
+var expirable = new ConversorUnidadesServices("Monster", "Monster9", () => ahora, TimeSpan.FromMinutes(1));
+var sesionCorta = expirable.Autenticar("Monster", "Monster9");
 ahora = ahora.AddMinutes(1);
 Code(expirable.ObtenerCategorias(sesionCorta.Token), "AUTH-003");
 
-var sesionAntesDeRecuperar = servicio.Autenticar("monster", "monster123");
-Code(servicio.RecuperarClave("monster", "clave-temporal"), "OK");
+var sesionAntesDeRecuperar = servicio.Autenticar("Monster", "Monster9");
+Code(servicio.RecuperarClave("Monster", "clave-temporal"), "OK");
 Code(servicio.ObtenerCategorias(sesionAntesDeRecuperar.Token), "AUTH-002");
-Code(servicio.Autenticar("monster", "monster123"), "AUTH-001");
-var nuevoLogin = servicio.Autenticar("monster", "clave-temporal");
+Code(servicio.Autenticar("Monster", "Monster9"), "AUTH-001");
+var nuevoLogin = servicio.Autenticar("Monster", "clave-temporal");
 Code(nuevoLogin, "OK");
 Code(servicio.RecuperarClave("usuario-desconocido", "nueva"), "AUTH-001");
-Code(servicio.RecuperarClave("monster", "  "), "DATA-001");
+Code(servicio.RecuperarClave("Monster", "  "), "DATA-001");
 
 string json = JsonSerializer.Serialize(new Respuesta { Estado = "EXITO", Codigo = "OK", Categorias = ["LONGITUD"] }, new JsonSerializerOptions(JsonSerializerDefaults.Web));
 Check(json.Contains("\"estado\"") && json.Contains("\"categorias\""), "El JSON REST debe conservar nombres en minúscula camelCase");

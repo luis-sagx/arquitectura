@@ -23,7 +23,7 @@ En Visual Studio: abrir `CLI_WEB_CON_UNI_DOTNET_SOAP.csproj` y presionar **▶**
 dotnet run
 ```
 
-y abrir `http://localhost:5080`. Usuario y clave iniciales: `monster` / `monster123`.
+y abrir `http://localhost:5080`. Usuario y clave iniciales: `Monster` / `Monster9`.
 
 ## Dirección del servicio
 

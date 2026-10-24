@@ -14,7 +14,7 @@ Aplicación Android en Java, con arquitectura MVC, para consumir el servicio SOA
 2. Esperar a que termine el **Gradle Sync**. La primera vez descarga Gradle 8.9 y las dependencias.
    Si Android Studio avisa que falta el *Gradle wrapper*, aceptar que lo genere.
 3. Elegir un emulador o un celular y presionar **Run ▶**.
-4. Usuario y clave iniciales del servidor: `monster` / `monster123`.
+4. Usuario y clave iniciales del servidor: `Monster` / `Monster9`.
 
 ## Abrir y ejecutar en NetBeans
 
@@ -38,7 +38,7 @@ Para probarlo:
   Antes de compilar, poner la IP del computador en `config.xml` (ver abajo).
 - **Emulador**: listar los dispositivos con `SDK/emulator/emulator -list-avds`, iniciar uno con
   `emulator -avd NOMBRE` y luego usar el mismo `adb install`.
-- Con Payara corriendo, abrir la app **Conversor Monster**, ingresar con `monster` / `monster123` y convertir.
+- Con Payara corriendo, abrir la app **Conversor Monster**, ingresar con `Monster` / `Monster9` y convertir.
 
 ## Dirección del servicio
 

@@ -16,11 +16,11 @@ final class VerificacionesREST {
 
     static ConversorUnidadesServices servicio() {
         return new ConversorUnidadesServices(
-            "monster", "monster123", Clock.systemUTC(), Duration.ofMinutes(15));
+            "Monster", "Monster9", Clock.systemUTC(), Duration.ofMinutes(15));
     }
 
     static String token(ConversorUnidadesServices servicio) {
-        Respuesta respuesta = servicio.autenticar("monster", "monster123");
+        Respuesta respuesta = servicio.autenticar("Monster", "Monster9");
         codigo(respuesta, "OK", "inicio de sesión para la prueba");
         comprobar(respuesta.getToken() != null && !respuesta.getToken().isBlank(), "debe emitir un token");
         return respuesta.getToken();

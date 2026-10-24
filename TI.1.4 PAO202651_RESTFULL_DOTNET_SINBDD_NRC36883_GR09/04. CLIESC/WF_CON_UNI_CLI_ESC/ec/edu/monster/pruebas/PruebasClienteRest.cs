@@ -41,10 +41,10 @@ namespace ec.edu.monster.pruebas
             using (var cliente = new ClienteRest(new Uri("http://localhost:5111/api/ws-con-uni/"), handler))
             {
                 handler.Configurar(HttpStatusCode.OK, "{\"estado\":\"EXITO\",\"codigo\":\"OK\",\"mensaje\":\"Sesion iniciada\",\"token\":\"token-prueba\",\"expiraEn\":\"2026-10-21T12:00:00Z\"}");
-                RespuestaRest login = await cliente.AutenticarAsync("monster", "monster123");
+                RespuestaRest login = await cliente.AutenticarAsync("Monster", "Monster9");
                 Check(login.IsExito && login.Token == "token-prueba", "Autenticación debe leer token y estado de éxito");
                 Check(handler.Ultima.Metodo == HttpMethod.Post && handler.Ultima.Uri.AbsolutePath == "/api/ws-con-uni/autenticar", "Autenticación debe enviar POST a la ruta correcta");
-                Check(handler.Ultima.Cuerpo.Contains("\"usuario\":\"monster\"") && handler.Ultima.Cuerpo.Contains("\"clave\":\"monster123\""), "Autenticación debe enviar los nombres JSON requeridos");
+                Check(handler.Ultima.Cuerpo.Contains("\"usuario\":\"Monster\"") && handler.Ultima.Cuerpo.Contains("\"clave\":\"Monster9\""), "Autenticación debe enviar los nombres JSON requeridos");
                 Check(handler.Ultima.Authorization == null, "Autenticación no debe enviar Bearer");
 
                 handler.Configurar(HttpStatusCode.OK, "{\"estado\":\"EXITO\",\"codigo\":\"OK\",\"mensaje\":\"Categorias\",\"categorias\":[\"LONGITUD\",\"MASA\"]}");
@@ -67,12 +67,12 @@ namespace ec.edu.monster.pruebas
                 Check(handler.Ultima.Authorization == "Bearer token-prueba", "Conversión debe enviar Bearer");
 
                 handler.Configurar(HttpStatusCode.OK, "{\"estado\":\"EXITO\",\"codigo\":\"OK\",\"mensaje\":\"Clave actualizada\"}");
-                RespuestaRest recuperacion = await cliente.RecuperarClaveAsync("monster", "nueva-clave");
+                RespuestaRest recuperacion = await cliente.RecuperarClaveAsync("Monster", "nueva-clave");
                 Check(recuperacion.IsExito && handler.Ultima.Uri.AbsolutePath.EndsWith("/recuperar-clave"), "Recuperación debe invocar la ruta REST correspondiente");
                 Check(handler.Ultima.Cuerpo.Contains("\"nuevaClave\":\"nueva-clave\"") && handler.Ultima.Authorization == null, "Recuperación debe enviar JSON sin token");
 
                 handler.Configurar(HttpStatusCode.Unauthorized, "{\"estado\":\"ERROR\",\"codigo\":\"AUTH-001\",\"mensaje\":\"Credenciales invalidas\"}");
-                RespuestaRest credenciales = await cliente.AutenticarAsync("monster", "mal");
+                RespuestaRest credenciales = await cliente.AutenticarAsync("Monster", "mal");
                 Check(!credenciales.IsExito && credenciales.Codigo == "AUTH-001", "HTTP 401 debe conservar el error de negocio JSON");
 
                 handler.Configurar(HttpStatusCode.BadRequest, "{\"estado\":\"ERROR\",\"codigo\":\"DATA-001\",\"mensaje\":\"Categoria inexistente\"}");
@@ -96,8 +96,8 @@ namespace ec.edu.monster.pruebas
             string baseConfigurada = Environment.GetEnvironmentVariable("REST_API_BASE");
             Uri endpoint = new Uri(String.IsNullOrWhiteSpace(baseConfigurada)
                 ? "http://localhost:5111/api/ws-con-uni/" : baseConfigurada.TrimEnd('/') + "/");
-            string usuario = Environment.GetEnvironmentVariable("REST_TEST_USER") ?? "monster";
-            string claveOriginal = Environment.GetEnvironmentVariable("REST_TEST_PASSWORD") ?? "monster123";
+            string usuario = Environment.GetEnvironmentVariable("REST_TEST_USER") ?? "Monster";
+            string claveOriginal = Environment.GetEnvironmentVariable("REST_TEST_PASSWORD") ?? "Monster9";
             string claveTemporal = "Prueba-" + Guid.NewGuid().ToString("N");
             using (var cliente = new ClienteRest(endpoint))
             {

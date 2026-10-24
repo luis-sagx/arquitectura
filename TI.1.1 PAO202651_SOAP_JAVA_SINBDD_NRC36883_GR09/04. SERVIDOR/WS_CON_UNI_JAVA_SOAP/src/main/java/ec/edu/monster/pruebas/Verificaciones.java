@@ -4,10 +4,10 @@ import ec.edu.monster.servicios.ConversorUnidadesServices;
 final class Verificaciones {
     private Verificaciones() {}
     static ConversorUnidadesServices servicio() {
-        return new ConversorUnidadesServices("monster", "monster123", java.time.Clock.systemUTC(), java.time.Duration.ofMinutes(15));
+        return new ConversorUnidadesServices("Monster", "Monster9", java.time.Clock.systemUTC(), java.time.Duration.ofMinutes(15));
     }
     static String token(ConversorUnidadesServices s) {
-        Respuesta r = s.autenticar("monster", "monster123");
+        Respuesta r = s.autenticar("Monster", "Monster9");
         codigo(r, "OK");
         comprobar(r.getToken() != null && !r.getToken().isBlank(), "Debe entregar token");
         return r.getToken();

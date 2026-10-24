@@ -22,8 +22,8 @@ namespace ec.edu.monster.servicios
         private readonly Dictionary<string, double> masa = new Dictionary<string, double>(StringComparer.Ordinal);
 
         public ConversorUnidadesServices()
-            : this(LeerConfiguracion("conversor.usuario", "monster"),
-                   LeerConfiguracion("conversor.clave", "monster123"),
+            : this(LeerConfiguracion("conversor.usuario", "Monster"),
+                   LeerConfiguracion("conversor.clave", "Monster9"),
                    () => DateTimeOffset.UtcNow,
                    LeerDuracion())
         {

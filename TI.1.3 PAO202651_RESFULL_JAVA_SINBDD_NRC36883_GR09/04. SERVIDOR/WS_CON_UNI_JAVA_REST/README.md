@@ -22,7 +22,7 @@ Envíe y reciba `application/json`. Las operaciones protegidas usan `Authorizati
 POST /{contexto}/api/auth/login
 Content-Type: application/json
 
-{"usuario":"monster","clave":"monster123"}
+{"usuario":"Monster","clave":"Monster9"}
 ```
 
 Respuesta exitosa (HTTP 200):
@@ -67,14 +67,14 @@ La respuesta incluye `resultado`, `categoria`, `unidadOrigen` y `unidadDestino`.
 POST /{contexto}/api/auth/recover
 Content-Type: application/json
 
-{"usuario":"monster","nuevaClave":"nueva-clave"}
+{"usuario":"Monster","nuevaClave":"nueva-clave"}
 ```
 
 La recuperación solo verifica el nombre de usuario. El cambio vive en memoria, borra todas las sesiones y se pierde al reiniciar o redesplegar.
 
 ## Credenciales, sesiones y configuración
 
-Credenciales iniciales: usuario `monster`, clave `monster123`. La sesión dura 15 minutos por defecto. Configure estas propiedades JVM del servidor antes de iniciar o desplegar:
+Credenciales iniciales: usuario `Monster`, clave `Monster9`. La sesión dura 15 minutos por defecto. Configure estas propiedades JVM del servidor antes de iniciar o desplegar:
 
 - `conversor.usuario`
 - `conversor.clave`
@@ -135,4 +135,4 @@ Para ejecutar solo las pruebas locales de autenticación, sesiones, catálogo y 
 powershell -NoProfile -ExecutionPolicy Bypass -File .\ejecutar-pruebas.ps1 -SoloServicio
 ```
 
-La integración prueba y restaura la clave inicial `monster123` al terminar.
+La integración prueba y restaura la clave inicial `Monster9` al terminar.

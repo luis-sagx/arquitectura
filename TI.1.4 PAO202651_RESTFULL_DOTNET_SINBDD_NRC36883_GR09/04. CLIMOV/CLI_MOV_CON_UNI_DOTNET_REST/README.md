@@ -11,7 +11,7 @@ El proyecto compila para **Android**; **iOS** está configurado pero solo compil
 - Android SDK con la plataforma **API 36** (Visual Studio la instala; por consola:
   `dotnet build -t:InstallAndroidDependencies -f net10.0-android -p:AcceptAndroidSDKLicenses=true`)
 - El servidor `WS_CON_UNI_DOTNET_REST` iniciado (Kestrel, puerto 5111)
-- Usuario y clave iniciales del servidor: `monster` / `monster123`
+- Usuario y clave iniciales del servidor: `Monster` / `Monster9`
 
 ## Ruta de compilación
 

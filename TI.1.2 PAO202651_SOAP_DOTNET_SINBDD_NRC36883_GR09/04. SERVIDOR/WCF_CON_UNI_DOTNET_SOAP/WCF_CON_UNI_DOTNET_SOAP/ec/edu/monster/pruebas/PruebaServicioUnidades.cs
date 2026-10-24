@@ -36,7 +36,7 @@ internal static class PruebaServicioUnidades
 
     private static string Token(ConversorUnidadesServices servicio)
     {
-        Respuesta respuesta = servicio.Autenticar("monster", "monster123");
+        Respuesta respuesta = servicio.Autenticar("Monster", "Monster9");
         Codigo(respuesta, "OK");
         Exigir(!String.IsNullOrWhiteSpace(respuesta.Token), "Autenticacion debe emitir token");
         return respuesta.Token;
@@ -65,8 +65,8 @@ internal static class PruebaServicioUnidades
         string token1 = Token(servicio);
         string token2 = Token(servicio);
         Exigir(token1 != token2, "Cada autenticacion debe generar un token distinto");
-        Codigo(servicio.Autenticar("monster", "incorrecta"), "AUTH-001");
-        Codigo(servicio.Autenticar("desconocido", "monster123"), "AUTH-001");
+        Codigo(servicio.Autenticar("Monster", "incorrecta"), "AUTH-001");
+        Codigo(servicio.Autenticar("desconocido", "Monster9"), "AUTH-001");
         Codigo(servicio.Autenticar(null, null), "AUTH-001");
         Codigo(servicio.Autenticar("", ""), "AUTH-001");
         Codigo(servicio.ObtenerCategorias(null), "AUTH-002");
@@ -137,7 +137,7 @@ internal static class PruebaServicioUnidades
     private static void SesionYRecuperacion()
     {
         DateTimeOffset ahora = new DateTimeOffset(2026, 10, 9, 0, 0, 0, TimeSpan.Zero);
-        var servicio = new ConversorUnidadesServices("monster", "monster123", () => ahora, TimeSpan.FromMinutes(15));
+        var servicio = new ConversorUnidadesServices("Monster", "Monster9", () => ahora, TimeSpan.FromMinutes(15));
         string token = Token(servicio);
         ahora = ahora.AddSeconds(899);
         Resultado(servicio.Convertir(token, "LONGITUD", "METRO", "CENTIMETRO", 1.0), 100.0);
@@ -147,11 +147,11 @@ internal static class PruebaServicioUnidades
         Codigo(servicio.ObtenerUnidades(token, "MASA"), "AUTH-003");
 
         Codigo(servicio.RecuperarClave("desconocido", "nueva123"), "AUTH-001");
-        Codigo(servicio.RecuperarClave("monster", "  "), "DATA-001");
+        Codigo(servicio.RecuperarClave("Monster", "  "), "DATA-001");
         string tokenAnterior = Token(servicio);
-        Codigo(servicio.RecuperarClave("monster", "nueva123"), "OK");
-        Codigo(servicio.Autenticar("monster", "monster123"), "AUTH-001");
-        Respuesta nuevaSesion = servicio.Autenticar("monster", "nueva123");
+        Codigo(servicio.RecuperarClave("Monster", "nueva123"), "OK");
+        Codigo(servicio.Autenticar("Monster", "Monster9"), "AUTH-001");
+        Respuesta nuevaSesion = servicio.Autenticar("Monster", "nueva123");
         Codigo(nuevaSesion, "OK");
         Codigo(servicio.ObtenerCategorias(tokenAnterior), "AUTH-002");
     }
