@@ -1,12 +1,107 @@
 package ec.edu.monster.controlador;
-import ec.edu.monster.modelo.RespuestaSoap;import ec.edu.monster.servicio.ConversorWebService;import jakarta.servlet.*;import jakarta.servlet.annotation.WebServlet;import jakarta.servlet.http.*;import java.io.IOException;
-@WebServlet("/conversor") public class ConversionServlet extends HttpServlet{
- protected void doGet(HttpServletRequest q,HttpServletResponse s)throws ServletException,IOException{q.setAttribute("categoriaSeleccionada",q.getParameter("categoria"));cargar(q,s);}
- protected void doPost(HttpServletRequest q,HttpServletResponse s)throws ServletException,IOException{
-  String cat=q.getParameter("categoria"),ori=q.getParameter("origen"),des=q.getParameter("destino");q.setAttribute("categoriaSeleccionada",cat);q.setAttribute("origenSeleccionado",ori);q.setAttribute("destinoSeleccionado",des);
-  try{double val=Double.parseDouble(q.getParameter("valor").trim().replace(',','.'));if(!Double.isFinite(val))throw new NumberFormatException();var r=api().convertir(token(q),cat,ori,des,val);if(r.isSesionInvalida()){q.getSession().invalidate();s.sendRedirect(q.getContextPath()+"/login");return;}if(r.isExito())q.setAttribute("resultado",r);else q.setAttribute("error",r.mensaje());}
-  catch(NumberFormatException|NullPointerException e){q.setAttribute("error","Escribe un valor numérico válido.");}catch(IOException|IllegalArgumentException e){q.setAttribute("error",e.getMessage());}cargar(q,s);
- }
- private void cargar(HttpServletRequest q,HttpServletResponse s)throws ServletException,IOException{String t=token(q);try{var r=api().obtenerCategorias(t);if(r.isSesionInvalida()){q.getSession().invalidate();s.sendRedirect(q.getContextPath()+"/login");return;}if(!r.isExito())q.setAttribute("error",r.mensaje());else{q.setAttribute("categorias",r.categorias());String c=(String)q.getAttribute("categoriaSeleccionada");if(c==null||c.isBlank())c=r.categorias().isEmpty()?"":r.categorias().get(0);q.setAttribute("categoriaSeleccionada",c);if(!c.isBlank()){var u=api().obtenerUnidades(t,c);if(u.isSesionInvalida()){q.getSession().invalidate();s.sendRedirect(q.getContextPath()+"/login");return;}if(u.isExito())q.setAttribute("unidades",u.unidades());else q.setAttribute("error",u.mensaje());}}}catch(IOException|IllegalArgumentException e){q.setAttribute("error",e.getMessage());}q.getRequestDispatcher("/WEB-INF/vista/conversor.jsp").forward(q,s);}
- private ConversorWebService api(){return new ConversorWebService(getServletContext());}private String token(HttpServletRequest q){return(String)q.getSession().getAttribute("token");}
+import ec.edu.monster.servicio.ConversorWebService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/conversor")
+public class ConversionServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setAttribute("categoriaSeleccionada", request.getParameter("categoria"));
+        cargar(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String categoria = request.getParameter("categoria");
+        String origen = request.getParameter("origen");
+        String destino = request.getParameter("destino");
+        request.setAttribute("categoriaSeleccionada", categoria);
+        request.setAttribute("origenSeleccionado", origen);
+        request.setAttribute("destinoSeleccionado", destino);
+
+        try {
+            double valor = Double.parseDouble(
+                    request.getParameter("valor").trim().replace(',', '.'));
+            if (!Double.isFinite(valor)) {
+                throw new NumberFormatException();
+            }
+
+            var respuesta = api().convertir(token(request), categoria, origen, destino, valor);
+            if (respuesta.isSesionInvalida()) {
+                request.getSession().invalidate();
+                response.sendRedirect(request.getContextPath() + "/login");
+                return;
+            }
+            if (respuesta.isExito()) {
+                request.setAttribute("resultado", respuesta);
+            } else {
+                request.setAttribute("error", respuesta.mensaje());
+            }
+        } catch (NumberFormatException | NullPointerException exception) {
+            request.setAttribute("error", "Escribe un valor numérico válido.");
+        } catch (IOException | IllegalArgumentException exception) {
+            request.setAttribute("error", exception.getMessage());
+        }
+
+        cargar(request, response);
+    }
+
+    private void cargar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String token = token(request);
+        try {
+            var respuesta = api().obtenerCategorias(token);
+            if (respuesta.isSesionInvalida()) {
+                request.getSession().invalidate();
+                response.sendRedirect(request.getContextPath() + "/login");
+                return;
+            }
+            if (!respuesta.isExito()) {
+                request.setAttribute("error", respuesta.mensaje());
+            } else {
+                request.setAttribute("categorias", respuesta.categorias());
+                String categoria = (String) request.getAttribute("categoriaSeleccionada");
+                if (categoria == null || categoria.isBlank()) {
+                    categoria = respuesta.categorias().isEmpty()
+                            ? ""
+                            : respuesta.categorias().get(0);
+                }
+                request.setAttribute("categoriaSeleccionada", categoria);
+
+                if (!categoria.isBlank()) {
+                    var unidades = api().obtenerUnidades(token, categoria);
+                    if (unidades.isSesionInvalida()) {
+                        request.getSession().invalidate();
+                        response.sendRedirect(request.getContextPath() + "/login");
+                        return;
+                    }
+                    if (unidades.isExito()) {
+                        request.setAttribute("unidades", unidades.unidades());
+                    } else {
+                        request.setAttribute("error", unidades.mensaje());
+                    }
+                }
+            }
+        } catch (IOException | IllegalArgumentException exception) {
+            request.setAttribute("error", exception.getMessage());
+        }
+
+        request.getRequestDispatcher("/WEB-INF/vista/conversor.jsp").forward(request, response);
+    }
+
+    private ConversorWebService api() {
+        return new ConversorWebService(getServletContext());
+    }
+
+    private String token(HttpServletRequest request) {
+        return (String) request.getSession().getAttribute("token");
+    }
 }
