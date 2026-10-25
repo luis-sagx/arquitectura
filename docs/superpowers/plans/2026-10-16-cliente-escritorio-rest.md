@@ -4,13 +4,13 @@
 
 **Goal:** Crear un cliente Swing MVC ejecutable que use el servidor REST de conversión y refleje la estructura y presentación del cliente de escritorio SOAP.
 
-**Architecture:** Crear `TI.1.3 PAO202651_RESFULL_JAVA_SINBDD_NRC36883_GR09/04. CLIESC/CLI_ESC_CON_UNI_JAVA_REST` como JAR Maven Java 21. El cliente tendrá modelos independientes, un adaptador Gson/HttpClient, controladores SwingWorker y vistas Swing bajo los mismos paquetes MVC del escritorio SOAP.
+**Architecture:** Crear `TI.1.3 PAO202651_RESTFULL_JAVA_SINBDD_NRC36883_GR09/04. CLIESC/CLI_ESC_CON_UNI_JAVA_REST` como JAR Maven Java 21. El cliente tendrá modelos independientes, un adaptador Gson/HttpClient, controladores SwingWorker y vistas Swing bajo los mismos paquetes MVC del escritorio SOAP.
 
 **Tech Stack:** Java 21, Swing, `java.net.http.HttpClient`, Gson 2.14.0, Maven JAR.
 
 **Spec:** `docs/superpowers/specs/2026-10-16-cliente-escritorio-rest-design.md`
 
-**Project root (`ROOT`):** `TI.1.3 PAO202651_RESFULL_JAVA_SINBDD_NRC36883_GR09/04. CLIESC/CLI_ESC_CON_UNI_JAVA_REST`
+**Project root (`ROOT`):** `TI.1.3 PAO202651_RESTFULL_JAVA_SINBDD_NRC36883_GR09/04. CLIESC/CLI_ESC_CON_UNI_JAVA_REST`
 
 ## Global Constraints
 
@@ -36,8 +36,8 @@
 ### Task 1: Proyecto Maven, modelos y adaptador REST
 
 **Files:**
-- Create: `TI.1.3 PAO202651_RESFULL_JAVA_SINBDD_NRC36883_GR09/04. CLIESC/CLI_ESC_CON_UNI_JAVA_REST/pom.xml`
-- Create: `TI.1.3 PAO202651_RESFULL_JAVA_SINBDD_NRC36883_GR09/04. CLIESC/CLI_ESC_CON_UNI_JAVA_REST/.gitignore`
+- Create: `TI.1.3 PAO202651_RESTFULL_JAVA_SINBDD_NRC36883_GR09/04. CLIESC/CLI_ESC_CON_UNI_JAVA_REST/pom.xml`
+- Create: `TI.1.3 PAO202651_RESTFULL_JAVA_SINBDD_NRC36883_GR09/04. CLIESC/CLI_ESC_CON_UNI_JAVA_REST/.gitignore`
 - Create: `ROOT/src/main/java/ec/edu/monster/modelo/RespuestaRest.java`
 - Create: `ROOT/src/main/java/ec/edu/monster/modelo/LoginRequest.java`
 - Create: `ROOT/src/main/java/ec/edu/monster/modelo/RecoverRequest.java`

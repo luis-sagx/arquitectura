@@ -13,6 +13,6 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\WF_CON_UNI_CLI_ESC.csproj" />
+    <ProjectReference Include="..\..\..\..\CLI_ESC_CON_UNI_DOTNET_REST.csproj" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
     <ProjectGuid>{998BFF2E-45C1-42D1-B730-D38943A0B2C9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ec.edu.monster</RootNamespace>
-    <AssemblyName>WF_CON_UNI_CLI_ESC</AssemblyName>
+    <AssemblyName>CLI_ESC_CON_UNI_DOTNET_REST</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

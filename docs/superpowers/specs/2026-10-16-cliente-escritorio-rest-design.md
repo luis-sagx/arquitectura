@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Agregar al proyecto `TI.1.3 PAO202651_RESFULL_JAVA_SINBDD_NRC36883_GR09` una aplicación Swing de escritorio que consuma el servidor REST de conversiones. La estructura de paquetes, navegación y presentación seguirá el cliente `04. CLIESC/ClienteEscritorio` del proyecto SOAP, usando HTTP/JSON en lugar de JAX-WS/SOAP.
+Agregar al proyecto `TI.1.3 PAO202651_RESTFULL_JAVA_SINBDD_NRC36883_GR09` una aplicación Swing de escritorio que consuma el servidor REST de conversiones. La estructura de paquetes, navegación y presentación seguirá el cliente `04. CLIESC/ClienteEscritorio` del proyecto SOAP, usando HTTP/JSON en lugar de JAX-WS/SOAP.
 
 ## Alcance funcional
 

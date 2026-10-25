@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // La información general de un ensamblado se controla mediante el siguiente
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("WF_CON_UNI_CLI_ESC")]
+[assembly: AssemblyTitle("CLI_ESC_CON_UNI_DOTNET_REST")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WF_CON_UNI_CLI_ESC")]
+[assembly: AssemblyProduct("CLI_ESC_CON_UNI_DOTNET_REST")]
 [assembly: AssemblyCopyright("Copyright ©  2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
