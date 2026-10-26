@@ -13,7 +13,7 @@ public sealed class ConversorUnidadesServices
     private readonly Func<DateTimeOffset> reloj;
     private readonly TimeSpan duracion;
     private readonly Dictionary<string, DateTimeOffset> sesiones = new(StringComparer.Ordinal);
-    private readonly List<string> categorias = ["LONGITUD", "MASA", "TEMPERATURA"];
+    private readonly List<string> categorias = ["LONGITUD", "MASA", "VOLUMEN", "TIEMPO", "TEMPERATURA", "AREA"];
     private readonly Dictionary<string, List<string>> catalogo = new(StringComparer.Ordinal);
     private readonly Dictionary<string, double> longitud = new(StringComparer.Ordinal);
     private readonly Dictionary<string, double> masa = new(StringComparer.Ordinal);
@@ -43,6 +43,9 @@ public sealed class ConversorUnidadesServices
         catalogo.Add("LONGITUD", ["KILOMETRO", "METRO", "CENTIMETRO", "MILIMETRO", "MILLA", "PIE"]);
         catalogo.Add("MASA", ["KILOGRAMO", "GRAMO", "MILIGRAMO", "LIBRA"]);
         catalogo.Add("TEMPERATURA", ["CELSIUS", "FAHRENHEIT", "KELVIN"]);
+        catalogo.Add("VOLUMEN", ["MILILITRO", "LITRO", "METRO_CUBICO", "GALON_US"]);
+        catalogo.Add("TIEMPO", ["SEGUNDO", "MINUTO", "HORA", "DIA"]);
+        catalogo.Add("AREA", ["METRO_CUADRADO", "KILOMETRO_CUADRADO", "HECTAREA", "ACRE"]);
 
         longitud.Add("KILOMETRO", 1000.0);
         longitud.Add("METRO", 1.0);
@@ -134,6 +137,8 @@ public sealed class ConversorUnidadesServices
             if (!valor.HasValue || double.IsNaN(valor.Value) || double.IsInfinity(valor.Value) ||
                 !catalogo.ContainsKey(c) || origen.Length == 0 || destino.Length == 0)
                 return Respuesta.Error("DATA-001", "Indique categoria, unidades y un valor numerico finito");
+            if (c != "LONGITUD" && c != "MASA" && c != "TEMPERATURA")
+                return Respuesta.Error("DATA-001", "La conversion solo esta habilitada para longitud, masa y temperatura");
 
             List<string> unidadesCategoria = catalogo[c];
             foreach (string unidad in new[] { origen, destino })

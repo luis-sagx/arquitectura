@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.List, ec.edu.monster.modelo.RespuestaSoap, ec.edu.monster.vista.VistaHtml" %>
+<%@ page import="java.util.List, java.util.Map, ec.edu.monster.modelo.RespuestaSoap, ec.edu.monster.vista.VistaHtml" %>
 <%!
     private String esc(String valor) {
         return VistaHtml.escapar(valor);
@@ -7,6 +7,15 @@
 
     private String sel(String actual, String seleccionado) {
         return actual != null && actual.equals(seleccionado) ? " selected" : "";
+    }
+    private String unidadLegible(String id) {
+        String nombre = id.replace('_', ' ').toLowerCase(java.util.Locale.ROOT);
+        nombre = nombre.substring(0, 1).toUpperCase(java.util.Locale.ROOT) + nombre.substring(1);
+        String simbolo = switch (id) { case "KILOMETRO" -> "km"; case "METRO" -> "m"; case "CENTIMETRO" -> "cm"; case "MILIMETRO" -> "mm"; case "MILLA" -> "mi"; case "PIE" -> "ft"; case "KILOGRAMO" -> "kg"; case "GRAMO" -> "g"; case "MILIGRAMO" -> "mg"; case "LIBRA" -> "lb"; case "CELSIUS" -> "°C"; case "FAHRENHEIT" -> "°F"; case "KELVIN" -> "K"; case "MILILITRO" -> "mL"; case "LITRO" -> "L"; case "METRO_CUBICO" -> "m³"; case "GALON_US" -> "gal"; case "SEGUNDO" -> "s"; case "MINUTO" -> "min"; case "HORA" -> "h"; case "DIA" -> "d"; case "METRO_CUADRADO" -> "m²"; case "KILOMETRO_CUADRADO" -> "km²"; case "HECTAREA" -> "ha"; case "ACRE" -> "ac"; default -> ""; };
+        return simbolo.isEmpty() ? nombre : nombre + " (" + simbolo + ")";
+    }
+    private String categoriaLegible(String id) {
+        return switch (id) { case "LONGITUD" -> "Longitud"; case "MASA" -> "Masa/peso"; case "VOLUMEN" -> "Volumen"; case "TIEMPO" -> "Tiempo"; case "TEMPERATURA" -> "Temperatura"; case "AREA" -> "Área"; default -> id; };
     }
 %>
 <%
@@ -16,6 +25,7 @@
     String origen = (String) request.getAttribute("origenSeleccionado");
     String destino = (String) request.getAttribute("destinoSeleccionado");
     RespuestaSoap resultado = (RespuestaSoap) request.getAttribute("resultado");
+    Map<String, List<String>> catalogoCompleto = (Map<String, List<String>>) request.getAttribute("catalogoCompleto");
 %>
 <!doctype html>
 <html lang="es">
@@ -43,7 +53,7 @@
             <% if (request.getAttribute("error") != null) { %>
                 <div class="notice error"><%= esc((String) request.getAttribute("error")) %></div>
             <% } %>
-
+            <div id="conversionView">
             <section class="panel">
                 <form method="get" action="<%= request.getContextPath() %>/conversor">
                     <label for="categoria">Categoría</label>
@@ -93,8 +103,12 @@
                             </select>
                         </div>
                     </div>
-                    <button>Convertir</button>
+                    <div class="form-actions">
+                <button>Convertir</button>
+                <button type="button" class="secondary" onclick="mostrarCatalogo(true)">Ver catalogo</button>
+            </div>
                 </form>
+
             </section>
 
             <% if (resultado != null) { %>
@@ -104,11 +118,34 @@
                     <p><%= esc(resultado.unidadOrigen()) %> → <%= esc(resultado.unidadDestino()) %></p>
                 </section>
             <% } %>
-        </main>
+            </div>
+            <section id="catalogView" class="catalog-view" hidden>
+                <button type="button" class="secondary" onclick="mostrarCatalogo(false)">Volver al conversor</button>
+                <h2>Catálogo de unidades</h2>
+                <div class="catalog-grid">
+                    <% if (catalogoCompleto != null) for (Map.Entry<String, List<String>> grupo : catalogoCompleto.entrySet()) { %>
+                        <article class="catalog-card"><h3><%= esc(categoriaLegible(grupo.getKey())) %></h3>
+                            <ul><% for (String unidad : grupo.getValue()) { %><li><%= esc(unidadLegible(unidad)) %></li><% } %></ul>
+                        </article>
+                    <% } %>
+                </div>
+                <p class="muted">Las conversiones están habilitadas para longitud, masa/peso y temperatura.</p>
+            </section>        </main>
         <aside class="visual-sidebar">
             <img src="<%= request.getContextPath() %>/recursos/img/monster.jpg"
                  alt="Monster usando una computadora">
         </aside>
     </div>
-</body>
+    <script>
+    function mostrarCatalogo(mostrar) {
+        document.getElementById('conversionView').hidden = mostrar;
+  document.querySelector('.wrap > h1').hidden = mostrar;
+  document.querySelector('.wrap > p.muted').hidden = mostrar;
+  var aviso = document.querySelector('.wrap > .notice'); if (aviso) aviso.hidden = mostrar;
+        document.getElementById('catalogView').hidden = !mostrar;
+        document.querySelector('.visual-sidebar').hidden = mostrar;
+  document.querySelector('.visual-sidebar').style.display = mostrar ? 'none' : '';
+        document.querySelector('.screen-layout').classList.toggle('catalog-mode', mostrar);
+    }
+    </script></body>
 </html>

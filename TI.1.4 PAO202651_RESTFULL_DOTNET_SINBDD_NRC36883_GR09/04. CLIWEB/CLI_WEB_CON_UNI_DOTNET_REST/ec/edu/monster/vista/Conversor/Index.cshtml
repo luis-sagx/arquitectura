@@ -16,7 +16,7 @@
     {
         <div class="notice error">@Model.Error</div>
     }
-
+    <div id="conversionView">
     <section class="panel">
         <form method="get" asp-controller="Conversor" asp-action="Index">
             <label for="categoria">Categoría</label>
@@ -53,8 +53,12 @@
                     </select>
                 </div>
             </div>
-            <button>Convertir</button>
+            <div class="form-actions">
+                <button>Convertir</button>
+                <button type="button" class="secondary" onclick="mostrarCatalogo(true)">Ver catalogo</button>
+            </div>
         </form>
+
     </section>
 
     @if (Model.Resultado != null)
@@ -65,4 +69,29 @@
             <p>@Model.DetalleResultado</p>
         </section>
     }
-</main><aside class="visual-sidebar"><img src="~/img/monster.jpg" alt="Monster usando una computadora"></aside></div>
+    </div>
+    <section id="catalogView" class="catalog-view" hidden>
+        <button type="button" class="secondary" onclick="mostrarCatalogo(false)">Volver al conversor</button>
+        <h2>Catálogo de unidades</h2>
+        <div class="catalog-grid">
+            @foreach (var grupo in Model.Catalogo)
+            {
+                <article class="catalog-card"><h3>@OpcionCatalogo.Desde(grupo.Key).Etiqueta</h3>
+                    <ul>@foreach (OpcionCatalogo unidad in grupo.Value) { <li>@unidad.Etiqueta</li> }</ul>
+                </article>
+            }
+        </div>
+        <p class="muted">Las conversiones están habilitadas para longitud, masa/peso y temperatura.</p>
+    </section></main><aside class="visual-sidebar"><img src="~/img/monster.jpg" alt="Monster usando una computadora"></aside></div>
+<script>
+function mostrarCatalogo(mostrar) {
+  document.getElementById('conversionView').hidden = mostrar;
+  document.querySelector('.wrap > h1').hidden = mostrar;
+  document.querySelector('.wrap > p.muted').hidden = mostrar;
+  var aviso = document.querySelector('.wrap > .notice'); if (aviso) aviso.hidden = mostrar;
+  document.getElementById('catalogView').hidden = !mostrar;
+  document.querySelector('.visual-sidebar').hidden = mostrar;
+  document.querySelector('.visual-sidebar').style.display = mostrar ? 'none' : '';
+  document.querySelector('.screen-layout').classList.toggle('catalog-mode', mostrar);
+}
+</script>

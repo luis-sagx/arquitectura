@@ -1,6 +1,8 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using ec.edu.monster.modelo;
 using ec.edu.monster.servicio;
@@ -25,6 +27,7 @@ namespace ec.edu.monster.controlador
             this.volverALogin = volverALogin;
             vista.CategoriaCambiadaSolicitado += CategoriaCambiada;
             vista.ConvertirSolicitado += Convertir;
+            vista.CatalogoSolicitado += ConsultarCatalogo;
             vista.CerrarSesionSolicitado += CerrarSesion;
             vista.FormClosed += (sender, evento) =>
             {
@@ -54,8 +57,9 @@ namespace ec.edu.monster.controlador
                     return;
                 }
 
-                vista.CargarCategorias(respuesta.Categorias);
-                if (respuesta.Categorias.Count == 0)
+                var convertibles = respuesta.Categorias.Where(c => c == "LONGITUD" || c == "MASA" || c == "TEMPERATURA").ToList();
+                vista.CargarCategorias(convertibles);
+                if (convertibles.Count == 0)
                 {
                     vista.MostrarMensaje("El servicio no devolvió categorías.", true);
                     return;
@@ -122,6 +126,27 @@ namespace ec.edu.monster.controlador
             vista.MostrarMensaje(respuesta.Unidades.Count == 0
                 ? "La categoría no contiene unidades." : "Selecciona las unidades e ingresa el valor.",
                 respuesta.Unidades.Count == 0);
+        }
+
+        private async void ConsultarCatalogo(object sender, EventArgs evento)
+        {
+            try
+            {
+                RespuestaSoap respuesta = await Task.Run(() => cliente.ObtenerCategorias(sesion.Token));
+                if (!VentanaActiva() || ManejarAutorizacion(respuesta) || !respuesta.IsExito) return;
+                var texto = new StringBuilder();
+                foreach (string categoria in respuesta.Categorias)
+                {
+                    RespuestaSoap unidades = await Task.Run(() => cliente.ObtenerUnidades(sesion.Token, categoria));
+                    if (ManejarAutorizacion(unidades) || !unidades.IsExito) return;
+                    texto.AppendLine(OpcionCatalogo.Desde(categoria).Texto);
+                    foreach (string unidad in unidades.Unidades) texto.AppendLine("  • " + OpcionCatalogo.Desde(unidad).Texto);
+                    texto.AppendLine();
+                }
+                texto.Append("Conversiones habilitadas: longitud, masa/peso y temperatura.");
+                vista.MostrarCatalogo(texto.ToString());
+            }
+            catch (IOException error) { if (VentanaActiva()) vista.MostrarMensaje(error.Message, true); }
         }
 
         private async void Convertir(object sender, EventArgs evento)

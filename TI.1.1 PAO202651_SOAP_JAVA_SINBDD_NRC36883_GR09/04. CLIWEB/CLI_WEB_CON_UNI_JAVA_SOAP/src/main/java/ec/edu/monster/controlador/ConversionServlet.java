@@ -6,6 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet("/conversor")
 public class ConversionServlet extends HttpServlet {
@@ -67,12 +70,25 @@ public class ConversionServlet extends HttpServlet {
             if (!respuesta.isExito()) {
                 request.setAttribute("error", respuesta.mensaje());
             } else {
-                request.setAttribute("categorias", respuesta.categorias());
+                Map<String, List<String>> catalogoCompleto = new LinkedHashMap<>();
+                for (String categoriaCatalogo : respuesta.categorias()) {
+                    var detalleCatalogo = api().obtenerUnidades(token, categoriaCatalogo);
+                    if (detalleCatalogo.isSesionInvalida()) {
+                        request.getSession().invalidate();
+                        response.sendRedirect(request.getContextPath() + "/login");
+                        return;
+                    }
+                    if (detalleCatalogo.isExito()) catalogoCompleto.put(categoriaCatalogo, detalleCatalogo.unidades());
+                }
+                request.setAttribute("catalogoCompleto", catalogoCompleto);
+                List<String> convertibles = respuesta.categorias().stream()
+                    .filter(c -> List.of("LONGITUD", "MASA", "TEMPERATURA").contains(c)).toList();
+                request.setAttribute("categorias", convertibles);
                 String categoria = (String) request.getAttribute("categoriaSeleccionada");
-                if (categoria == null || categoria.isBlank()) {
-                    categoria = respuesta.categorias().isEmpty()
+                if (categoria == null || !convertibles.contains(categoria)) {
+                    categoria = convertibles.isEmpty()
                             ? ""
-                            : respuesta.categorias().get(0);
+                            : convertibles.get(0);
                 }
                 request.setAttribute("categoriaSeleccionada", categoria);
 

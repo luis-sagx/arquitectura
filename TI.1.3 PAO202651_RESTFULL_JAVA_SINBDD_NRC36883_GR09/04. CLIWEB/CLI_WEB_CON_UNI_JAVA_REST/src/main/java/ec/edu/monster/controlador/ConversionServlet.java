@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @WebServlet("/conversor")
 public class ConversionServlet extends HttpServlet {
@@ -70,8 +72,21 @@ public class ConversionServlet extends HttpServlet {
                 return;
             }
 
-            List<String> categorias = respuestaCategorias.getCategorias() == null
+            List<String> categoriasDisponibles = respuestaCategorias.getCategorias() == null
                 ? List.of() : respuestaCategorias.getCategorias();
+            Map<String, List<String>> catalogoCompleto = new LinkedHashMap<>();
+            for (String categoriaCatalogo : categoriasDisponibles) {
+                RespuestaRest unidadesCatalogo = api().obtenerUnidades(token, categoriaCatalogo);
+                if (unidadesCatalogo.esSesionInvalida()) {
+                    irALoginPorSesion(request, response);
+                    return;
+                }
+                if (unidadesCatalogo.esExito() && unidadesCatalogo.getUnidades() != null)
+                    catalogoCompleto.put(categoriaCatalogo, unidadesCatalogo.getUnidades());
+            }
+            request.setAttribute("catalogoCompleto", catalogoCompleto);
+            List<String> categorias = categoriasDisponibles.stream()
+                .filter(c -> List.of("LONGITUD", "MASA", "TEMPERATURA").contains(c)).toList();
             request.setAttribute("categorias", categorias);
             String categoria = (String) request.getAttribute("categoriaSeleccionada");
             if (categoria == null || !categorias.contains(categoria)) {

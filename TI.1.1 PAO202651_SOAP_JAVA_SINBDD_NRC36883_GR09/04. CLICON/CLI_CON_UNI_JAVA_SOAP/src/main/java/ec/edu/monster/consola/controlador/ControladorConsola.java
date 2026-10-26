@@ -73,14 +73,15 @@ public final class ControladorConsola {
     }
 
     private boolean consultarCatalogo() throws IOException {
-        vista.mostrarSeccion("CONSULTAR CATÁLOGO | Selecciona una categoría");
+        vista.mostrarSeccion("CATÁLOGO DE UNIDADES");
         RespuestaSoap categorias = cliente.obtenerCategorias(token);
         if (!mostrar(categorias)) return true;
-        String categoria = vista.seleccionar("Categoria", categorias.getCategorias());
-        if (categoria == null) return false;
-        vista.mostrarSeccion("CONSULTAR CATÁLOGO | " + categoria);
-        RespuestaSoap unidades = cliente.obtenerUnidades(token, categoria);
-        if (mostrar(unidades)) vista.mostrarUnidades(unidades.getUnidades());
+        for (String categoria : categorias.getCategorias()) {
+            RespuestaSoap unidades = cliente.obtenerUnidades(token, categoria);
+            if (!mostrar(unidades)) return true;
+            vista.mostrarCategoriaCatalogo(categoria, unidades.getUnidades(),
+                List.of("LONGITUD", "MASA", "TEMPERATURA").contains(categoria));
+        }
         return true;
     }
 

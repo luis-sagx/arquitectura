@@ -14,12 +14,15 @@ namespace ec.edu.monster.vista
         private readonly ComboBox destino;
         private readonly EntradaRedondeada valor;
         private readonly Button convertir;
+        private readonly Button catalogo;
         private readonly Button salir;
         private readonly Label resultado;
         private readonly Label mensaje;
         private readonly Label sesion;
         private readonly ToolTip ayudaMensajes;
         private bool actualizandoListas;
+        private Control[] controlesConversor;
+        private string tituloConversor;
 
         public ConversionForm()
         {
@@ -52,13 +55,17 @@ namespace ec.edu.monster.vista
             tarjeta.Controls.Add(destino);
 
             tarjeta.Controls.Add(EstilosUI.Etiqueta("Valor", 28, 211, 300, 24, 10F, true));
-            valor = EstilosUI.Entrada(28, 239, 315, 42, false);
+            valor = EstilosUI.Entrada(28, 239, 654, 42, false);
             tarjeta.Controls.Add(valor);
-            convertir = EstilosUI.Boton("Convertir", 367, 237, 315, 44, true);
+            convertir = EstilosUI.Boton("Convertir", 28, 293, 315, 44, true);
             convertir.Click += (sender, args) => Disparar(ConvertirSolicitado);
             tarjeta.Controls.Add(convertir);
 
-            resultado = EstilosUI.Etiqueta("El resultado aparecerá aquí", 28, 302, 654, 34, 18F, true);
+            catalogo = EstilosUI.Boton("Ver catalogo", 367, 293, 315, 44, false);
+            catalogo.Click += (sender, args) => Disparar(CatalogoSolicitado);
+            tarjeta.Controls.Add(catalogo);
+
+            resultado = EstilosUI.Etiqueta("El resultado aparecerá aquí", 28, 338, 654, 34, 18F, true);
             tarjeta.Controls.Add(resultado);
             sesion = EstilosUI.Etiqueta(String.Empty, 500, 568, 250, 24, 9F, false);
             sesion.ForeColor = EstilosUI.TextoSecundario;
@@ -79,10 +86,14 @@ namespace ec.edu.monster.vista
             };
             ayudaMensajes.SetToolTip(mensaje, mensaje.Text);
             Controls.Add(EstilosUI.CrearImagenLateral());
+            tituloConversor = Text;
+            controlesConversor = new Control[Controls.Count];
+            Controls.CopyTo(controlesConversor, 0);
         }
 
         public event EventHandler CategoriaCambiadaSolicitado;
         public event EventHandler ConvertirSolicitado;
+        public event EventHandler CatalogoSolicitado;
         public event EventHandler CerrarSesionSolicitado;
 
         public OpcionCatalogo CategoriaSeleccionada { get { return categorias.SelectedItem as OpcionCatalogo; } }
@@ -176,6 +187,79 @@ namespace ec.edu.monster.vista
             MostrarMensaje(String.Empty, false);
         }
 
+        public void MostrarCatalogo(string texto)
+        {
+            var encabezado = new Panel { Dock = DockStyle.Fill, Padding = new Padding(28, 16, 28, 12), BackColor = EstilosUI.Fondo };
+            var titulo = new Label { Text = "Catálogo de unidades", Dock = DockStyle.Left, Width = 420, Font = new Font("Segoe UI", 22F, FontStyle.Bold), ForeColor = EstilosUI.Tinta, TextAlign = ContentAlignment.MiddleLeft };
+            var volver = EstilosUI.Boton("Volver al conversor", 0, 0, 190, 42, false);
+            volver.Dock = DockStyle.Right;
+            volver.Click += (sender, args) =>
+            {
+                Controls.Clear();
+                Controls.AddRange(controlesConversor);
+                Text = tituloConversor;
+            };
+            encabezado.Controls.Add(titulo);
+            encabezado.Controls.Add(volver);
+            var cuadrícula = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoScroll = false, WrapContents = true, FlowDirection = FlowDirection.LeftToRight, Padding = new Padding(28), BackColor = EstilosUI.Fondo };
+            Panel tarjeta = null;
+            FlowLayoutPanel lista = null;
+            string conversionesHabilitadas = "Conversiones habilitadas: longitud, masa/peso y temperatura.";
+            foreach (string linea in texto.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                string limpio = linea.Trim();
+                if (limpio.StartsWith("Conversiones habilitadas:"))
+                {
+                    conversionesHabilitadas = limpio;
+                    continue;
+                }
+                if (limpio.StartsWith("Conversiones disponibles")) continue;
+                bool esUnidad = linea.StartsWith(" ") || limpio.StartsWith("•");
+                if (!esUnidad)
+                {
+                    tarjeta = new Panel { Width = 300, AutoSize = true, MinimumSize = new Size(280, 120), BackColor = EstilosUI.Blanco, Padding = new Padding(18), Margin = new Padding(0, 0, 18, 18) };
+                    tarjeta.Controls.Add(new Label { Text = limpio, Dock = DockStyle.Top, Height = 30, Font = new Font("Segoe UI", 14F, FontStyle.Bold), ForeColor = EstilosUI.Acento });
+                    lista = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, FlowDirection = FlowDirection.TopDown, WrapContents = false, BackColor = EstilosUI.Blanco };
+                    tarjeta.Controls.Add(lista);
+                    cuadrícula.Controls.Add(tarjeta);
+                }
+                else if (lista != null)
+                {
+                    if (limpio.StartsWith("•")) limpio = limpio.Substring(1).Trim();
+                    lista.Controls.Add(new Label { Text = limpio, AutoSize = true, Font = new Font("Segoe UI", 11F), ForeColor = EstilosUI.Tinta, Margin = new Padding(0, 4, 0, 4) });
+                }
+            }
+            var diseño = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 1,
+                RowCount = 3,
+                BackColor = EstilosUI.Fondo,
+                Margin = Padding.Empty
+            };
+            diseño.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            diseño.RowStyles.Add(new RowStyle(SizeType.Absolute, 76F));
+            diseño.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            diseño.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
+            var resumen = new Label
+            {
+                Text = conversionesHabilitadas,
+                Dock = DockStyle.Fill,
+                AutoEllipsis = true,
+                Padding = new Padding(28, 8, 28, 8),
+                Font = new Font("Segoe UI", 10F),
+                ForeColor = EstilosUI.TextoSecundario,
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            diseño.Controls.Add(encabezado, 0, 0);
+            diseño.Controls.Add(cuadrícula, 0, 1);
+            diseño.Controls.Add(resumen, 0, 2);
+
+            Controls.Clear();
+            Controls.Add(diseño);
+            Text = "Catálogo de unidades";
+        }
+
         public void LimpiarResultado()
         {
             resultado.Text = "El resultado aparecerá aquí";
@@ -195,6 +279,7 @@ namespace ec.edu.monster.vista
             destino.Enabled = !ocupado;
             valor.Enabled = !ocupado;
             convertir.Enabled = !ocupado;
+            catalogo.Enabled = !ocupado;
             salir.Enabled = !ocupado;
             UseWaitCursor = ocupado;
         }

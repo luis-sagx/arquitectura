@@ -49,7 +49,10 @@ public class ConversorUnidadesServices {
             "LIBRA", 0.45359237);
         catalogo.put("LONGITUD", List.of("KILOMETRO", "METRO", "CENTIMETRO", "MILIMETRO", "MILLA", "PIE"));
         catalogo.put("MASA", List.of("KILOGRAMO", "GRAMO", "MILIGRAMO", "LIBRA"));
+        catalogo.put("VOLUMEN", List.of("MILILITRO", "LITRO", "METRO_CUBICO", "GALON_US"));
+        catalogo.put("TIEMPO", List.of("SEGUNDO", "MINUTO", "HORA", "DIA"));
         catalogo.put("TEMPERATURA", List.of("CELSIUS", "FAHRENHEIT", "KELVIN"));
+        catalogo.put("AREA", List.of("METRO_CUADRADO", "KILOMETRO_CUADRADO", "HECTAREA", "ACRE"));
     }
 
     public synchronized Respuesta autenticar(String usuario, String clave) {
@@ -111,6 +114,8 @@ public class ConversorUnidadesServices {
         String c = normalizar(categoria), origen = normalizar(unidadOrigen), destino = normalizar(unidadDestino);
         if (valor == null || !Double.isFinite(valor) || !catalogo.containsKey(c) || origen.isEmpty() || destino.isEmpty())
             return Respuesta.error("DATA-001", "Indique categoria, unidades y un valor numerico finito");
+        if (!List.of("LONGITUD", "MASA", "TEMPERATURA").contains(c))
+            return Respuesta.error("DATA-001", "La conversion solo esta habilitada para longitud, masa y temperatura");
         for (String u : List.of(origen, destino)) {
             if (!catalogo.get(c).contains(u)) {
                 boolean otraMagnitud = catalogo.values().stream().anyMatch(unidades -> unidades.contains(u));

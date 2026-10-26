@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -25,10 +26,12 @@ public final class VentanaConversiones extends JFrame {
     private final JComboBox<OpcionCatalogo> destino = new JComboBox<>();
     private final JTextField valor = new JTextField();
     private final JButton convertir = new JButton("Convertir");
+    private final JButton catalogo = new JButton("Ver catalogo");
     private final JButton cerrarSesion = new JButton("Cerrar sesión");
     private final JLabel resultado = new JLabel(" ", SwingConstants.CENTER);
     private final JLabel estado = new JLabel(" ");
     private boolean actualizandoCatalogo;
+    private JPanel vistaConversor;
 
     public VentanaConversiones() {
         super("Monster · Conversor de unidades");
@@ -45,7 +48,8 @@ public final class VentanaConversiones extends JFrame {
         contenido.add(crearPie(), BorderLayout.SOUTH);
         raiz.add(contenido, BorderLayout.CENTER);
         raiz.add(new ImagenLateral(), BorderLayout.EAST);
-        setContentPane(raiz);
+        vistaConversor = raiz;
+        setContentPane(vistaConversor);
 
         categorias.addActionListener(evento -> {
             if (!actualizandoCatalogo) {
@@ -114,8 +118,10 @@ public final class VentanaConversiones extends JFrame {
         agregar(tarjeta, destino, c, 1, 5, 1);
 
         EstilosUI.estilizarBotonPrincipal(convertir);
-        c.gridwidth = 2;
-        agregar(tarjeta, convertir, c, 0, 6, 2);
+        c.gridwidth = 1;
+        agregar(tarjeta, convertir, c, 0, 6, 1);
+        EstilosUI.estilizarBotonPrincipal(catalogo);
+        agregar(tarjeta, catalogo, c, 1, 6, 1);
 
         resultado.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         resultado.setForeground(EstilosUI.AZUL_MARINO);
@@ -155,6 +161,7 @@ public final class VentanaConversiones extends JFrame {
 
     public void alCambiarCategoria(ActionListener listener) { categorias.addActionListener(listener); }
     public void alConvertir(ActionListener listener) { convertir.addActionListener(listener); }
+    public void alConsultarCatalogo(ActionListener listener) { catalogo.addActionListener(listener); }
     public void alCerrarSesion(ActionListener listener) { cerrarSesion.addActionListener(listener); }
     public OpcionCatalogo categoriaSeleccionada() { return (OpcionCatalogo) categorias.getSelectedItem(); }
     public OpcionCatalogo origenSeleccionado() { return (OpcionCatalogo) origen.getSelectedItem(); }
@@ -187,6 +194,56 @@ public final class VentanaConversiones extends JFrame {
 
     public void limpiarUnidades() { setUnidades(List.of()); }
     public void mostrarResultado(String texto) { resultado.setText(texto); }
+    public void mostrarCatalogo(String texto) {
+        JPanel raiz = new JPanel(new BorderLayout(0, 18));
+        raiz.setBackground(EstilosUI.FONDO);
+        raiz.setBorder(BorderFactory.createEmptyBorder(28, 36, 28, 36));
+        JPanel encabezado = new JPanel(new BorderLayout());
+        encabezado.setOpaque(false);
+        JLabel titulo = new JLabel("Catálogo de unidades");
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        titulo.setForeground(EstilosUI.TINTA);
+        JButton volver = new JButton("Volver al conversor");
+        EstilosUI.estilizarBotonSecundario(volver);
+        volver.addActionListener(e -> {
+            setContentPane(vistaConversor);
+            revalidate();
+            repaint();
+        });
+        encabezado.add(titulo, BorderLayout.CENTER);
+        encabezado.add(volver, BorderLayout.EAST);
+        JPanel cuadrícula = new JPanel(new java.awt.GridLayout(0, 3, 16, 16));
+        cuadrícula.setOpaque(false);
+        JPanel tarjeta = null;
+        JPanel unidades = null;
+        for (String linea : texto.split("\\R")) {
+            String limpio = linea.trim();
+            if (limpio.isEmpty() || limpio.startsWith("Conversiones disponibles")) continue;
+            if (!linea.startsWith(" ") && !linea.startsWith("\t")) {
+                tarjeta = new JPanel(new BorderLayout(0, 10));
+                tarjeta.setBackground(EstilosUI.BLANCO);
+                tarjeta.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(EstilosUI.BORDE), BorderFactory.createEmptyBorder(18, 20, 18, 20)));
+                JLabel categoría = new JLabel(limpio);
+                categoría.setFont(new Font("Segoe UI", Font.BOLD, 17));
+                categoría.setForeground(EstilosUI.AZUL_MARINO);
+                unidades = new JPanel(new java.awt.GridLayout(0, 1, 0, 7));
+                unidades.setOpaque(false);
+                tarjeta.add(categoría, BorderLayout.NORTH);
+                tarjeta.add(unidades, BorderLayout.CENTER);
+                cuadrícula.add(tarjeta);
+            } else if (unidades != null) {
+                JLabel unidad = new JLabel(limpio.replaceFirst("^[•*-]\\s*", ""));
+                unidad.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+                unidad.setForeground(EstilosUI.TINTA);
+                unidades.add(unidad);
+            }
+        }
+        raiz.add(encabezado, BorderLayout.NORTH);
+        raiz.add(new javax.swing.JScrollPane(cuadrícula), BorderLayout.CENTER);
+        setContentPane(raiz);
+        revalidate();
+        repaint();
+    }
     public void mostrarEstado(String texto) { estado.setText(texto == null || texto.isBlank() ? " " : texto); }
 
     public void setOcupado(boolean ocupado) {
@@ -195,6 +252,8 @@ public final class VentanaConversiones extends JFrame {
         destino.setEnabled(!ocupado);
         valor.setEnabled(!ocupado);
         convertir.setEnabled(!ocupado);
+        catalogo.setEnabled(!ocupado);
+        catalogo.setEnabled(!ocupado);
         cerrarSesion.setEnabled(!ocupado);
         setCursor(ocupado ? java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.WAIT_CURSOR)
                 : java.awt.Cursor.getDefaultCursor());

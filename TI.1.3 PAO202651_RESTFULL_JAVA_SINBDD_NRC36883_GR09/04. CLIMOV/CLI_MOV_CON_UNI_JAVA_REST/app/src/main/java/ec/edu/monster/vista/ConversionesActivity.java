@@ -39,6 +39,7 @@ public final class ConversionesActivity extends AppCompatActivity implements Vis
     private Spinner destino;
     private TextInputEditText valor;
     private MaterialButton convertir;
+    private MaterialButton verCatalogo;
     private MaterialButton intercambiar;
     private MaterialButton cerrarSesion;
     private LinearProgressIndicator progreso;
@@ -75,6 +76,7 @@ public final class ConversionesActivity extends AppCompatActivity implements Vis
         destino = findViewById(R.id.destino);
         valor = findViewById(R.id.valor);
         convertir = findViewById(R.id.convertir);
+        verCatalogo = findViewById(R.id.verCatalogo);
         intercambiar = findViewById(R.id.intercambiar);
         cerrarSesion = findViewById(R.id.cerrarSesion);
         progreso = findViewById(R.id.progreso);
@@ -100,6 +102,7 @@ public final class ConversionesActivity extends AppCompatActivity implements Vis
         destino.setOnItemSelectedListener(limpiar);
 
         convertir.setOnClickListener(v -> enviarConversion());
+        verCatalogo.setOnClickListener(v -> controlador.consultarCatalogo());
         valor.setOnEditorActionListener((v, accion, evento) -> {
             if (accion == EditorInfo.IME_ACTION_DONE) {
                 enviarConversion();
@@ -138,6 +141,7 @@ public final class ConversionesActivity extends AppCompatActivity implements Vis
         origen.setEnabled(!ocupado);
         destino.setEnabled(!ocupado);
         convertir.setEnabled(!ocupado);
+        verCatalogo.setEnabled(!ocupado);
         intercambiar.setEnabled(!ocupado);
     }
 
@@ -154,6 +158,74 @@ public final class ConversionesActivity extends AppCompatActivity implements Vis
                 .setMessage(mensaje)
                 .setPositiveButton(R.string.aceptar, null)
                 .show();
+    }
+
+    @Override
+        public void mostrarCatalogo(String mensaje) {
+        android.app.Dialog dialog = new android.app.Dialog(this);
+        android.widget.LinearLayout raiz = new android.widget.LinearLayout(this);
+        raiz.setOrientation(android.widget.LinearLayout.VERTICAL);
+        raiz.setBackgroundColor(Color.rgb(241, 244, 248));
+        raiz.setPadding(20, 24, 20, 16);
+        android.widget.LinearLayout encabezado = new android.widget.LinearLayout(this);
+        encabezado.setGravity(android.view.Gravity.CENTER_VERTICAL);
+        encabezado.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+        TextView titulo = new TextView(this);
+        titulo.setText("Catálogo de unidades");
+        titulo.setTextSize(22);
+        titulo.setTypeface(null, android.graphics.Typeface.BOLD);
+        titulo.setTextColor(Color.rgb(24, 50, 87));
+        encabezado.addView(titulo, new android.widget.LinearLayout.LayoutParams(0, -2, 1));
+        MaterialButton volver = new MaterialButton(this);
+        volver.setText("Volver");
+        volver.setOnClickListener(v -> dialog.dismiss());
+        encabezado.addView(volver);
+        raiz.addView(encabezado);
+        android.widget.ScrollView scroll = new android.widget.ScrollView(this);
+        android.widget.GridLayout grid = new android.widget.GridLayout(this);
+        grid.setColumnCount(2);
+        grid.setUseDefaultMargins(false);
+        grid.setPadding(0, 18, 0, 8);
+        android.widget.LinearLayout lista = null;
+        int indice = 0;
+        for (String linea : mensaje.split("\\R")) {
+            String limpio = linea.trim();
+            if (limpio.isEmpty() || limpio.startsWith("Conversiones disponibles")) continue;
+            if (!linea.startsWith(" ") && !linea.startsWith("\t")) {
+                com.google.android.material.card.MaterialCardView card = new com.google.android.material.card.MaterialCardView(this);
+                card.setCardBackgroundColor(Color.WHITE);
+                card.setRadius(20);
+                card.setStrokeColor(Color.rgb(211, 219, 229));
+                card.setStrokeWidth(1);
+                card.setContentPadding(20, 16, 20, 16);
+                lista = new android.widget.LinearLayout(this);
+                lista.setOrientation(android.widget.LinearLayout.VERTICAL);
+                TextView categoria = new TextView(this);
+                categoria.setText(limpio);
+                categoria.setTextSize(16);
+                categoria.setTypeface(null, android.graphics.Typeface.BOLD);
+                categoria.setTextColor(Color.rgb(24, 50, 87));
+                lista.addView(categoria);
+                card.addView(lista);
+                android.widget.GridLayout.LayoutParams parametros = new android.widget.GridLayout.LayoutParams(android.widget.GridLayout.spec(indice / 2), android.widget.GridLayout.spec(indice % 2, 1, 1f));
+                parametros.width = 0;
+                parametros.setMargins(0, 0, 10, 14);
+                grid.addView(card, parametros);
+                indice++;
+            } else if (lista != null) {
+                TextView unidad = new TextView(this);
+                unidad.setText(limpio.replaceFirst("^[•*-]\\s*", ""));
+                unidad.setTextSize(14);
+                unidad.setTextColor(Color.rgb(55, 67, 82));
+                unidad.setPadding(0, 8, 0, 0);
+                lista.addView(unidad);
+            }
+        }
+        scroll.addView(grid);
+        raiz.addView(scroll, new android.widget.LinearLayout.LayoutParams(-1, 0, 1));
+        dialog.setContentView(raiz);
+        dialog.show();
+        if (dialog.getWindow() != null) dialog.getWindow().setLayout(-1, -1);
     }
 
     @Override

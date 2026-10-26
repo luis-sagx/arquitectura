@@ -16,7 +16,7 @@ namespace ec.edu.monster.servicios
         private readonly Func<DateTimeOffset> reloj;
         private readonly TimeSpan duracion;
         private readonly Dictionary<string, DateTimeOffset> sesiones = new Dictionary<string, DateTimeOffset>(StringComparer.Ordinal);
-        private readonly List<string> categorias = new List<string> { "LONGITUD", "MASA", "TEMPERATURA" };
+        private readonly List<string> categorias = new List<string> { "LONGITUD", "MASA", "VOLUMEN", "TIEMPO", "TEMPERATURA", "AREA" };
         private readonly Dictionary<string, List<string>> catalogo = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         private readonly Dictionary<string, double> longitud = new Dictionary<string, double>(StringComparer.Ordinal);
         private readonly Dictionary<string, double> masa = new Dictionary<string, double>(StringComparer.Ordinal);
@@ -44,6 +44,9 @@ namespace ec.edu.monster.servicios
             catalogo.Add("LONGITUD", new List<string> { "KILOMETRO", "METRO", "CENTIMETRO", "MILIMETRO", "MILLA", "PIE" });
             catalogo.Add("MASA", new List<string> { "KILOGRAMO", "GRAMO", "MILIGRAMO", "LIBRA" });
             catalogo.Add("TEMPERATURA", new List<string> { "CELSIUS", "FAHRENHEIT", "KELVIN" });
+            catalogo.Add("VOLUMEN", new List<string> { "MILILITRO", "LITRO", "METRO_CUBICO", "GALON_US" });
+            catalogo.Add("TIEMPO", new List<string> { "SEGUNDO", "MINUTO", "HORA", "DIA" });
+            catalogo.Add("AREA", new List<string> { "METRO_CUADRADO", "KILOMETRO_CUADRADO", "HECTAREA", "ACRE" });
 
             longitud.Add("KILOMETRO", 1000.0);
             longitud.Add("METRO", 1.0);
@@ -138,6 +141,8 @@ namespace ec.edu.monster.servicios
                 if (!valor.HasValue || Double.IsNaN(valor.Value) || Double.IsInfinity(valor.Value) ||
                     !catalogo.ContainsKey(c) || origen.Length == 0 || destino.Length == 0)
                     return Respuesta.Error("DATA-001", "Indique categoria, unidades y un valor numerico finito");
+                if (c != "LONGITUD" && c != "MASA" && c != "TEMPERATURA")
+                    return Respuesta.Error("DATA-001", "La conversion solo esta habilitada para longitud, masa y temperatura");
 
                 List<string> unidadesCategoria = catalogo[c];
                 string[] unidades = { origen, destino };

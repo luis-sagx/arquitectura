@@ -33,6 +33,28 @@ public final class ControladorConversiones {
         cargarCategorias();
     }
 
+    public void consultarCatalogo() {
+        vista.setOcupado(true);
+        final String token = sesion.token();
+        ejecutor.ejecutar(() -> {
+            RespuestaRest respuesta = cliente.obtenerCategorias(token);
+            if (!respuesta.isExito()) throw new IOException(respuesta.getMensaje());
+            StringBuilder texto = new StringBuilder();
+            for (String categoria : respuesta.getCategorias()) {
+                RespuestaRest unidades = cliente.obtenerUnidades(token, categoria);
+                if (!unidades.isExito()) throw new IOException(unidades.getMensaje());
+                texto.append(OpcionCatalogo.desde(categoria).etiqueta()).append('\n');
+                for (String unidad : unidades.getUnidades()) texto.append("  • ").append(OpcionCatalogo.desde(unidad).etiqueta()).append('\n');
+                texto.append('\n');
+            }
+            texto.append("Conversiones disponibles: longitud, masa/peso y temperatura.");
+            return texto.toString();
+        }, new EjecutorTareas.Resultado<String>() {
+            @Override public void exito(String catalogo) { vista.setOcupado(false); vista.mostrarCatalogo(catalogo); }
+            @Override public void error(IOException error) { vista.setOcupado(false); vista.mostrarAviso("Catálogo", error.getMessage()); }
+        });
+    }
+
     private void cargarCategorias() {
         vista.setOcupado(true);
         vista.mostrarEstado("Consultando categorías del servidor…");
@@ -47,7 +69,8 @@ public final class ControladorConversiones {
                     vista.mostrarEstado("No se pudieron cargar las categorías.");
                     vista.mostrarAviso("Catálogo", respuesta.mensaje());
                 } else {
-                    List<OpcionCatalogo> opciones = opciones(respuesta.categorias());
+                    List<OpcionCatalogo> opciones = opciones(respuesta.categorias().stream()
+                        .filter(c -> List.of("LONGITUD", "MASA", "TEMPERATURA").contains(c)).toList());
                     categoriaActual = null;
                     vista.setCategorias(opciones);
                     if (opciones.isEmpty()) {

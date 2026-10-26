@@ -9,12 +9,17 @@ namespace ec.edu.monster.modelo
     {
         private static readonly Dictionary<string, string> Etiquetas = new Dictionary<string, string>
         {
-            { "LONGITUD", "Longitud" }, { "MASA", "Masa" }, { "TEMPERATURA", "Temperatura" },
-            { "KILOMETRO", "Kilómetro" }, { "METRO", "Metro" }, { "CENTIMETRO", "Centímetro" },
-            { "MILIMETRO", "Milímetro" }, { "MILLA", "Milla" }, { "PIE", "Pie" },
-            { "KILOGRAMO", "Kilogramo" }, { "GRAMO", "Gramo" }, { "MILIGRAMO", "Miligramo" },
-            { "LIBRA", "Libra" }, { "CELSIUS", "Celsius" }, { "FAHRENHEIT", "Fahrenheit" },
-            { "KELVIN", "Kelvin" }
+            { "LONGITUD", "Longitud" }, { "MASA", "Masa/peso" }, { "TEMPERATURA", "Temperatura" },
+            { "VOLUMEN", "Volumen" }, { "TIEMPO", "Tiempo" }, { "AREA", "Área" },
+            { "KILOMETRO", "Kilómetro (km)" }, { "METRO", "Metro (m)" }, { "CENTIMETRO", "Centímetro (cm)" },
+            { "MILIMETRO", "Milímetro (mm)" }, { "MILLA", "Milla (mi)" }, { "PIE", "Pie (ft)" },
+            { "KILOGRAMO", "Kilogramo (kg)" }, { "GRAMO", "Gramo (g)" }, { "MILIGRAMO", "Miligramo (mg)" },
+            { "LIBRA", "Libra (lb)" }, { "CELSIUS", "Celsius (°C)" }, { "FAHRENHEIT", "Fahrenheit (°F)" },
+            { "KELVIN", "Kelvin (K)" }, { "MILILITRO", "Mililitro (mL)" }, { "LITRO", "Litro (L)" },
+            { "METRO_CUBICO", "Metro cúbico (m³)" }, { "GALON_US", "Galón estadounidense (gal)" },
+            { "SEGUNDO", "Segundo (s)" }, { "MINUTO", "Minuto (min)" }, { "HORA", "Hora (h)" }, { "DIA", "Día (d)" },
+            { "METRO_CUADRADO", "Metro cuadrado (m²)" }, { "KILOMETRO_CUADRADO", "Kilómetro cuadrado (km²)" },
+            { "HECTAREA", "Hectárea (ha)" }, { "ACRE", "Acre (ac)" }
         };
 
         public OpcionCatalogo(string id, string? etiqueta)

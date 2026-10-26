@@ -41,6 +41,29 @@ namespace ec.edu.monster.controlador
             return CargarCategoriasAsync();
         }
 
+        public async Task ConsultarCatalogoAsync()
+        {
+            try
+            {
+                RespuestaRest respuesta = await cliente.ObtenerCategoriasAsync(sesion.Token);
+                if (respuesta.IsSesionInvalida) { ExpirarSesion(respuesta.Mensaje); return; }
+                if (!respuesta.IsExito) { vista.MostrarAviso("Catálogo", respuesta.Mensaje); return; }
+                var texto = new System.Text.StringBuilder();
+                foreach (string categoria in respuesta.Categorias)
+                {
+                    RespuestaRest unidades = await cliente.ObtenerUnidadesAsync(sesion.Token, categoria);
+                    if (unidades.IsSesionInvalida) { ExpirarSesion(unidades.Mensaje); return; }
+                    if (!unidades.IsExito) { vista.MostrarAviso("Catálogo", unidades.Mensaje); return; }
+                    texto.AppendLine(OpcionCatalogo.Desde(categoria).Etiqueta);
+                    foreach (string unidad in unidades.Unidades) texto.AppendLine("  • " + OpcionCatalogo.Desde(unidad).Etiqueta);
+                    texto.AppendLine();
+                }
+                texto.Append("Conversiones disponibles: longitud, masa/peso y temperatura.");
+                vista.MostrarCatalogo(texto.ToString());
+            }
+            catch (IOException ex) { if (!liberado) vista.MostrarAviso("Catálogo", ex.Message); }
+        }
+
         private async Task CargarCategoriasAsync()
         {
             vista.EstablecerOcupado(true);
@@ -61,7 +84,7 @@ namespace ec.edu.monster.controlador
                 }
                 else
                 {
-                    List<OpcionCatalogo> opciones = Opciones(respuesta.Categorias);
+                    List<OpcionCatalogo> opciones = Opciones(respuesta.Categorias.Where(c => c == "LONGITUD" || c == "MASA" || c == "TEMPERATURA").ToList());
                     categoriaActual = null;
                     vista.EstablecerCategorias(opciones);
                     if (opciones.Count == 0)

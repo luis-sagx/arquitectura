@@ -141,7 +141,31 @@ public final class VistaConsola {
         salida.println();
         salida.println("Unidades disponibles:");
         salida.println();
-        for (String unidad : unidades) salida.println("- " + unidad);
+        for (String unidad : unidades) salida.println("- " + medida(unidad));
+    }
+
+    public void mostrarCategoriaCatalogo(String categoria, List<String> unidades, boolean convertible) {
+        salida.println();
+        salida.println(titulo(categoria) + (convertible ? " (conversión disponible)" : " (solo consulta)"));
+        for (String unidad : unidades) salida.println("  - " + medida(unidad));
+    }
+
+    private String titulo(String id) {
+        return switch (id) { case "MASA" -> "Masa/peso"; case "AREA" -> "Área";
+            default -> id.substring(0, 1) + id.substring(1).toLowerCase(Locale.ROOT); };
+    }
+
+    private String medida(String id) {
+        return switch (id) { case "KILOMETRO" -> "Kilómetro (km)"; case "METRO" -> "Metro (m)";
+            case "CENTIMETRO" -> "Centímetro (cm)"; case "MILIMETRO" -> "Milímetro (mm)";
+            case "MILLA" -> "Milla (mi)"; case "PIE" -> "Pie (ft)"; case "KILOGRAMO" -> "Kilogramo (kg)";
+            case "GRAMO" -> "Gramo (g)"; case "MILIGRAMO" -> "Miligramo (mg)"; case "LIBRA" -> "Libra (lb)";
+            case "CELSIUS" -> "Celsius (°C)"; case "FAHRENHEIT" -> "Fahrenheit (°F)"; case "KELVIN" -> "Kelvin (K)";
+            case "MILILITRO" -> "Mililitro (mL)"; case "LITRO" -> "Litro (L)"; case "METRO_CUBICO" -> "Metro cúbico (m³)";
+            case "GALON_US" -> "Galón estadounidense (gal)"; case "SEGUNDO" -> "Segundo (s)"; case "MINUTO" -> "Minuto (min)";
+            case "HORA" -> "Hora (h)"; case "DIA" -> "Día (d)"; case "METRO_CUADRADO" -> "Metro cuadrado (m²)";
+            case "KILOMETRO_CUADRADO" -> "Kilómetro cuadrado (km²)"; case "HECTAREA" -> "Hectárea (ha)"; case "ACRE" -> "Acre (ac)";
+            default -> id; };
     }
 
     public void mostrarConversion(double valor, String origen, Double resultado, String destino) {

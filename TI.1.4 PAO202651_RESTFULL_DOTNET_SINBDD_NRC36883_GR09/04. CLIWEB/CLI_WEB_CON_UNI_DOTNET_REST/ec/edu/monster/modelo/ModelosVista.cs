@@ -23,6 +23,7 @@ namespace ec.edu.monster.modelo
     {
         public IList<OpcionCatalogo> Categorias { get; set; } = new List<OpcionCatalogo>();
         public IList<OpcionCatalogo> Unidades { get; set; } = new List<OpcionCatalogo>();
+        public IDictionary<string, IList<OpcionCatalogo>> Catalogo { get; set; } = new Dictionary<string, IList<OpcionCatalogo>>();
         public string? Categoria { get; set; }
         public string? Origen { get; set; }
         public string? Destino { get; set; }

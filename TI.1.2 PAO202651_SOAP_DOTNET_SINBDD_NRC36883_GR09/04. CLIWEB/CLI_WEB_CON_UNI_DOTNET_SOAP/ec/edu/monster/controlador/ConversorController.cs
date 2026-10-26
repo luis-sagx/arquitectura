@@ -96,7 +96,14 @@ namespace ec.edu.monster.controlador
                     modelo.Error ??= categorias.Mensaje;
                     return View("Index", modelo);
                 }
-                modelo.Categorias = Opciones(categorias.Categorias);
+                foreach (string categoriaCatalogo in categorias.Categorias)
+                {
+                    RespuestaSoap unidadesCatalogo = await cliente.ObtenerUnidadesAsync(Token(), categoriaCatalogo);
+                    if (unidadesCatalogo.IsSesionInvalida) return Expirar(unidadesCatalogo.Mensaje);
+                    if (unidadesCatalogo.IsExito) modelo.Catalogo[categoriaCatalogo] = Opciones(unidadesCatalogo.Unidades);
+                }
+                modelo.Categorias = Opciones(categorias.Categorias)
+                    .Where(c => c.Id == "LONGITUD" || c.Id == "MASA" || c.Id == "TEMPERATURA").ToList();
                 if (String.IsNullOrWhiteSpace(modelo.Categoria) || !modelo.Categorias.Any(c => c.Id == modelo.Categoria))
                     modelo.Categoria = modelo.Categorias.FirstOrDefault()?.Id;
 

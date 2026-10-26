@@ -161,7 +161,31 @@ namespace ec.edu.monster.consola.vista
             Console.WriteLine();
             Console.WriteLine("Unidades disponibles:");
             Console.WriteLine();
-            foreach (string unidad in unidades) Console.WriteLine("- " + unidad);
+            foreach (string unidad in unidades) Console.WriteLine("- " + Medida(unidad));
+        }
+
+        public void MostrarCategoriaCatalogo(string categoria, IList<string> unidades, bool convertible)
+        {
+            Console.WriteLine();
+            string nombre = categoria == "LONGITUD" ? "Longitud" : categoria == "MASA" ? "Masa/peso" : categoria == "VOLUMEN" ? "Volumen" : categoria == "TIEMPO" ? "Tiempo" : categoria == "TEMPERATURA" ? "Temperatura" : "Área";
+            Console.WriteLine(nombre + (convertible ? " (conversión disponible)" : " (solo consulta)"));
+            foreach (string unidad in unidades) Console.WriteLine("  - " + Medida(unidad));
+        }
+
+        private static string Medida(string id)
+        {
+            switch (id)
+            {
+                case "KILOMETRO": return "Kilómetro (km)"; case "METRO": return "Metro (m)"; case "CENTIMETRO": return "Centímetro (cm)";
+                case "MILIMETRO": return "Milímetro (mm)"; case "MILLA": return "Milla (mi)"; case "PIE": return "Pie (ft)";
+                case "KILOGRAMO": return "Kilogramo (kg)"; case "GRAMO": return "Gramo (g)"; case "MILIGRAMO": return "Miligramo (mg)";
+                case "LIBRA": return "Libra (lb)"; case "CELSIUS": return "Celsius (°C)"; case "FAHRENHEIT": return "Fahrenheit (°F)";
+                case "KELVIN": return "Kelvin (K)"; case "MILILITRO": return "Mililitro (mL)"; case "LITRO": return "Litro (L)";
+                case "METRO_CUBICO": return "Metro cúbico (m³)"; case "GALON_US": return "Galón estadounidense (gal)";
+                case "SEGUNDO": return "Segundo (s)"; case "MINUTO": return "Minuto (min)"; case "HORA": return "Hora (h)"; case "DIA": return "Día (d)";
+                case "METRO_CUADRADO": return "Metro cuadrado (m²)"; case "KILOMETRO_CUADRADO": return "Kilómetro cuadrado (km²)";
+                case "HECTAREA": return "Hectárea (ha)"; case "ACRE": return "Acre (ac)"; default: return id;
+            }
         }
 
         public void MostrarConversion(double valor, string origen, double resultado, string destino)

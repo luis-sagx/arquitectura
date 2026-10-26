@@ -9,6 +9,7 @@ namespace ec.edu.monster.vista
         void EstablecerOcupado(bool ocupado);
         void MostrarEstado(string mensaje);
         void MostrarAviso(string titulo, string mensaje);
+        void MostrarCatalogo(string texto);
 
         void EstablecerCategorias(IList<OpcionCatalogo> categorias);
         void EstablecerUnidades(IList<OpcionCatalogo> unidades);

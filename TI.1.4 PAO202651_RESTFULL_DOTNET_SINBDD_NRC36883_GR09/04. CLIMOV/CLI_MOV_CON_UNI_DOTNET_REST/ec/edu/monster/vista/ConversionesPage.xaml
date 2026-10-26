@@ -51,8 +51,12 @@
                                    Completed="AlConvertir" />
                         </Border>
 
-                        <Button x:Name="convertir" Text="Convertir" Style="{StaticResource BotonPrincipal}"
-                                Margin="0,18,0,0" Clicked="AlConvertir" />
+                        <Grid Margin="0,18,0,0" ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Button Grid.Column="0" x:Name="convertir" Text="Convertir" Style="{StaticResource BotonPrincipal}"
+                                    Clicked="AlConvertir" />
+                            <Button Grid.Column="1" x:Name="verCatalogo" Text="Ver catalogo" Style="{StaticResource BotonTonal}"
+                                    Clicked="AlConsultarCatalogo" />
+                        </Grid>
                     </VerticalStackLayout>
                 </Border>
 

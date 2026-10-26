@@ -27,6 +27,7 @@ public final class ControladorConversiones {
         this.vista = vista;
         vista.alCambiarCategoria(this::cargarUnidades);
         vista.alConvertir(this::convertir);
+        vista.alConsultarCatalogo(this::consultarCatalogo);
         vista.alCerrarSesion(this::cerrarSesion);
         vista.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override public void windowClosing(java.awt.event.WindowEvent evento) { cerrarSesion(null); }
@@ -55,7 +56,7 @@ public final class ControladorConversiones {
                         vista.mostrarAviso(ControladorLogin.mensajeRespuesta(r), "Catálogo", JOptionPane.WARNING_MESSAGE);
                         return;
                     }
-                    List<OpcionCatalogo> opciones = r.getCategorias().stream().map(OpcionCatalogo::desde).toList();
+                    List<OpcionCatalogo> opciones = r.getCategorias().stream().filter(c -> List.of("LONGITUD", "MASA", "TEMPERATURA").contains(c)).map(OpcionCatalogo::desde).toList();
                     vista.setCategorias(opciones);
                     if (opciones.isEmpty()) vista.mostrarEstado("El servidor no publicó categorías.");
                     else {
@@ -67,6 +68,32 @@ public final class ControladorConversiones {
                     Thread.currentThread().interrupt();
                     errorConexion("Se interrumpió la consulta de categorías.");
                 } catch (ExecutionException ex) { errorConexion(ControladorLogin.mensajeError(ex)); }
+            }
+        }.execute();
+    }
+
+    private void consultarCatalogo(ActionEvent evento) {
+        vista.setOcupado(true);
+        new SwingWorker<String, Void>() {
+            @Override protected String doInBackground() throws IOException {
+                RespuestaRest respuesta = cliente.obtenerCategorias(sesion.token());
+                if (!respuesta.isExito()) throw new IOException(respuesta.getMensaje());
+                StringBuilder texto = new StringBuilder();
+                for (String categoria : respuesta.getCategorias()) {
+                    RespuestaRest unidades = cliente.obtenerUnidades(sesion.token(), categoria);
+                    if (!unidades.isExito()) throw new IOException(unidades.getMensaje());
+                    texto.append(OpcionCatalogo.desde(categoria).etiqueta()).append('\n');
+                    unidades.getUnidades().forEach(u -> texto.append("  • ").append(OpcionCatalogo.desde(u).etiqueta()).append('\n'));
+                    texto.append('\n');
+                }
+                texto.append("Conversiones disponibles: longitud, masa/peso y temperatura.");
+                return texto.toString();
+            }
+            @Override protected void done() {
+                vista.setOcupado(false);
+                try { vista.mostrarCatalogo(get()); }
+                catch (InterruptedException error) { Thread.currentThread().interrupt(); vista.mostrarEstado("Se interrumpió la consulta del catálogo."); }
+                catch (ExecutionException error) { vista.mostrarAviso(ControladorLogin.mensajeError(error), "Catálogo", JOptionPane.WARNING_MESSAGE); }
             }
         }.execute();
     }

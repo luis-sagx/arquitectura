@@ -11,6 +11,8 @@ public interface VistaConversiones {
 
     void mostrarAviso(String titulo, String mensaje);
 
+    void mostrarCatalogo(String mensaje);
+
     void setCategorias(List<OpcionCatalogo> categorias);
 
     void setUnidades(List<OpcionCatalogo> unidades);

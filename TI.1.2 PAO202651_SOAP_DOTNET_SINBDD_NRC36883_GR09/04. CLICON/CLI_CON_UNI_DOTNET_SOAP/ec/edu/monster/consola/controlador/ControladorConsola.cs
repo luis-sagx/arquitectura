@@ -91,15 +91,15 @@ namespace ec.edu.monster.consola.controlador
 
         private bool ConsultarCatalogo()
         {
-            vista.MostrarSeccion("CONSULTAR CATÁLOGO | Selecciona una categoría");
+            vista.MostrarSeccion("CATÁLOGO DE UNIDADES");
             RespuestaSoap categorias = cliente.ObtenerCategorias(token);
             if (!Mostrar(categorias)) return true;
-            string categoria = vista.Seleccionar("Categoría", categorias.Categorias);
-            if (categoria == null) return false;
-
-            vista.MostrarSeccion("CONSULTAR CATÁLOGO | " + categoria);
-            RespuestaSoap unidades = cliente.ObtenerUnidades(token, categoria);
-            if (Mostrar(unidades)) vista.MostrarUnidades(unidades.Unidades);
+            foreach (string categoriaCatalogo in categorias.Categorias)
+            {
+                RespuestaSoap unidades = cliente.ObtenerUnidades(token, categoriaCatalogo);
+                if (!Mostrar(unidades)) return true;
+                vista.MostrarCategoriaCatalogo(categoriaCatalogo, unidades.Unidades, CategoriasConvertibles.Contains(categoriaCatalogo));
+            }
             return true;
         }
 
