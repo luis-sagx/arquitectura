@@ -10,7 +10,7 @@
         <properties>
             <exec.vmArgs>-Dconversor.interactivo=true</exec.vmArgs>
             <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-            <exec.appArgs></exec.appArgs>
+            <exec.appArgs>http://localhost:8080/WS_CON_UNI_JAVA_SOAP/WSConUni</exec.appArgs>
             <exec.mainClass>ec.edu.monster.consola.MainConsola</exec.mainClass>
             <exec.executable>java</exec.executable>
         </properties>
@@ -25,10 +25,27 @@
         <properties>
             <exec.vmArgs>-Dconversor.interactivo=true -agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
             <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-            <exec.appArgs></exec.appArgs>
+            <exec.appArgs>http://localhost:8080/WS_CON_UNI_JAVA_SOAP/WSConUni</exec.appArgs>
             <exec.mainClass>ec.edu.monster.consola.MainConsola</exec.mainClass>
             <exec.executable>java</exec.executable>
             <jpda.listen>true</jpda.listen>
         </properties>
     </action>
+    <action>
+            <actionName>profile</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:3.6.3:exec</goal>
+            </goals>
+            <properties>
+                <exec.vmArgs></exec.vmArgs>
+                <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
+                <exec.mainClass>${packageClassName}</exec.mainClass>
+                <exec.executable>java</exec.executable>
+                <exec.appArgs>http://localhost:8080/WS_CON_UNI_JAVA_SOAP/WSConUni</exec.appArgs>
+            </properties>
+        </action>
 </actions>

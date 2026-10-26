@@ -11,7 +11,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>ec.edu.monster.clienteescritorio.ClienteEscritorio</exec.mainClass>
+        <exec.mainClass>ec.edu.monster.ClienteEscritorio</exec.mainClass>
     </properties>
 
     <build>

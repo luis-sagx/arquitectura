@@ -1,6 +1,6 @@
 <Solution>
   <Project Path="../../04. CLICON/CLI_CON_UNI_DOTNET_REST/CLI_CON_UNI_DOTNET_REST.csproj" Id="ac85b436-cf37-4070-90b5-5c54ac4d6352" />
   <Project Path="../../04. CLIESC/CLI_ESC_CON_UNI_DOTNET_REST/CLI_ESC_CON_UNI_DOTNET_REST.csproj" Id="998bff2e-45c1-42d1-b730-d38943a0b2c9" />
-  <Project Path="WS_CON_UNI_DOTNET_REST.Verification/WS_CON_UNI_DOTNET_REST.Verification.csproj" />
   <Project Path="WS_CON_UNI_DOTNET_REST/WS_CON_UNI_DOTNET_REST.csproj" />
+  <Project Path="WS_CON_UNI_DOTNET_REST/ec/edu/monster/pruebas/PruebasServidor.csproj" />
 </Solution>

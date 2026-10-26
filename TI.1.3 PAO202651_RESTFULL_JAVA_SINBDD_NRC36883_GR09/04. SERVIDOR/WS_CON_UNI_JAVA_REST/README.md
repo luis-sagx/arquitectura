@@ -123,7 +123,7 @@ Con el WAR desplegado y Payara en ejecución, desde PowerShell en esta carpeta e
 powershell -NoProfile -ExecutionPolicy Bypass -File .\ejecutar-pruebas.ps1
 ```
 
-La suite HTTP asume por defecto la URL `http://localhost:8080/WS_CON_UNI_JAVA_REST-1.0-SNAPSHOT/api`. Si el contexto o puerto difiere, indíquelo como primer argumento:
+La suite HTTP asume por defecto la URL `http://localhost:8080/WS_CON_UNI_JAVA_REST/api`. Si el contexto o puerto difiere, indíquelo como primer argumento:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\ejecutar-pruebas.ps1 -BaseUrl "http://localhost:8080/WS_CON_UNI_JAVA_REST/api"

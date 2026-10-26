@@ -1,5 +1,5 @@
 param(
-    [string]$BaseUrl = "http://localhost:8080/WS_CON_UNI_JAVA_REST-1.0-SNAPSHOT/api",
+    [string]$BaseUrl = "http://localhost:8080/WS_CON_UNI_JAVA_REST/api",
     [switch]$SoloServicio
 )
 

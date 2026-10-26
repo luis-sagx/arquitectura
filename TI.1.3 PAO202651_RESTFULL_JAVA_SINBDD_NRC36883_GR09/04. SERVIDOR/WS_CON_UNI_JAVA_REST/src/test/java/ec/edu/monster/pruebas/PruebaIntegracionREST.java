@@ -130,7 +130,7 @@ public class PruebaIntegracionREST {
     private static String baseUrl(String[] args) {
         String baseUrl = args.length > 0 ? args[0] : System.getenv("REST_BASE_URL");
         if (baseUrl == null || baseUrl.isBlank()) {
-            baseUrl = "http://localhost:8080/WS_CON_UNI_JAVA_REST-1.0-SNAPSHOT/api";
+            baseUrl = "http://localhost:8080/WS_CON_UNI_JAVA_REST/api";
         }
         while (baseUrl.endsWith("/")) baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
         return baseUrl;
