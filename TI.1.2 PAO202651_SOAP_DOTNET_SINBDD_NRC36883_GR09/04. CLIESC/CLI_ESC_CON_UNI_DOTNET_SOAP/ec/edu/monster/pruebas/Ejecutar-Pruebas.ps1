@@ -19,7 +19,7 @@ $temporaryDirectory = Join-Path $temporaryRoot ("PruebaClienteEscritorio-{0}" -f
 $testOutput = Join-Path $temporaryDirectory 'PruebaClienteEscritorio.exe'
 $testAssembly = Join-Path $temporaryDirectory 'ClienteEscritorio.exe'
 $sources = @(
-    (Join-Path $PSScriptRoot 'PruebaClienteEscritorio.cs')
+    (Get-ChildItem -LiteralPath $PSScriptRoot -Filter '*.cs' | ForEach-Object FullName)
 )
 
 try {

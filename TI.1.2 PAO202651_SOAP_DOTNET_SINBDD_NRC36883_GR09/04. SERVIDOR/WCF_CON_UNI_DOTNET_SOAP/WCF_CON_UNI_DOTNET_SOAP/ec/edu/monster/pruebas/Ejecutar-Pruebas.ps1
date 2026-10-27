@@ -9,12 +9,11 @@ if (-not (Test-Path -LiteralPath $compiler)) {
 }
 
 $output = Join-Path $env:TEMP ("PruebaServicioUnidades-{0}.exe" -f $PID)
-$sources = @(
-    (Join-Path $PSScriptRoot 'PruebaServicioUnidades.cs'),
-    (Join-Path $projectRoot 'ec\edu\monster\modelos\Respuesta.cs'),
-    (Join-Path $projectRoot 'ec\edu\monster\servicios\ConversorUnidadesServices.cs'),
-    (Join-Path $projectRoot 'ec\edu\monster\controladores\ws\WSConUni.cs')
-) | Where-Object { Test-Path -LiteralPath $_ }
+$sources = @(Get-ChildItem -LiteralPath $PSScriptRoot -Filter '*.cs' | ForEach-Object FullName)
+$sources += Join-Path $projectRoot 'ec\edu\monster\modelos\Respuesta.cs'
+$sources += Join-Path $projectRoot 'ec\edu\monster\servicios\ConversorUnidadesServices.cs'
+$sources += Join-Path $projectRoot 'ec\edu\monster\controladores\ws\WSConUni.cs'
+$sources = $sources | Where-Object { Test-Path -LiteralPath $_ }
 
 try {
     & $compiler "/out:$output" /target:exe /r:System.Core.dll /r:System.Configuration.dll /r:System.Runtime.Serialization.dll /r:System.ServiceModel.dll /r:System.Web.Services.dll /r:System.Xml.dll $sources

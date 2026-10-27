@@ -21,6 +21,10 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<Compile Remove="ec\edu\monster\pruebas\**\*.cs" />
+	</ItemGroup>
+
 	<!-- El APK se genera con el nombre del resto de clientes móviles. -->
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 		<AndroidPackageFormat>apk</AndroidPackageFormat>

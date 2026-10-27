@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\\cliente\\ws\\ClienteSoap.cs" Link="ClienteSoap.cs" />
+    <Compile Include="..\\ws\\ContratoWcf.cs" Link="ContratoWcf.cs" />
+    <Compile Include="..\\modelo\\RespuestaSoap.cs" Link="RespuestaSoap.cs" />
+  </ItemGroup>
+</Project>

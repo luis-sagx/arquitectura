@@ -13,7 +13,7 @@ try {
         throw "Maven no pudo compilar las pruebas (código $LASTEXITCODE)."
     }
 
-    $testClasspath = "target\test-classes;target\classes"
+    $testClasspath = "target\classes"
     java -cp $testClasspath ec.edu.monster.pruebas.PruebaSistemaUnidades
     if ($LASTEXITCODE -ne 0) {
         throw "Falló la suite de Source Packages ec.edu.monster.pruebas (código $LASTEXITCODE)."

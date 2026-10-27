@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 Push-Location $PSScriptRoot
 try {
-    $fuentesConversion = @(Get-ChildItem -LiteralPath 'src/main/java/ec/edu/monster/pruebas', 'src/main/java/ec/edu/monster/modelos', 'src/main/java/ec/edu/monster/servicios' -Filter *.java | ForEach-Object FullName)
+    $fuentesConversion = @(Get-ChildItem -LiteralPath 'src/main/java/ec/edu/monster/pruebas', 'src/main/java/ec/edu/monster/modelos', 'src/main/java/ec/edu/monster/servicios' -Filter *.java | Where-Object Name -ne 'PruebaIntegracionSOAP.java' | ForEach-Object FullName)
     & javac -encoding UTF-8 --release 21 -d target/pruebas @fuentesConversion
     if ($LASTEXITCODE -ne 0) { throw 'No se pudieron compilar las pruebas' }
     & java -cp target/pruebas ec.edu.monster.pruebas.PruebaSistemaUnidades

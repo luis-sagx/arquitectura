@@ -9,7 +9,7 @@ using ec.edu.monster.servicio;
 
 namespace ec.edu.monster.pruebas
 {
-    internal static class PruebasClienteRest
+    internal static partial class PruebasClienteRest
     {
         private static int comprobaciones;
 
@@ -37,58 +37,11 @@ namespace ec.edu.monster.pruebas
 
         private static async Task VerificarTransporteAsync()
         {
-            var handler = new Handler();
-            using (var cliente = new ClienteRest(new Uri("http://localhost:5111/api/ws-con-uni/"), handler))
-            {
-                handler.Configurar(HttpStatusCode.OK, "{\"estado\":\"EXITO\",\"codigo\":\"OK\",\"mensaje\":\"Sesion iniciada\",\"token\":\"token-prueba\",\"expiraEn\":\"2026-10-21T12:00:00Z\"}");
-                RespuestaRest login = await cliente.AutenticarAsync("Monster", "Monster9");
-                Check(login.IsExito && login.Token == "token-prueba", "Autenticación debe leer token y estado de éxito");
-                Check(handler.Ultima.Metodo == HttpMethod.Post && handler.Ultima.Uri.AbsolutePath == "/api/ws-con-uni/autenticar", "Autenticación debe enviar POST a la ruta correcta");
-                Check(handler.Ultima.Cuerpo.Contains("\"usuario\":\"Monster\"") && handler.Ultima.Cuerpo.Contains("\"clave\":\"Monster9\""), "Autenticación debe enviar los nombres JSON requeridos");
-                Check(handler.Ultima.Authorization == null, "Autenticación no debe enviar Bearer");
-
-                handler.Configurar(HttpStatusCode.OK, "{\"estado\":\"EXITO\",\"codigo\":\"OK\",\"mensaje\":\"Categorias\",\"categorias\":[\"LONGITUD\",\"MASA\"]}");
-                RespuestaRest categorias = await cliente.ObtenerCategoriasAsync("token-prueba");
-                Check(categorias.Categorias.Count == 2 && categorias.Categorias[0] == "LONGITUD", "Categorías deben deserializarse");
-                Check(handler.Ultima.Metodo == HttpMethod.Get && handler.Ultima.Uri.AbsolutePath.EndsWith("/categorias"), "Categorías debe usar GET");
-                Check(handler.Ultima.Authorization == "Bearer token-prueba", "Categorías debe enviar Bearer");
-
-                handler.Configurar(HttpStatusCode.OK, "{\"estado\":\"EXITO\",\"codigo\":\"OK\",\"mensaje\":\"Unidades\",\"unidades\":[\"METRO\"]}");
-                RespuestaRest unidades = await cliente.ObtenerUnidadesAsync("token-prueba", "MASA CON ESPACIO");
-                Check(unidades.Unidades.Count == 1 && unidades.Unidades[0] == "METRO", "Unidades deben deserializarse");
-                Check(handler.Ultima.Uri.Query.Contains("categoria=MASA%20CON%20ESPACIO"), "Categoría debe codificarse en la consulta URI");
-                Check(handler.Ultima.Authorization == "Bearer token-prueba", "Unidades debe enviar Bearer");
-
-                handler.Configurar(HttpStatusCode.OK, "{\"estado\":\"EXITO\",\"codigo\":\"OK\",\"mensaje\":\"Conversion realizada\",\"resultado\":200,\"categoria\":\"LONGITUD\",\"unidadOrigen\":\"METRO\",\"unidadDestino\":\"CENTIMETRO\"}");
-                RespuestaRest conversion = await cliente.ConvertirAsync("token-prueba", "LONGITUD", "METRO", "CENTIMETRO", 2);
-                Check(conversion.Resultado == 200 && conversion.UnidadOrigen == "METRO", "Conversión debe deserializar resultado y unidades");
-                Check(handler.Ultima.Metodo == HttpMethod.Post && handler.Ultima.Uri.AbsolutePath.EndsWith("/convertir"), "Conversión debe usar POST");
-                Check(handler.Ultima.Cuerpo.Contains("\"categoria\":\"LONGITUD\"") && handler.Ultima.Cuerpo.Contains("\"valor\":2"), "Conversión debe enviar los campos JSON y el valor numérico");
-                Check(handler.Ultima.Authorization == "Bearer token-prueba", "Conversión debe enviar Bearer");
-
-                handler.Configurar(HttpStatusCode.OK, "{\"estado\":\"EXITO\",\"codigo\":\"OK\",\"mensaje\":\"Clave actualizada\"}");
-                RespuestaRest recuperacion = await cliente.RecuperarClaveAsync("Monster", "nueva-clave");
-                Check(recuperacion.IsExito && handler.Ultima.Uri.AbsolutePath.EndsWith("/recuperar-clave"), "Recuperación debe invocar la ruta REST correspondiente");
-                Check(handler.Ultima.Cuerpo.Contains("\"nuevaClave\":\"nueva-clave\"") && handler.Ultima.Authorization == null, "Recuperación debe enviar JSON sin token");
-
-                handler.Configurar(HttpStatusCode.Unauthorized, "{\"estado\":\"ERROR\",\"codigo\":\"AUTH-001\",\"mensaje\":\"Credenciales invalidas\"}");
-                RespuestaRest credenciales = await cliente.AutenticarAsync("Monster", "mal");
-                Check(!credenciales.IsExito && credenciales.Codigo == "AUTH-001", "HTTP 401 debe conservar el error de negocio JSON");
-
-                handler.Configurar(HttpStatusCode.BadRequest, "{\"estado\":\"ERROR\",\"codigo\":\"DATA-001\",\"mensaje\":\"Categoria inexistente\"}");
-                RespuestaRest categoriaInvalida = await cliente.ObtenerUnidadesAsync("token-prueba", "X");
-                Check(!categoriaInvalida.IsExito && categoriaInvalida.Codigo == "DATA-001", "HTTP 400 debe conservar el error de negocio JSON");
-
-                handler.Configurar(HttpStatusCode.InternalServerError, "<html>fallo</html>");
-                await DebeLanzarIOException(() => cliente.ObtenerCategoriasAsync("token-prueba"), "JSON inválido debe convertirse en IOException legible");
-                handler.Error = new HttpRequestException("conexión cerrada");
-                await DebeLanzarIOException(() => cliente.ObtenerCategoriasAsync("token-prueba"), "Fallo de transporte debe convertirse en IOException");
-            }
-
-            bool rechazoEndpoint = false;
-            try { using (var clienteInvalido = new ClienteRest(new Uri("ftp://localhost/api/", UriKind.Absolute))) { } }
-            catch (ArgumentException) { rechazoEndpoint = true; }
-            Check(rechazoEndpoint, "El cliente debe rechazar endpoint que no use HTTP o HTTPS");
+            await VerificarAutenticacionAsync();
+            await VerificarCatalogoAsync();
+            await VerificarConversionesAsync();
+            await VerificarRecuperacionClaveAsync();
+            await VerificarErroresTransporteAsync();
         }
 
         private static async Task VerificarIntegracionAsync()

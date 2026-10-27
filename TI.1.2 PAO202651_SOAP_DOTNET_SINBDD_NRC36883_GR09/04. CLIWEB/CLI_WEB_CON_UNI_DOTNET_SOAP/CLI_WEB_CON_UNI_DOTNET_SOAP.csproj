@@ -8,6 +8,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Remove="ec\edu\monster\pruebas\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<!-- Cliente WCF para .NET moderno: ChannelFactory + BasicHttpBinding (SOAP 1.1). -->
 		<PackageReference Include="System.ServiceModel.Http" Version="10.0.652802" />
 	</ItemGroup>
