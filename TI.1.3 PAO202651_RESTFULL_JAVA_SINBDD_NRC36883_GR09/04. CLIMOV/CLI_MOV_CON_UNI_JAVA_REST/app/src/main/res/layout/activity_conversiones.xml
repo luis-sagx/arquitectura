@@ -205,7 +205,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/suave"
+                app:cardBackgroundColor="@color/azul_marino"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -218,7 +218,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/resultado"
-                        android:textColor="@color/gris"
+                        android:textColor="@color/blanco"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -228,7 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="@string/sin_resultado"
-                        android:textColor="@color/azul_marino"
+                        android:textColor="@color/blanco"
                         android:textIsSelectable="true"
                         android:textSize="28sp"
                         android:textStyle="bold" />

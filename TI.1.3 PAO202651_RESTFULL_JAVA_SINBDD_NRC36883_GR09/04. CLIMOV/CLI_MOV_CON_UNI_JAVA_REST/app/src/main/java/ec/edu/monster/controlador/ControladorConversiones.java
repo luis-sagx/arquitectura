@@ -7,6 +7,7 @@ import ec.edu.monster.servicio.ClienteRest;
 import ec.edu.monster.servicio.EjecutorTareas;
 import ec.edu.monster.vista.VistaConversiones;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -217,6 +218,7 @@ public final class ControladorConversiones {
         }
         NumberFormat formato = NumberFormat.getNumberInstance(Locale.forLanguageTag("es-EC"));
         formato.setMaximumFractionDigits(4);
+        formato.setRoundingMode(RoundingMode.HALF_UP);
         return formato.format(numero);
     }
 

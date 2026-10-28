@@ -8,6 +8,7 @@ import ec.edu.monster.vista.GestorPantallas;
 import ec.edu.monster.vista.VentanaConversiones;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -159,6 +160,7 @@ public final class ControladorConversiones {
                     if (r.isExito() && r.getResultado() != null && Double.isFinite(r.getResultado())) {
                         NumberFormat formato = NumberFormat.getNumberInstance(Locale.forLanguageTag("es-EC"));
                         formato.setMaximumFractionDigits(4);
+                        formato.setRoundingMode(RoundingMode.HALF_UP);
                         vista.mostrarResultado(formato.format(r.getResultado()) + " " + destino.etiqueta());
                         vista.mostrarEstado(r.getMensaje() == null ? "Conversión completada." : r.getMensaje());
                     } else {

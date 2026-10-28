@@ -60,12 +60,12 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <Border Style="{StaticResource Tarjeta}" BackgroundColor="{StaticResource Suave}"
+                <Border Style="{StaticResource Tarjeta}" BackgroundColor="{StaticResource AzulMarino}"
                         StrokeThickness="0" Padding="20" Margin="0,16,0,0">
                     <VerticalStackLayout>
-                        <Label Text="Resultado" FontAttributes="Bold" FontSize="14" TextColor="{StaticResource Gris}" />
+                        <Label Text="Resultado" FontAttributes="Bold" FontSize="14" TextColor="White" />
                         <Label x:Name="resultado" Text="—" FontAttributes="Bold" FontSize="28" Margin="0,6,0,0"
-                               TextColor="{StaticResource AzulMarino}" />
+                               TextColor="White" />
                     </VerticalStackLayout>
                 </Border>
 

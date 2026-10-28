@@ -65,7 +65,10 @@ namespace ec.edu.monster.vista
             catalogo.Click += (sender, args) => Disparar(CatalogoSolicitado);
             tarjeta.Controls.Add(catalogo);
 
-            resultado = EstilosUI.Etiqueta("El resultado aparecerá aquí", 28, 338, 654, 34, 18F, true);
+            resultado = EstilosUI.Etiqueta("El resultado aparecerá aquí", 28, 338, 654, 58, 18F, true);
+            resultado.BackColor = EstilosUI.Acento;
+            resultado.ForeColor = System.Drawing.Color.White;
+            resultado.Padding = new Padding(16, 8, 16, 8);
             tarjeta.Controls.Add(resultado);
             sesion = EstilosUI.Etiqueta(String.Empty, 500, 568, 250, 24, 9F, false);
             sesion.ForeColor = EstilosUI.TextoSecundario;

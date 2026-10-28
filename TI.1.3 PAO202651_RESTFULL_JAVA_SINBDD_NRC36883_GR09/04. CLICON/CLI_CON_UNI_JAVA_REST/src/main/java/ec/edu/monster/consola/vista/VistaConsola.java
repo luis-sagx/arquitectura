@@ -4,6 +4,8 @@ import ec.edu.monster.modelo.RespuestaRest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Locale;
 
@@ -179,9 +181,22 @@ public final class VistaConsola {
     public void mostrarConversion(double valor, String origen, Double resultado, String destino) {
         salida.println();
         salida.println("Conversión completada:");
-        salida.println(SEPARADOR);
-        salida.printf(Locale.ROOT, "    %.4f %s = %.4f %s%n", valor, origen, resultado, destino);
-        salida.println(SEPARADOR);
+        String texto = String.format(Locale.ROOT, "  %.4f %s = %s %s", valor, origen,
+                formatearResultado(resultado), destino);
+        int ancho = Math.max(58, texto.length());
+        String borde = "+" + "-".repeat(ancho) + "+";
+        boolean colorear = interactiva && System.console() != null;
+        if (colorear) salida.print("\u001B[44;97m");
+        salida.println(borde);
+        salida.println("|" + texto + " ".repeat(ancho - texto.length()) + "|");
+        salida.println(borde);
+        if (colorear) salida.print("\u001B[0m");
+        salida.flush();
+    }
+
+    private static String formatearResultado(double numero) {
+        return BigDecimal.valueOf(numero).setScale(4, RoundingMode.HALF_UP)
+                .stripTrailingZeros().toPlainString();
     }
 
     private void imprimirSeccion(String titulo) {

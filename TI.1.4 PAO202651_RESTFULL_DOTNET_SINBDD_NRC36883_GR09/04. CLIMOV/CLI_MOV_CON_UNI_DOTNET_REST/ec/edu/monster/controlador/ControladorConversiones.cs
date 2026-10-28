@@ -238,10 +238,10 @@ namespace ec.edu.monster.controlador
 
         internal static string Formatear(double numero)
         {
-            double absoluto = Math.Abs(numero);
-            if (numero != 0 && (absoluto < 0.0001 || absoluto >= 1e12))
-                return numero.ToString("0.0000E+0", CultureInfo.InvariantCulture);
-            return numero.ToString("#,##0.####", FormatoLocal);
+            double redondeado = Math.Round(numero, 4, MidpointRounding.AwayFromZero);
+            if (redondeado != 0 && (Math.Abs(redondeado) < 0.0001 || Math.Abs(redondeado) >= 1e12))
+                return redondeado.ToString("0.0000E+0", CultureInfo.InvariantCulture);
+            return redondeado.ToString("#,##0.####", FormatoLocal);
         }
 
         internal static double ParsearValor(string? texto)

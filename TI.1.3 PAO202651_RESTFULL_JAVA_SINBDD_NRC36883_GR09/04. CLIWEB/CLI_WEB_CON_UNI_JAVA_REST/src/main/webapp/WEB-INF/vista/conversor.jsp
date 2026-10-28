@@ -79,7 +79,7 @@ Map<String,List<String>> catalogoCompleto = (Map<String,List<String>>) request.g
   <% if (resultado != null) { %>
     <section class="result" aria-live="polite">
       <p class="eyebrow">Resultado</p>
-      <strong><%=resultado.getResultado()%></strong>
+      <strong><%=VistaHtml.formatearResultado(resultado.getResultado())%></strong>
       <p><%=esc(resultado.getUnidadOrigen())%> &rarr; <%=esc(resultado.getUnidadDestino())%></p>
     </section>
   <% } %>

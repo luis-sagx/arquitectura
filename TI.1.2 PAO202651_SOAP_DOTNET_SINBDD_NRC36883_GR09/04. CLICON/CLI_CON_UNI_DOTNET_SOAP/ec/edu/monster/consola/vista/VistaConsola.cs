@@ -192,9 +192,26 @@ namespace ec.edu.monster.consola.vista
         {
             Console.WriteLine();
             Console.WriteLine("Conversión completada:");
-            Console.WriteLine(Separador);
-            Console.WriteLine("    {0:F4} {1} = {2:F4} {3}", valor, origen, resultado, destino);
-            Console.WriteLine(Separador);
+            bool colorear = !Console.IsOutputRedirected;
+            ConsoleColor fondoAnterior = Console.BackgroundColor;
+            ConsoleColor textoAnterior = Console.ForegroundColor;
+            if (colorear)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            string texto = String.Format(CultureInfo.InvariantCulture, "  {0:F4} {1} = {2} {3}", valor, origen,
+                Math.Round(resultado, 4, MidpointRounding.AwayFromZero).ToString("0.####", CultureInfo.InvariantCulture), destino);
+            int ancho = Math.Max(58, texto.Length);
+            string borde = "+" + new string('-', ancho) + "+";
+            Console.WriteLine(borde);
+            Console.WriteLine("|" + texto.PadRight(ancho) + "|");
+            Console.WriteLine(borde);
+            if (colorear)
+            {
+                Console.BackgroundColor = fondoAnterior;
+                Console.ForegroundColor = textoAnterior;
+            }
         }
 
         private static void Seccion(string titulo)

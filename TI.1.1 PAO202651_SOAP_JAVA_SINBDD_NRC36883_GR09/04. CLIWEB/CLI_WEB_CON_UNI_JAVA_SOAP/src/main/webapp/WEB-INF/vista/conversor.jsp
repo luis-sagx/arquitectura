@@ -114,7 +114,7 @@
             <% if (resultado != null) { %>
                 <section class="result">
                     <p class="eyebrow">Resultado</p>
-                    <strong><%= resultado.resultado() %></strong>
+                    <strong><%= VistaHtml.formatearResultado(resultado.resultado()) %></strong>
                     <p><%= esc(resultado.unidadOrigen()) %> → <%= esc(resultado.unidadDestino()) %></p>
                 </section>
             <% } %>

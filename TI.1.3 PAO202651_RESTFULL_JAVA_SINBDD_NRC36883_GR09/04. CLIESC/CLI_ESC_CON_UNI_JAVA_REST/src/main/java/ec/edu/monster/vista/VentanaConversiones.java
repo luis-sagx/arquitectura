@@ -124,12 +124,12 @@ public final class VentanaConversiones extends JFrame {
         agregar(tarjeta, catalogo, c, 1, 6, 1);
 
         resultado.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        resultado.setForeground(EstilosUI.AZUL_MARINO);
+        resultado.setForeground(java.awt.Color.WHITE);
         resultado.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(EstilosUI.BORDE),
                 BorderFactory.createEmptyBorder(14, 14, 14, 14)));
         resultado.setOpaque(true);
-        resultado.setBackground(new java.awt.Color(247, 249, 252));
+        resultado.setBackground(EstilosUI.AZUL_MARINO);
         agregar(tarjeta, resultado, c, 0, 7, 2);
         return tarjeta;
     }
