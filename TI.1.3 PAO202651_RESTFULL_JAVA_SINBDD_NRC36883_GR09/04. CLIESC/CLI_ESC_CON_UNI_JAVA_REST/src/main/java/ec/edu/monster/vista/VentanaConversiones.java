@@ -2,6 +2,7 @@ package ec.edu.monster.vista;
 
 import ec.edu.monster.modelo.OpcionCatalogo;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -28,7 +29,7 @@ public final class VentanaConversiones extends JFrame {
     private final JButton convertir = new JButton("Convertir");
     private final JButton catalogo = new JButton("Ver catalogo");
     private final JButton cerrarSesion = new JButton("Cerrar sesión");
-    private final JLabel resultado = new JLabel(" ", SwingConstants.CENTER);
+    private final JLabel resultado = new JLabel("", SwingConstants.CENTER);
     private final JLabel estado = new JLabel(" ");
     private boolean actualizandoCatalogo;
     private JPanel vistaConversor;
@@ -42,7 +43,7 @@ public final class VentanaConversiones extends JFrame {
         raiz.setBackground(EstilosUI.FONDO);
         JPanel contenido = new JPanel(new BorderLayout(0, 22));
         contenido.setOpaque(false);
-        contenido.setBorder(BorderFactory.createEmptyBorder(24, 34, 24, 34));
+        contenido.setBorder(BorderFactory.createEmptyBorder(24, 34, 24, 54));
         contenido.add(crearCabecera(), BorderLayout.NORTH);
         contenido.add(crearFormulario(), BorderLayout.CENTER);
         contenido.add(crearPie(), BorderLayout.SOUTH);
@@ -123,14 +124,24 @@ public final class VentanaConversiones extends JFrame {
         EstilosUI.estilizarBotonPrincipal(catalogo);
         agregar(tarjeta, catalogo, c, 1, 6, 1);
 
-        resultado.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        JPanel bloqueResultado = new JPanel(new BorderLayout(0, 16));
+        bloqueResultado.setOpaque(false);
+        JLabel tituloResultado = new JLabel("Resultado");
+        tituloResultado.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        tituloResultado.setForeground(EstilosUI.TINTA);
+        bloqueResultado.add(tituloResultado, BorderLayout.NORTH);
+
+        resultado.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        resultado.setPreferredSize(new Dimension(440, 64));
+        resultado.setMinimumSize(new Dimension(440, 64));
         resultado.setForeground(java.awt.Color.WHITE);
         resultado.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(EstilosUI.BORDE),
                 BorderFactory.createEmptyBorder(14, 14, 14, 14)));
         resultado.setOpaque(true);
         resultado.setBackground(EstilosUI.AZUL_MARINO);
-        agregar(tarjeta, resultado, c, 0, 7, 2);
+        bloqueResultado.add(resultado, BorderLayout.CENTER);
+        agregar(tarjeta, bloqueResultado, c, 0, 7, 2);
         return tarjeta;
     }
 
@@ -264,6 +275,6 @@ public final class VentanaConversiones extends JFrame {
     }
 
     public void limpiarResultado() {
-        resultado.setText(" ");
+        resultado.setText("");
     }
 }

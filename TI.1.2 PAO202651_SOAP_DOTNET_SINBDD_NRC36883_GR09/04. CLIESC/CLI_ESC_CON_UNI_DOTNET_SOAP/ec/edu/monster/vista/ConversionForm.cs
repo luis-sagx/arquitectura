@@ -17,6 +17,7 @@ namespace ec.edu.monster.vista
         private readonly Button catalogo;
         private readonly Button salir;
         private readonly Label resultado;
+        private readonly Label detalleResultado;
         private readonly Label mensaje;
         private readonly Label sesion;
         private readonly ToolTip ayudaMensajes;
@@ -34,13 +35,13 @@ namespace ec.edu.monster.vista
             subtitulo.ForeColor = EstilosUI.TextoSecundario;
             Controls.Add(subtitulo);
 
-            salir = EstilosUI.Boton("Cerrar sesión", 610, 34, 140, 38, false);
+            salir = EstilosUI.Boton("Cerrar sesión", 580, 34, 140, 38, false);
             salir.Click += (sender, args) => Disparar(CerrarSesionSolicitado);
             Controls.Add(salir);
 
-            var tarjeta = EstilosUI.Tarjeta(new Point(40, 166), new Size(710, 390));
+            var tarjeta = EstilosUI.Tarjeta(new Point(40, 154), new Size(680, 456));
             tarjeta.Controls.Add(EstilosUI.Etiqueta("Categoría", 28, 26, 300, 24, 10F, true));
-            categorias = CrearCombo(28, 54, 654);
+            categorias = CrearCombo(28, 54, 624);
             categorias.SelectedIndexChanged += (sender, args) =>
             {
                 if (!actualizandoListas) Disparar(CategoriaCambiadaSolicitado);
@@ -48,35 +49,50 @@ namespace ec.edu.monster.vista
             tarjeta.Controls.Add(categorias);
 
             tarjeta.Controls.Add(EstilosUI.Etiqueta("Unidad de origen", 28, 119, 300, 24, 10F, true));
-            origen = CrearCombo(28, 147, 315);
+            origen = CrearCombo(28, 147, 300);
             tarjeta.Controls.Add(origen);
-            tarjeta.Controls.Add(EstilosUI.Etiqueta("Unidad de destino", 367, 119, 300, 24, 10F, true));
-            destino = CrearCombo(367, 147, 315);
+            tarjeta.Controls.Add(EstilosUI.Etiqueta("Unidad de destino", 346, 119, 300, 24, 10F, true));
+            destino = CrearCombo(346, 147, 300);
             tarjeta.Controls.Add(destino);
 
-            tarjeta.Controls.Add(EstilosUI.Etiqueta("Valor", 28, 211, 300, 24, 10F, true));
-            valor = EstilosUI.Entrada(28, 239, 654, 42, false);
+            tarjeta.Controls.Add(EstilosUI.Etiqueta("Valor", 28, 199, 300, 24, 10F, true));
+            valor = EstilosUI.Entrada(28, 227, 624, 42, false);
             tarjeta.Controls.Add(valor);
-            convertir = EstilosUI.Boton("Convertir", 28, 293, 315, 44, true);
+            convertir = EstilosUI.Boton("Convertir", 28, 281, 300, 44, true);
             convertir.Click += (sender, args) => Disparar(ConvertirSolicitado);
             tarjeta.Controls.Add(convertir);
 
-            catalogo = EstilosUI.Boton("Ver catalogo", 367, 293, 315, 44, false);
+            catalogo = EstilosUI.Boton("Ver catalogo", 346, 281, 300, 44, false);
             catalogo.Click += (sender, args) => Disparar(CatalogoSolicitado);
             tarjeta.Controls.Add(catalogo);
 
-            resultado = EstilosUI.Etiqueta("El resultado aparecerá aquí", 28, 338, 654, 58, 18F, true);
-            resultado.BackColor = EstilosUI.Acento;
+            var etiquetaResultado = EstilosUI.Etiqueta("Resultado", 28, 328, 624, 24, 10F, true);
+            etiquetaResultado.ForeColor = EstilosUI.Tinta;
+            tarjeta.Controls.Add(etiquetaResultado);
+            var panelResultado = new Panel
+            {
+                Location = new Point(28, 356),
+                Size = new Size(624, 78),
+                MinimumSize = new Size(624, 78),
+                MaximumSize = new Size(624, 78),
+                BackColor = EstilosUI.Acento
+            };
+            resultado = EstilosUI.Etiqueta(String.Empty, 16, 5, 592, 38, 22F, true);
+            resultado.AutoSize = false;
             resultado.ForeColor = System.Drawing.Color.White;
-            resultado.Padding = new Padding(16, 8, 16, 8);
-            tarjeta.Controls.Add(resultado);
-            sesion = EstilosUI.Etiqueta(String.Empty, 500, 568, 250, 24, 9F, false);
+            detalleResultado = EstilosUI.Etiqueta(String.Empty, 16, 43, 592, 24, 9F, false);
+            detalleResultado.AutoSize = false;
+            detalleResultado.ForeColor = System.Drawing.Color.White;
+            panelResultado.Controls.Add(resultado);
+            panelResultado.Controls.Add(detalleResultado);
+            tarjeta.Controls.Add(panelResultado);
+            sesion = EstilosUI.Etiqueta(String.Empty, 500, 622, 250, 24, 9F, false);
             sesion.ForeColor = EstilosUI.TextoSecundario;
             sesion.TextAlign = ContentAlignment.MiddleRight;
             Controls.Add(tarjeta);
             Controls.Add(sesion);
 
-            mensaje = EstilosUI.Etiqueta("Conectando con el servicio…", 40, 568, 440, 24, 9F, false);
+            mensaje = EstilosUI.Etiqueta("Conectando con el servicio…", 40, 622, 440, 24, 9F, false);
             mensaje.AutoEllipsis = true;
             mensaje.ForeColor = EstilosUI.TextoSecundario;
             Controls.Add(mensaje);
@@ -182,11 +198,11 @@ namespace ec.edu.monster.vista
                 LimpiarResultado();
                 return;
             }
-            resultado.Text = valorIngresado.ToString("G", System.Globalization.CultureInfo.CurrentCulture)
-                + " " + respuesta.UnidadOrigen + " = "
-                + Math.Round(respuesta.Resultado.Value, 4, MidpointRounding.AwayFromZero)
-                    .ToString("0.####", System.Globalization.CultureInfo.CurrentCulture)
-                + " " + respuesta.UnidadDestino;
+            string valorConvertido = Math.Round(respuesta.Resultado.Value, 4, MidpointRounding.AwayFromZero)
+                .ToString("0.####", System.Globalization.CultureInfo.CurrentCulture);
+            resultado.Text = valorConvertido + " " + respuesta.UnidadDestino;
+            detalleResultado.Text = valorIngresado.ToString("G", System.Globalization.CultureInfo.CurrentCulture)
+                + " " + respuesta.UnidadOrigen + " → " + respuesta.UnidadDestino;
             MostrarMensaje(String.Empty, false);
         }
 
@@ -275,7 +291,8 @@ namespace ec.edu.monster.vista
 
         public void LimpiarResultado()
         {
-            resultado.Text = "El resultado aparecerá aquí";
+            resultado.Text = String.Empty;
+            detalleResultado.Text = String.Empty;
         }
 
         public void MostrarMensaje(string texto, bool esError)

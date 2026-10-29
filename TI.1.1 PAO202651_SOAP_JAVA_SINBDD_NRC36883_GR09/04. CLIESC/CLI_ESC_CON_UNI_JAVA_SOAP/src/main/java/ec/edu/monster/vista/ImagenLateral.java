@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 /** Panel lateral que muestra la ilustración del cliente sin deformarla. */
 final class ImagenLateral extends JPanel {
-    private static final int ANCHO = 410;
+    private static final int ANCHO = 390;
     private final BufferedImage imagen;
 
     ImagenLateral() {
